@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: argocd
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/argocd:7aff2d0
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/argocd:42fab55
         ports:
         - containerPort: 80
 

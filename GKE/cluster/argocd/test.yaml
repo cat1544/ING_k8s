@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image:4a3c9c7asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image:7aff2d0
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image:2ada30d
         ports:
         - containerPort: 80
 

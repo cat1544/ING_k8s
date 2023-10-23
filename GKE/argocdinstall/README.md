@@ -1,5 +1,5 @@
 # 실행 방법
 ```
-chmod +x your_script_name.sh
+chmod +x argoinstall.sh
 bash argoinstall.sh
 ```

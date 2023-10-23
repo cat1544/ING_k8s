@@ -22,6 +22,29 @@ spec:
         - containerPort: 80
 
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd2-deployment
+  labels:
+    app: argocd2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: argocd2
+  template:
+    metadata:
+      labels:
+        app: argocd2
+    spec:
+      containers:
+      - name: argocd2
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/argocd2:7aff2d0
+        ports:
+        - containerPort: 80
+
+---
 apiVersion: v1
 kind: Service
 metadata:

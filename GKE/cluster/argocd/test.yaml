@@ -42,7 +42,7 @@ spec:
       - name: argocd2
         image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/argocd2:7aff2d0
         ports:
-        - containerPort: 80
+        - containerPort: 81
 
 ---
 apiVersion: v1

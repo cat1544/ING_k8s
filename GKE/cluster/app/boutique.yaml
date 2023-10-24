@@ -325,7 +325,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-external
+  name: front-external
 spec:
   type: LoadBalancer
   selector:
@@ -563,7 +563,7 @@ spec:
               echo "Error: Could not reach frontend - Status code: ${STATUSCODE}"
               exit 1
           fi
-        name: frontend-check
+        name: front-check
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:

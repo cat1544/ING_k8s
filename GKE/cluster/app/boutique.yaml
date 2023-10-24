@@ -247,7 +247,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
       containers:
-        - name: server
+        - name: serverfront
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -255,7 +255,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice:8c4cc9e
+          image: gcr.io/google-samples/microservices-demo/frontend:v0.8.0
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -312,7 +312,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: front
 spec:
   type: ClusterIP
   selector:
@@ -364,7 +364,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice:8c4cc9e
+        image: gcr.io/google-samples/microservices-demo/paymentservice:v0.8.0
         ports:
         - containerPort: 50051
         env:
@@ -573,7 +573,7 @@ spec:
           readOnlyRootFilesystem: true
         image: busybox:latest
         env:
-        - name: FRONTEND_ADDR
+        - name: FRONT_ADDR
           value: "frontend:80"
       containers:
       - name: main
@@ -586,7 +586,7 @@ spec:
           readOnlyRootFilesystem: true
         image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.8.0
         env:
-        - name: FRONTEND_ADDR
+        - name: FRONT_ADDR
           value: "frontend:80"
         - name: USERS
           value: "10"

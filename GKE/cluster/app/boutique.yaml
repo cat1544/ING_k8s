@@ -74,7 +74,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: emailservice
+  name: e-mailservice
 spec:
   type: ClusterIP
   selector:
@@ -112,7 +112,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:0381ee5
+          image: gcr.io/google-samples/microservices-demo/checkoutservice:v0.8.0
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -147,7 +147,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: checkoutservice
+  name: check-outservice
 spec:
   type: ClusterIP
   selector:
@@ -186,7 +186,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.8.0
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -215,7 +215,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommendationservice
+  name: recommen-dationservice
 spec:
   type: ClusterIP
   selector:
@@ -364,7 +364,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/paymentservice:v0.8.0
         ports:
         - containerPort: 50051
         env:
@@ -389,7 +389,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentservice
+  name: pay-mentservice
 spec:
   type: ClusterIP
   selector:
@@ -428,7 +428,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.8.0
         ports:
         - containerPort: 3550
         env:
@@ -453,7 +453,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: productcatalogservice
+  name: product-catalogservice
 spec:
   type: ClusterIP
   selector:
@@ -518,7 +518,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cartservice
+  name: c-artservice
 spec:
   type: ClusterIP
   selector:
@@ -653,7 +653,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: currencyservice
+  name: cu-rrencyservice
 spec:
   type: ClusterIP
   selector:
@@ -691,7 +691,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/shippingservice:v0.8.0
         ports:
         - containerPort: 50051
         env:
@@ -717,7 +717,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shippingservice
+  name: ship-pingservice
 spec:
   type: ClusterIP
   selector:
@@ -754,7 +754,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice:0381ee5
+        image: redis:alpine
         ports:
         - containerPort: 6379
         readinessProbe:
@@ -848,7 +848,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice
+  name: ad-service
 spec:
   type: ClusterIP
   selector:

@@ -255,7 +255,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:878b727
+          image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:78bfaf3
           ports:
           - containerPort: 8080
           readinessProbe:

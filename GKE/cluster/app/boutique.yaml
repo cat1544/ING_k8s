@@ -428,7 +428,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.8.0
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice:9c8c002
         ports:
         - containerPort: 3550
         env:

@@ -571,7 +571,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: busybox:latest
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator:0381ee5
         env:
         - name: FRONT_ADDR
           value: "frontend:80"

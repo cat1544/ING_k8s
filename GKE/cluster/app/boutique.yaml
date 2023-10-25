@@ -125,17 +125,17 @@ spec:
           - name: PORT
             value: "5050"
           - name: PRODUCT_CATALOG_SERVICE_ADDR
-            value: "productcatalogservice:3550"
+            value: "produc-tcatalogservice:3550"
           - name: SHIPPING_SERVICE_ADDR
-            value: "shippingservice:50051"
+            value: "ship-pingservice:50051"
           - name: PAYMENT_SERVICE_ADDR
-            value: "paymentservice:50051"
+            value: "pay-mentservice:50051"
           - name: EMAIL_SERVICE_ADDR
-            value: "emailservice:5000"
+            value: "e-mailservice:5000"
           - name: CURRENCY_SERVICE_ADDR
-            value: "currencyservice:7000"
+            value: "cu-rrencyservice:7000"
           - name: CART_SERVICE_ADDR
-            value: "cartservice:7070"
+            value: "c-artservice:7070"
           resources:
             requests:
               cpu: 100m

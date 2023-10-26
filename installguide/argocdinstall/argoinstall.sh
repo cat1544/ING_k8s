@@ -1,25 +1,29 @@
 #!/bin/bash
 
-function wait_for_port_to_be_used() {
-    local PORT=$1
-    local MAX_TRIES=10
-    local TRIES=0
+# Install Helm
+echo "Installing Helm..."
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+rm get_helm.sh
+echo "Helm installation complete."
 
-    while ! (netstat -tuln | grep ":$PORT " > /dev/null 2>&1); do
-        sleep 1
-        ((TRIES++))
+# Add Helm Chart
+echo "Adding Helm chart for Argo..."
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+echo "Helm chart added."
 
-        if [ $TRIES -ge $MAX_TRIES ]; then
-            echo "Port $PORT is not being used after waiting for $MAX_TRIES seconds. Exiting."
-            exit 1
-        fi
-    done
-}
+# Create values.yaml
+cat <<EOF > values.yaml
+global:
+  nodeSelector:
+    cloud.google.com/gke-nodepool: argocd
+EOF
 
-# Install ArgoCD
+# Install argocd
 echo "Installing ArgoCD..."
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+helm install argocd -f values.yaml argo/argo-cd --namespace argocd --create-namespace 
 echo "ArgoCD installation complete."
 
 # Install ArgoCD CLI
@@ -33,15 +37,16 @@ echo "ArgoCD CLI installation complete."
 echo "Changing ArgoCD's service type to LoadBalancer..."
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 
-# Port-forwarding
-echo "Setting up port-forwarding for ArgoCD..."
-kubectl port-forward svc/argocd-server -n argocd 8080:443 & 
-
-# Wait for port 8080 to be in use
-wait_for_port_to_be_used 8080
-
-# Print External IP
-kubectl get svc argocd-server -n argocd -o=jsonpath='{.status.loadBalancer.ingress[0].ip}'; echo
+# Wait for External IP
+echo "Waiting for ArgoCD External IP..."
+while true; do
+    IP=$(kubectl get svc argocd-server -n argocd -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    if [[ ! -z "$IP" ]]; then
+        break
+    fi
+    sleep 10
+done
+echo "ArgoCD External IP: $IP"
 
 # Print the admin password
 echo "Fetching the initial admin password..."

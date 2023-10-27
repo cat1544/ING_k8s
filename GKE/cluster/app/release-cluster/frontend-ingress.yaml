@@ -15,7 +15,28 @@ spec:
   rules:
   - http:
       paths:
-      - path: /*
+      - path: /cart
+        pathType: Prefix
+        backend:
+          service:
+            name: cartservice
+            port:
+              number: 7070
+      - path: /product
+        pathType: Prefix
+        backend:
+          service:
+            name: productcatalogservice
+            port:
+              number: 3550
+      - path: /checkout
+        pathType: Prefix
+        backend:
+          service:
+            name: checkoutservice
+            port:
+              number: 5050
+      - path: /
         pathType: ImplementationSpecific
         backend:
           service:

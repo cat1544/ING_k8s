@@ -79,7 +79,7 @@ gke_<project>_asia-northeast3_<clusername>
 argocd cluster add <위에 명령어 결과값> --system-namespace argocd
 
 # 앱 추가
-argocd app create shopping --repo https://github.com/cat1544/ING_k8s.git --path GKE/cluster/app --dest-namespace shopping --dest-server https://kubernetes.default.svc --directory-recurse
+argocd app create boutique --repo https://github.com/cat1544/ING_k8s.git --path GKE/cluster/app --dest-namespace shopping --dest-server https://kubernetes.default.svc --directory-recurse
 
 
 

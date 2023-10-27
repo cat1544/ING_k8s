@@ -1,0 +1,75 @@
+# helm 인스톨
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+# 헬름 차트 추가
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+
+# values.yaml파일 생성
+```
+## Globally shared configuration
+global:
+  # -- Default node selector for all components
+  nodeSelector:
+    cloud.google.com/gke-nodepool: argocd
+```
+
+# argocd 설치
+helm install argocd -f values.yaml argo/argo-cd \
+  --namespace argocd \
+  --create-namespace 
+
+# Install ArgoCD CLI
+echo "Installing ArgoCD CLI..."
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
+echo "ArgoCD CLI installation complete."
+
+# Change the ArgoCD's Cluster IP to LoadBalancer
+echo "Changing ArgoCD's service type to LoadBalancer..."
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+
+# Print External IP
+kubectl get svc argocd-server -n argocd -o=jsonpath='{.status.loadBalancer.ingress[0].ip}'; echo
+
+# Print the admin password
+echo "Fetching the initial admin password..."
+argocd admin initial-password -n argocd
+
+echo "Setting up port-forwarding for ArgoCD..."
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+# secret manger key 받아오기
+SECRET_VALUE=$(gcloud secrets versions access version --secret="<KEY_NAME>")
+
+# argocd login
+argocd login cd.argoproj.io
+
+# argocd repo 등록
+argocd repo add https://github.com/cat1544/ING_k8s.git --username cat1544 --password $SECRET_VALUE --insecure
+-skip-server-verification
+
+# 클러스터 등록을 위해 다른 클러스터에 접속
+gcloud container clusters get-credentials <clusername> --region asia-northeast3 --project <project>
+
+# namespace 만들기
+kubectl create namespace argocd
+kubectl create namespace shopping
+
+# 클러스터 등록시 필요한 클러스터 이름 형식
+gke_<project>_asia-northeast3_<clusername>
+
+# 클러스터 추가 등록
+argocd cluster add <위에 명령어 결과값> --system-namespace argocd
+
+# 앱 추가
+argocd app create shopping --repo https://github.com/cat1544/ING_k8s.git --path GKE/cluster/app --dest-namespace shopping --dest-server https://kubernetes.default.svc --directory-recurse
+
+
+
+
+## 만약 에러 발생시
+kubectl delete crd applicationsets.argoproj.io  applications.argoproj.io appprojects.argoproj.io

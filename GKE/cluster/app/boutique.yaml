@@ -45,7 +45,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -121,7 +121,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -190,7 +190,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -282,7 +282,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -360,7 +360,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -426,7 +426,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -493,7 +493,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -574,7 +574,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       restartPolicy: Always
       securityContext:
         fsGroup: 1000
@@ -629,7 +629,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -696,7 +696,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -761,7 +761,7 @@ spec:
         - mountPath: /data
           name: redis-data
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -830,7 +830,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        cloud.google.com/gke-nodepool: develop
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000

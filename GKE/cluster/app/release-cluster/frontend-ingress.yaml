@@ -19,21 +19,21 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: cartservice
+            name: c-artservice
             port:
               number: 7070
       - path: /product
         pathType: Prefix
         backend:
           service:
-            name: productcatalogservice
+            name: product-catalogservice
             port:
               number: 3550
       - path: /checkout
         pathType: Prefix
         backend:
           service:
-            name: checkoutservice
+            name: check-outservice
             port:
               number: 5050
       - path: /

@@ -3,19 +3,11 @@ variable "backend_gcs_name" {
   default = "boutique-tf"
 }
 
-# variable "label_key" {
-#   type    = string
-# #   default = "boutique_tf_backend"
-# }
-
-# variable "label_value" {
-#   type    = string
-# #   default = "boutique_tf_backend"
-# }
-
-variable "retention_period" {
-  type    = number
-  default = 60
+variable "label" {
+  type = map(string)
+  default = {
+    "app" : "boutique"
+  }
 }
 
 variable "location" {

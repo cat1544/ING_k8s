@@ -39,7 +39,7 @@ gcloud compute ssl-policies create $SSL_POLICY_NAME \
 # Deploy
 Deploy the Kubernetes manifests in this current folder:
 ```
-kubectl apply f .
+kubectl apply -f . -n boutique
 ```
 
 Wait for the ManagedCertificate to be provisioned. This usually takes about 30 minutes.
@@ -49,5 +49,5 @@ kubectl get managedcertificates
 
 Remove the default LoadBalancer Service not used at this point:
 ```
-kubectl delete service frontend-external
+kubectl delete service front-external -n boutique
 ```

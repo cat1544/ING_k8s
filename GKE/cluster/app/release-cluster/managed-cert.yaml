@@ -4,4 +4,5 @@ metadata:
   name: boutique-certificate
 spec:
   domains:
-    - 2280.strore
+    - www.2280.store
+    - 2280.store

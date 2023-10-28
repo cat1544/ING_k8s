@@ -134,7 +134,6 @@ kind: Service
 metadata:
   name: check-outservice
   annotations:
-    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
   - name: grpc
@@ -416,7 +415,6 @@ kind: Service
 metadata:
   name: product-catalogservice
   annotations:
-    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
   - name: grpc
@@ -485,7 +483,6 @@ kind: Service
 metadata:
   name: c-artservice
   annotations:
-    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
   - name: grpc

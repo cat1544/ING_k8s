@@ -13,30 +13,30 @@ spec:
       port:
         number: 80
   rules:
-  - http:
+   - http:
       paths:
-      - path: /cart
-        pathType: Prefix
-        backend:
-          service:
-            name: c-artservice
-            port:
-              number: 7070
-      - path: /product
-        pathType: Prefix
-        backend:
-          service:
-            name: product-catalogservice
-            port:
-              number: 3550
-      - path: /checkout
-        pathType: Prefix
-        backend:
-          service:
-            name: check-outservice
-            port:
-              number: 5050
-      - path: /
+      # - path: /cart
+      #   pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: c-artservice
+      #       port:
+      #         number: 7070
+      # - path: /product
+      #   pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: product-catalogservice
+      #       port:
+      #         number: 3550
+      # - path: /checkout
+      #   pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: check-outservice
+      #       port:
+      #         number: 5050
+      - path: /*
         pathType: ImplementationSpecific
         backend:
           service:

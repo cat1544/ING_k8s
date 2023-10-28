@@ -135,7 +135,7 @@ metadata:
   name: check-outservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "check-outservice-backend-config"}'
+    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -444,7 +444,7 @@ metadata:
   name: product-catalogservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "product-catalogservice-backend-config"}'
+    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -514,7 +514,7 @@ metadata:
   name: c-artservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "c-artservice-backend-config"}'
+    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -976,7 +976,7 @@ kind: BackendConfig
 metadata:
   name: product-catalogservice-backend-config
 spec:
-  protocol: grpc
+  protocol: tcp
   timeoutSec: 30
   connectionDraining:
     drainingTimeoutSec: 60

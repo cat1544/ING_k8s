@@ -956,7 +956,7 @@ kind: BackendConfig
 metadata:
   name: c-artservice-backend-config
 spec:
-  protocol: GRPC
+  protocol: grpc
   timeoutSec: 30
   connectionDraining:
     drainingTimeoutSec: 60
@@ -966,7 +966,7 @@ kind: BackendConfig
 metadata:
   name: check-outservice-backend-config
 spec:
-  protocol: GRPC
+  protocol: grpc
   timeoutSec: 30
   connectionDraining:
     drainingTimeoutSec: 60
@@ -976,7 +976,7 @@ kind: BackendConfig
 metadata:
   name: product-catalogservice-backend-config
 spec:
-  protocol: GRPC
+  protocol: grpc
   timeoutSec: 30
   connectionDraining:
     drainingTimeoutSec: 60

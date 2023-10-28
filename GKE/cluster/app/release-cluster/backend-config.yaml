@@ -5,3 +5,9 @@ metadata:
 spec:
   securityPolicy:
     name: boutique-security-policy
+  sessionAffinity:
+    affinityType: "GENERATED_COOKIE"
+    affinityCookieTtlSec: 50
+  logging:
+    enable: true
+    sampleRate: 0.5

@@ -135,6 +135,7 @@ metadata:
   name: check-outservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
+    #cloud.google.com/backend-config: '{"default": "frontend-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -443,6 +444,7 @@ metadata:
   name: product-catalogservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
+    #cloud.google.com/backend-config: '{"default": "frontend-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -512,6 +514,7 @@ metadata:
   name: c-artservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
+    #cloud.google.com/backend-config: '{"default": "frontend-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -893,29 +896,29 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
-        pathType: Prefix
+      - path: /*
+        pathType: ImplementationSpecific
         backend:
           service:
             name: frontend
             port:
               number: 80
       - path: /cart
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: c-artservice
             port:
               number: 7070
       - path: /product
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: product-catalogservice
             port:
               number: 3550
       - path: /checkout
-        pathType: Prefix
+        pathType: ImplementationSpecific
         backend:
           service:
             name: check-outservice

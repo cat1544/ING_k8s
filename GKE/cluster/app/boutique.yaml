@@ -290,18 +290,18 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: front
-spec:
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
-  selector:
-    app: frontend
-  type: ClusterIP
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: front
+# spec:
+#   ports:
+#   - name: http
+#     port: 80
+#     targetPort: 8080
+#   selector:
+#     app: frontend
+#   type: ClusterIP
 # ---
 # apiVersion: v1
 # kind: Service

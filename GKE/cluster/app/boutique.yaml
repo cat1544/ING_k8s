@@ -904,21 +904,21 @@ spec:
             name: front
             port:
               number: 80
-      - path: /cart
+      - path: /cart/*
         pathType: ImplementationSpecific
         backend:
           service:
             name: c-artservice
             port:
               number: 7070
-      - path: /product
+      - path: /product/*
         pathType: ImplementationSpecific
         backend:
           service:
             name: product-catalogservice
             port:
               number: 3550
-      - path: /checkout
+      - path: /checkout/*
         pathType: ImplementationSpecific
         backend:
           service:

@@ -135,7 +135,7 @@ metadata:
   name: check-outservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "frontend-backend-config"}'
+    cloud.google.com/backend-config: '{"default": "check-outservice-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -218,7 +218,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: front
 spec:
   selector:
     matchLabels:
@@ -444,7 +444,7 @@ metadata:
   name: product-catalogservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "frontend-backend-config"}'
+    cloud.google.com/backend-config: '{"default": "product-catalogservice-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -514,7 +514,7 @@ metadata:
   name: c-artservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "frontend-backend-config"}'
+    cloud.google.com/backend-config: '{"default": "c-artservice-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -864,7 +864,7 @@ spec:
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
 metadata:
-  name: frontend-backend-config
+  name: front-backend-config
 spec:
   securityPolicy:
     name: boutique-security-policy
@@ -872,7 +872,7 @@ spec:
 apiVersion: networking.gke.io/v1beta1
 kind: FrontendConfig
 metadata:
-  name: frontend-frontend-config
+  name: front-frontend-config
 spec:
   sslPolicy: boutique-ssl-policy
   redirectToHttps:
@@ -882,18 +882,18 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: frontend-ingress
+  name: front-ingress
   annotations:
     kubernetes.io/ingress.class: "gce"
     kubernetes.io/ingress.global-static-ip-name: boutique-ip
     networking.gke.io/managed-certificates: boutique-certificate
-    networking.gke.io/v1beta1.FrontendConfig: frontend-frontend-config
+    networking.gke.io/v1beta1.FrontendConfig: front-frontend-config
 spec:
-  defaultBackend:
-    service:
-      name: frontend
-      port:
-        number: 80
+  # defaultBackend:
+  #   service:
+  #     name: front
+  #     port:
+  #       number: 80
   rules:
   - http:
       paths:
@@ -901,7 +901,7 @@ spec:
         pathType: ImplementationSpecific
         backend:
           service:
-            name: frontend
+            name: front
             port:
               number: 80
       - path: /cart
@@ -929,10 +929,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: front
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "frontend-backend-config"}'
+    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
 spec:
   type: ClusterIP
   selector:
@@ -950,3 +950,33 @@ spec:
 #   domains:
 #     - www.2280.store
 #     - 2280.store
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: c-artservice-backend-config
+spec:
+  protocol: GRPC
+  timeoutSec: 30
+  connectionDraining:
+    drainingTimeoutSec: 60
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: check-outservice-backend-config
+spec:
+  protocol: GRPC
+  timeoutSec: 30
+  connectionDraining:
+    drainingTimeoutSec: 60
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: product-catalogservice-backend-config
+spec:
+  protocol: GRPC
+  timeoutSec: 30
+  connectionDraining:
+    drainingTimeoutSec: 60

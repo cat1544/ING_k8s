@@ -894,29 +894,29 @@ spec:
   rules:
   - http:
       paths:
-      - path: /*
+      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
             name: front
             port:
               number: 80
-      - path: /cart/*
-        pathType: ImplementationSpecific
+      - path: /cart
+        pathType: prefix
         backend:
           service:
             name: c-artservice
             port:
               number: 7070
-      - path: /product/*
-        pathType: ImplementationSpecific
+      - path: /product
+        pathType: prefix
         backend:
           service:
             name: product-catalogservice
             port:
               number: 3550
-      - path: /checkout/*
-        pathType: ImplementationSpecific
+      - path: /checkout
+        pathType: prefix
         backend:
           service:
             name: check-outservice

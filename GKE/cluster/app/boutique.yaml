@@ -135,7 +135,6 @@ metadata:
   name: check-outservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -444,7 +443,6 @@ metadata:
   name: product-catalogservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -514,7 +512,6 @@ metadata:
   name: c-artservice
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
 spec:
   ports:
   - name: grpc
@@ -889,11 +886,11 @@ metadata:
     networking.gke.io/managed-certificates: boutique-certificate
     networking.gke.io/v1beta1.FrontendConfig: front-frontend-config
 spec:
-  # defaultBackend:
-  #   service:
-  #     name: front
-  #     port:
-  #       number: 80
+  defaultBackend:
+    service:
+      name: front
+      port:
+        number: 80
   rules:
   - http:
       paths:
@@ -941,42 +938,3 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
----
-# apiVersion: networking.gke.io/v1
-# kind: ManagedCertificate
-# metadata:
-#   name: boutique-certificate
-# spec:
-#   domains:
-#     - www.2280.store
-#     - 2280.store
----
-apiVersion: cloud.google.com/v1
-kind: BackendConfig
-metadata:
-  name: c-artservice-backend-config
-spec:
-  protocol: grpc
-  timeoutSec: 30
-  connectionDraining:
-    drainingTimeoutSec: 60
----
-apiVersion: cloud.google.com/v1
-kind: BackendConfig
-metadata:
-  name: check-outservice-backend-config
-spec:
-  protocol: grpc
-  timeoutSec: 30
-  connectionDraining:
-    drainingTimeoutSec: 60
----
-apiVersion: cloud.google.com/v1
-kind: BackendConfig
-metadata:
-  name: product-catalogservice-backend-config
-spec:
-  protocol: tcp
-  timeoutSec: 30
-  connectionDraining:
-    drainingTimeoutSec: 60

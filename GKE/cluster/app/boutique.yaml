@@ -902,21 +902,21 @@ spec:
             port:
               number: 80
       - path: /cart
-        pathType: prefix
+        pathType: Prefix
         backend:
           service:
             name: c-artservice
             port:
               number: 7070
       - path: /product
-        pathType: prefix
+        pathType: Prefix
         backend:
           service:
             name: product-catalogservice
             port:
               number: 3550
       - path: /checkout
-        pathType: prefix
+        pathType: Prefix
         backend:
           service:
             name: check-outservice

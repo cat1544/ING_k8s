@@ -13,7 +13,7 @@ images:
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice
   newTag: NEW_TAG_HERE
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice
-  newTag: NEW_TAG_HERE
+  newTag: 47ab7d4
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice
   newTag: NEW_TAG_HERE
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice

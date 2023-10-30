@@ -301,9 +301,9 @@ spec:
       app: adservice
   strategy:
     blueGreen:
-      activeService: ad-service-active
+      activeService: adservice-active
       autoPromotionEnabled: true
-      previewService: ad-service-preview
+      previewService: adservice-preview
   template:
     metadata:
       labels:
@@ -361,9 +361,9 @@ spec:
       app: cartservice
   strategy:
     blueGreen:
-      activeService: c-artservice-active
+      activeService: cartservice-active
       autoPromotionEnabled: true
-      previewService: c-artservice-preview
+      previewService: cartservice-preview
   template:
     metadata:
       labels:
@@ -420,9 +420,9 @@ spec:
       app: checkoutservice
   strategy:
     blueGreen:
-      activeService: check-outservice-active
+      activeService: checkoutservice-active
       autoPromotionEnabled: true
-      previewService: check-outservice-preview
+      previewService: checkoutservice-preview
   template:
     metadata:
       labels:
@@ -487,9 +487,9 @@ spec:
       app: currencyservice
   strategy:
     blueGreen:
-      activeService: cu-rrencyservice-active
+      activeService: currencyservice-active
       autoPromotionEnabled: true
-      previewService: cu-rrencyservice-preview
+      previewService: currencyservice-preview
   template:
     metadata:
       labels:
@@ -501,7 +501,7 @@ spec:
           value: "7000"
         - name: DISABLE_PROFILER
           value: "1"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice:8033b00
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice:c9dd7b4
         livenessProbe:
           grpc:
             port: 7000
@@ -546,9 +546,9 @@ spec:
       app: emailservice
   strategy:
     blueGreen:
-      activeService: e-mailservice-active
+      activeService: emailservice-active
       autoPromotionEnabled: true
-      previewService: e-mailservice-preview
+      previewService: emailservice-preview
   template:
     metadata:
       labels:
@@ -607,9 +607,9 @@ spec:
       app: frontend
   strategy:
     blueGreen:
-      activeService: front-active
+      activeService: frontend-active
       autoPromotionEnabled: true
-      previewService: front-preview
+      previewService: frontend-preview
   template:
     metadata:
       annotations:
@@ -690,9 +690,9 @@ spec:
       app: paymentservice
   strategy:
     blueGreen:
-      activeService: pay-mentservice-active
+      activeService: paymentservice-active
       autoPromotionEnabled: true
-      previewService: pay-mentservice-preview
+      previewService: paymentservice-preview
   template:
     metadata:
       labels:
@@ -748,9 +748,9 @@ spec:
       app: productcatalogservice
   strategy:
     blueGreen:
-      activeService: product-catalogservice-active
+      activeService: productcatalogservice-active
       autoPromotionEnabled: true
-      previewService: product-catalogservice-preview
+      previewService: productcatalogservice-preview
   template:
     metadata:
       labels:
@@ -806,9 +806,9 @@ spec:
       app: recommendationservice
   strategy:
     blueGreen:
-      activeService: recommen-dationservice-active
+      activeService: recommendationservice-active
       autoPromotionEnabled: true
-      previewService: recommen-dationservice-preview
+      previewService: recommendationservice-preview
   template:
     metadata:
       labels:
@@ -927,9 +927,9 @@ spec:
       app: shippingservice
   strategy:
     blueGreen:
-      activeService: ship-pingservice-active
+      activeService: shippingservice-active
       autoPromotionEnabled: true
-      previewService: ship-pingservice-preview
+      previewService: shippingservice-preview
   template:
     metadata:
       labels:

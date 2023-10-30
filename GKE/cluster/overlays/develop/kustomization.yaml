@@ -7,7 +7,7 @@ images:
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice
   newTag: UPDATED_TAG
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice
-  newTag: NEW_TAG_HERE
+  newTag: b32536d
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice
   newTag: b32536d
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice

@@ -262,7 +262,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: front
+  name: frontend
 spec:
   selector:
     matchLabels:

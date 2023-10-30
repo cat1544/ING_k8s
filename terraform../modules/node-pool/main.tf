@@ -4,7 +4,7 @@ resource "google_container_node_pool" "node-pool" {
 #  cluster    = google_container_cluster.cluster.name
 #  node_count = 3 autoscaling과 함께 사용 불가
   cluster = var.cluster_name
-  max_pods_per_node = 90
+  max_pods_per_node = var.max_pods
 
   node_config {
     preemptible  = true
@@ -12,15 +12,11 @@ resource "google_container_node_pool" "node-pool" {
     machine_type = "e2-medium"
     disk_size_gb = var.disk_size
     disk_type = "pd-balanced"
-    # labels = {
-    #   "app" = "boutique"
-    #   "env" = "dev"
-    # }
     labels = var.label
   }
   autoscaling {
-    total_min_node_count = 3
-    total_max_node_count = 9
+    total_min_node_count = var.max_node
+    total_max_node_count = var.min_node
     location_policy = "BALANCED"
   }
   network_config {

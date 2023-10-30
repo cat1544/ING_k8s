@@ -5,7 +5,7 @@ bases:
   - ../../app
 images:
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice
-  newTag: UPDATED_TAG
+  newTag: 8033b00
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice
   newTag: c9dd7b4
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice

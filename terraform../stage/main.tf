@@ -53,14 +53,14 @@ module "subnet" {
 # ***************prod-cluster**************
 # =========================================
 
-module "prod-gke" {
+module "dev-gke" {
   source = "../modules/gke"
 
   network = module.vpc.network
   subnet = module.subnet.subnetwork
 #   private_ip_name        = "private"    #
 #   vpc_connection_service = "servicenetworking.googleapis.com" #
-  name                   = "${local.service}-prod"
+  name                   = "${local.service}-dev"
   location               = local.location
   master_ipv4_cidr_block = "172.16.0.0/28"
   peering = module.vpc.peering
@@ -68,26 +68,41 @@ module "prod-gke" {
   master_network_name = "test"
 
 #   resource_labels = {
-#     "env" = "prod"
+#     "env" = "dev"
 #   }
 
   workload_identity_config = "${local.project_id}.svc.id.goog"
 }
 
-module "prod-nodepool" {
+module "dev-nodepool" {
   source         = "../modules/node-pool"
-  node_pool_name = "prod-nodepool"
+  node_pool_name = "dev-nodepool"
   location       = local.location
-  disk_size      = 100
-  cluster_name        = module.prod-gke.cluster_name
+  disk_size      = 50
+  cluster_name        = module.dev-gke.cluster_name
 
   label = {
-    "env" : "prod"
+    "env" : "dev"
+    "app" : "boutique"
   }
 }
 
+module "argo-nodepool" {
+  source         = "../modules/node-pool"
+  node_pool_name = "argo-nodepool"
+  location       = local.location
+  disk_size      = 20
+  cluster_name        = module.dev-gke.cluster_name
+
+  label = {
+    "env" : "dev"
+    "app" : "argo"
+  }
+}
+
+
 # =========================================
-# ***************dev-cluster***************
+# ***************prod-cluster***************
 # =========================================
 
 # module "prod-gke" {

@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+bases:
+  - ../../base
+images:
+  # Add your image changes here
+  # - name: original-image-name
+  #   newTag: new-image-tag

@@ -10,7 +10,7 @@ resource "google_container_node_pool" "node-pool" {
     preemptible  = true
     image_type = "COS_CONTAINERD"
     machine_type = "e2-medium"
-    disk_size_gb = var.disk_size #100
+    disk_size_gb = var.disk_size
     disk_type = "pd-balanced"
     # labels = {
     #   "app" = "boutique"
@@ -20,7 +20,7 @@ resource "google_container_node_pool" "node-pool" {
   }
   autoscaling {
     total_min_node_count = 3
-    total_max_node_count = 6
+    total_max_node_count = 9
     location_policy = "BALANCED"
   }
   network_config {
@@ -30,15 +30,15 @@ resource "google_container_node_pool" "node-pool" {
   }
 
   upgrade_settings {
-    # max_surge = 1
-    # max_unavailable = 1
-    strategy = "BLUE_GREEN"
-    blue_green_settings {
-      node_pool_soak_duration = "10.0s"
-      standard_rollout_policy {
-        batch_percentage = 0.5
-        batch_soak_duration = "10.0s"
-      }
-    } 
+    max_surge = 1
+    max_unavailable = 0
+    #strategy = "BLUE_GREEN"
+    #blue_green_settings {
+    #  node_pool_soak_duration = "10.0s"
+    #  standard_rollout_policy {
+    #    batch_percentage = 0.5
+    #    batch_soak_duration = "10.0s"
+    #  }
+    #} 
   }
 }

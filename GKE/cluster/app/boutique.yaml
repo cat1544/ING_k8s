@@ -61,7 +61,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: emailservice-active
+  name: e-mailservice-active
 spec:
   ports:
   - port: 80
@@ -73,7 +73,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: emailservice-preview
+  name: e-mailservice-preview
 spec:
   ports:
   - port: 80
@@ -152,26 +152,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: checkoutservice-active
+  name: check-outservice-active
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 5050
   selector:
-    app: emailservice
+    app: checkoutservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: checkoutservice-preview
+  name: check-outservice-preview
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 5050
   selector:
-    app: emailservice
+    app: checkoutservice
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -238,26 +238,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommendationservice-active
+  name: recommen-dationservice-active
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 8080
   selector:
-    app: emailservice
+    app: recommendationservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommendationservice-preview
+  name: recommen-dationservice-preview
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 8080
   selector:
-    app: emailservice
+    app: recommendationservice
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -352,7 +352,7 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: emailservice
+    app: frontend
 ---
 apiVersion: v1
 kind: Service
@@ -364,7 +364,7 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: emailservice
+    app: frontend
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -427,26 +427,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentservice-active
+  name: pay-mentservice-active
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 50051
   selector:
-    app: emailservice
+    app: paymentservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentservice-preview
+  name: pay-mentservice-preview
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 50051
   selector:
-    app: emailservice
+    app: paymentservice
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -509,26 +509,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: productcatalogservice-active
+  name: product-catalogservice-active
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 3550
   selector:
-    app: emailservice
+    app: productcatalogservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: productcatalogservice-preview
+  name: product-catalogservice-preview
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 3550
   selector:
-    app: emailservice
+    app: productcatalogservice
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -592,124 +592,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cartservice-active
+  name: c-artservice-active
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 7070
   selector:
-    app: emailservice
+    app: cartservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: cartservice-preview
+  name: c-artservice-preview
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 7070
   selector:
-    app: emailservice
----
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
-metadata:
-  name: loadgenerator
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: loadgenerator
-  strategy:
-    blueGreen:
-      activeService: loadgenerator-active
-      autoPromotionEnabled: true
-      previewService: loadgenerator-preview
-  template:
-    metadata:
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: 'true'
-      labels:
-        app: loadgenerator
-    spec:
-      containers:
-      - env:
-        - name: FRONT_ADDR
-          value: frontend:80
-        - name: USERS
-          value: '10'
-        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.8.0
-        name: main
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi
-          requests:
-            cpu: 300m
-            memory: 256Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-      initContainers:
-      - command:
-        - /bin/sh
-        - -exc
-        - "echo \"Init container pinging frontend: ${FRONTEND_ADDR}...\"\nSTATUSCODE=$(wget\
-          \ --server-response http://${FRONTEND_ADDR} 2>&1 | awk '/^  HTTP/{print\
-          \ $2}')\nif test $STATUSCODE -ne 200; then\n    echo \"Error: Could not\
-          \ reach frontend - Status code: ${STATUSCODE}\"\n    exit 1\nfi\n"
-        env:
-        - name: FRONT_ADDR
-          value: frontend:80
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator:0381ee5
-        name: front-check
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-      nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
-      restartPolicy: Always
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-      serviceAccountName: default
-      terminationGracePeriodSeconds: 5
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: loadgenerator-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: emailservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: loadgenerator-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: emailservice
+    app: cartservice
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -773,26 +675,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: currencyservice-active
+  name: cu-rrencyservice-active
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 7000
   selector:
-    app: emailservice
+    app: currencyservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: currencyservice-preview
+  name: cu-rrencyservice-preview
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 7000
   selector:
-    app: emailservice
+    app: currencyservice
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -855,26 +757,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shippingservice-active
+  name: ship-pingservice-active
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 50051
   selector:
-    app: emailservice
+    app: shippingservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: shippingservice-preview
+  name: ship-pingservice-preview
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 50051
   selector:
-    app: emailservice
+    app: shippingservice
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -945,7 +847,7 @@ spec:
     protocol: TCP
     targetPort: 6379
   selector:
-    app: emailservice
+    app: redis-cart
 ---
 apiVersion: v1
 kind: Service
@@ -957,7 +859,7 @@ spec:
     protocol: TCP
     targetPort: 6379
   selector:
-    app: emailservice
+    app: redis-cart
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
@@ -1022,23 +924,23 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice-active
+  name: ad-service-active
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 9555
   selector:
-    app: emailservice
+    app: adservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice-preview
+  name: ad-service-preview
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 9555
   selector:
-    app: emailservice
+    app: adservice

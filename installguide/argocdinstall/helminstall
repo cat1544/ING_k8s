@@ -40,6 +40,11 @@ sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
 rm argocd-linux-amd64
 echo "ArgoCD CLI installation complete."
 
+# Install rollouts plugin
+curl -LO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-linux-amd64
+chmod +x ./kubectl-argo-rollouts-linux-amd64
+sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
+
 # Change the ArgoCD's Cluster IP to LoadBalancer
 echo "Changing ArgoCD's service type to LoadBalancer..."
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
@@ -81,8 +86,8 @@ argocd cluster add <위에 명령어 결과값> --system-namespace argocd
 # 앱 추가
 argocd app create boutique --repo https://github.com/cat1544/ING_k8s.git --path GKE/cluster/app --dest-namespace shopping --dest-server https://kubernetes.default.svc --directory-recurse
 
-
-
+# argocd rollouts dashboard 생성
+kubectl argo rollouts dashboard
 
 ## 만약 에러 발생시
 kubectl delete crd applicationsets.argoproj.io  applications.argoproj.io appprojects.argoproj.io

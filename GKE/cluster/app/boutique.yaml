@@ -1,12 +1,16 @@
----
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: emailservice
 spec:
   selector:
     matchLabels:
       app: emailservice
+  strategy:
+    blueGreen:
+      activeService: emailservice-active
+      autoPromotionEnabled: true
+      previewService: emailservice-preview
   template:
     metadata:
       labels:
@@ -57,24 +61,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: e-mailservice
+  name: emailservice-active
 spec:
   ports:
-  - name: grpc
-    port: 5000
+  - port: 80
+    protocol: TCP
     targetPort: 8080
   selector:
     app: emailservice
-  type: ClusterIP
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: emailservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: checkoutservice
 spec:
   selector:
     matchLabels:
       app: checkoutservice
+  strategy:
+    blueGreen:
+      activeService: checkoutservice-active
+      autoPromotionEnabled: true
+      previewService: checkoutservice-preview
   template:
     metadata:
       labels:
@@ -132,25 +152,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: check-outservice
-  annotations:
+  name: checkoutservice-active
 spec:
   ports:
-  - name: grpc
-    port: 5050
+  - port: 80
+    protocol: TCP
     targetPort: 5050
   selector:
-    app: checkoutservice
-  type: ClusterIP
+    app: emailservice
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkoutservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5050
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: recommendationservice
 spec:
   selector:
     matchLabels:
       app: recommendationservice
+  strategy:
+    blueGreen:
+      activeService: recommendationservice-active
+      autoPromotionEnabled: true
+      previewService: recommendationservice-preview
   template:
     metadata:
       labels:
@@ -203,24 +238,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommen-dationservice
+  name: recommendationservice-active
 spec:
   ports:
-  - name: grpc
-    port: 8080
+  - port: 80
+    protocol: TCP
     targetPort: 8080
   selector:
-    app: recommendationservice
-  type: ClusterIP
+    app: emailservice
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommendationservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: front
 spec:
   selector:
     matchLabels:
       app: frontend
+  strategy:
+    blueGreen:
+      activeService: front-active
+      autoPromotionEnabled: true
+      previewService: front-preview
   template:
     metadata:
       annotations:
@@ -291,14 +342,43 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: emailservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: paymentservice
 spec:
   selector:
     matchLabels:
       app: paymentservice
+  strategy:
+    blueGreen:
+      activeService: paymentservice-active
+      autoPromotionEnabled: true
+      previewService: paymentservice-preview
   template:
     metadata:
       labels:
@@ -347,24 +427,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: pay-mentservice
+  name: paymentservice-active
 spec:
   ports:
-  - name: grpc
-    port: 50051
+  - port: 80
+    protocol: TCP
     targetPort: 50051
   selector:
-    app: paymentservice
-  type: ClusterIP
+    app: emailservice
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: paymentservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 50051
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: productcatalogservice
 spec:
   selector:
     matchLabels:
       app: productcatalogservice
+  strategy:
+    blueGreen:
+      activeService: productcatalogservice-active
+      autoPromotionEnabled: true
+      previewService: productcatalogservice-preview
   template:
     metadata:
       labels:
@@ -413,25 +509,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-catalogservice
-  annotations:
+  name: productcatalogservice-active
 spec:
   ports:
-  - name: grpc
-    port: 3550
+  - port: 80
+    protocol: TCP
     targetPort: 3550
   selector:
-    app: productcatalogservice
-  type: ClusterIP
+    app: emailservice
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: productcatalogservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3550
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: cartservice
 spec:
   selector:
     matchLabels:
       app: cartservice
+  strategy:
+    blueGreen:
+      activeService: cartservice-active
+      autoPromotionEnabled: true
+      previewService: cartservice-preview
   template:
     metadata:
       labels:
@@ -481,19 +592,29 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: c-artservice
-  annotations:
+  name: cartservice-active
 spec:
   ports:
-  - name: grpc
-    port: 7070
+  - port: 80
+    protocol: TCP
     targetPort: 7070
   selector:
-    app: cartservice
-  type: ClusterIP
+    app: emailservice
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: cartservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 7070
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: loadgenerator
 spec:
@@ -501,6 +622,11 @@ spec:
   selector:
     matchLabels:
       app: loadgenerator
+  strategy:
+    blueGreen:
+      activeService: loadgenerator-active
+      autoPromotionEnabled: true
+      previewService: loadgenerator-preview
   template:
     metadata:
       annotations:
@@ -561,14 +687,43 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadgenerator-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: emailservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadgenerator-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: currencyservice
 spec:
   selector:
     matchLabels:
       app: currencyservice
+  strategy:
+    blueGreen:
+      activeService: currencyservice-active
+      autoPromotionEnabled: true
+      previewService: currencyservice-preview
   template:
     metadata:
       labels:
@@ -618,24 +773,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cu-rrencyservice
+  name: currencyservice-active
 spec:
   ports:
-  - name: grpc
-    port: 7000
+  - port: 80
+    protocol: TCP
     targetPort: 7000
   selector:
-    app: currencyservice
-  type: ClusterIP
+    app: emailservice
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: currencyservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 7000
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: shippingservice
 spec:
   selector:
     matchLabels:
       app: shippingservice
+  strategy:
+    blueGreen:
+      activeService: shippingservice-active
+      autoPromotionEnabled: true
+      previewService: shippingservice-preview
   template:
     metadata:
       labels:
@@ -684,24 +855,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ship-pingservice
+  name: shippingservice-active
 spec:
   ports:
-  - name: grpc
-    port: 50051
+  - port: 80
+    protocol: TCP
     targetPort: 50051
   selector:
-    app: shippingservice
-  type: ClusterIP
+    app: emailservice
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: shippingservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 50051
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: redis-cart
 spec:
   selector:
     matchLabels:
       app: redis-cart
+  strategy:
+    blueGreen:
+      activeService: redis-cart-active
+      autoPromotionEnabled: true
+      previewService: redis-cart-preview
   template:
     metadata:
       labels:
@@ -751,24 +938,40 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-cart
+  name: redis-cart-active
 spec:
   ports:
-  - name: tcp-redis
-    port: 6379
+  - port: 80
+    protocol: TCP
     targetPort: 6379
   selector:
-    app: redis-cart
-  type: ClusterIP
+    app: emailservice
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cart-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: emailservice
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: adservice
 spec:
   selector:
     matchLabels:
       app: adservice
+  strategy:
+    blueGreen:
+      activeService: adservice-active
+      autoPromotionEnabled: true
+      previewService: adservice-preview
   template:
     metadata:
       labels:
@@ -819,81 +1022,23 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ad-service
+  name: adservice-active
 spec:
   ports:
-  - name: grpc
-    port: 9555
+  - port: 80
+    protocol: TCP
     targetPort: 9555
   selector:
-    app: adservice
-  type: ClusterIP
----
-apiVersion: cloud.google.com/v1
-kind: BackendConfig
-metadata:
-  name: front-backend-config
-spec:
-  securityPolicy:
-    name: boutique-security-policy
----
-apiVersion: networking.gke.io/v1beta1
-kind: FrontendConfig
-metadata:
-  name: front-frontend-config
-spec:
-  sslPolicy: boutique-ssl-policy
-  redirectToHttps:
-    enabled: true
-    responseCodeName: ""
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: front-ingress
-  annotations:
-    kubernetes.io/ingress.global-static-ip-name: boutique-ip
-    networking.gke.io/managed-certificates: boutique-certificate
-    networking.gke.io/v1beta1.FrontendConfig: front-frontend-config
-spec:
-  defaultBackend:
-    service:
-      name: front
-      port:
-        number: 80
-  rules:
-  - host: "www.2280.store"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: front
-            port:
-              number: 80
+    app: emailservice
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: front
-  annotations:
-    cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
+  name: adservice-preview
 spec:
-  type: ClusterIP
-  selector:
-    app: frontend
   ports:
-  - name: http
-    port: 80
-    targetPort: 8080
----
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: boutique-certificate
-spec:
-  domains:
-    - www.2280.store
-    - 2280.store
+  - port: 80
+    protocol: TCP
+    targetPort: 9555
+  selector:
+    app: emailservice

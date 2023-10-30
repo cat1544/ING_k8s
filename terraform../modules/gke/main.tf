@@ -87,7 +87,21 @@ resource "google_container_cluster" "cluster" {
       issue_client_certificate = false
     }
   }
-  
+
+  maintenance_policy {
+    recurring_window {
+      daily_maintenance_window {
+        start_time = "17:00"
+      }
+      recurring_options {
+        recurring_day_of_week = ["MON", "WED", "SUN"]
+      }
+      duration = "4h"
+    }
+  }
+
+  resource_labels = var.label
+
   # resource_labels = {
   #   "env" = "prod"
   # }

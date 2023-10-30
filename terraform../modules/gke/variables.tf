@@ -27,13 +27,9 @@ variable "master_ipv4_cidr_block" {
   type    = string
 }
 
-# variable "label_key" {
-#   type    = string
-# }
-
-# variable "label_value" {
-#   type    = string
-# }
+variable "label" {
+  type    = map(string)
+}
 
 variable "workload_identity_config" {
   type    = string

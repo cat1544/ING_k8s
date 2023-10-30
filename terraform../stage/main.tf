@@ -67,9 +67,9 @@ module "dev-gke" {
   cidr_block = module.subnet.ip_cidr_range
   master_network_name = "test"
 
-#   resource_labels = {
-#     "env" = "dev"
-#   }
+  label = {
+    "app" : "boutique"
+}
 
   workload_identity_config = "${local.project_id}.svc.id.goog"
 }
@@ -79,6 +79,9 @@ module "dev-nodepool" {
   node_pool_name = "dev-nodepool"
   location       = local.location
   disk_size      = 50
+  max_pods = 60
+  min_node = 3
+  max_node = 6
   cluster_name        = module.dev-gke.cluster_name
 
   label = {
@@ -92,6 +95,9 @@ module "argo-nodepool" {
   node_pool_name = "argo-nodepool"
   location       = local.location
   disk_size      = 20
+  max_pods = 30
+  min_node = 1
+  max_node = 3
   cluster_name        = module.dev-gke.cluster_name
 
   label = {
@@ -116,4 +122,5 @@ module "argo-nodepool" {
 # module "prod-nodepool-argocd" {
 #     source = "../modules/node-pool"
 # }
+
 

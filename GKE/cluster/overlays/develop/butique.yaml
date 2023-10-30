@@ -596,7 +596,7 @@ spec:
           value: "50051"
         - name: DISABLE_PROFILER
           value: "1"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:b32536d
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:2d10ce3
         livenessProbe:
           grpc:
             port: 50051

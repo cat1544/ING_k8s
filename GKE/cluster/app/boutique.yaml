@@ -61,7 +61,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: e-mailservice-active
+  name: emailservice-active
 spec:
   ports:
   - port: 80
@@ -73,7 +73,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: e-mailservice-preview
+  name: emailservice-preview
 spec:
   ports:
   - port: 80
@@ -105,17 +105,17 @@ spec:
         - name: PORT
           value: '5050'
         - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice:3550
+          value: productcatalogservice:3550
         - name: SHIPPING_SERVICE_ADDR
-          value: ship-pingservice:50051
+          value: shippingservice:50051
         - name: PAYMENT_SERVICE_ADDR
-          value: pay-mentservice:50051
+          value: paymentservice:50051
         - name: EMAIL_SERVICE_ADDR
-          value: e-mailservice:5000
+          value: emailservice:5000
         - name: CURRENCY_SERVICE_ADDR
-          value: cu-rrencyservice:7000
+          value: currencyservice:7000
         - name: CART_SERVICE_ADDR
-          value: c-artservice:7070
+          value: cartservice:7070
         image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:0381ee5
         livenessProbe:
           grpc:
@@ -152,7 +152,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: check-outservice-active
+  name: checkoutservice-active
 spec:
   ports:
   - port: 80
@@ -164,7 +164,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: check-outservice-preview
+  name: checkoutservice-preview
 spec:
   ports:
   - port: 80
@@ -196,7 +196,7 @@ spec:
         - name: PORT
           value: '8080'
         - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice:3550
+          value: productcatalogservice:3550
         - name: DISABLE_PROFILER
           value: '1'
         image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice:0381ee5
@@ -238,7 +238,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommen-dationservice-active
+  name: recommendationservice-active
 spec:
   ports:
   - port: 80
@@ -250,7 +250,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommen-dationservice-preview
+  name: recommendationservice-preview
 spec:
   ports:
   - port: 80
@@ -285,19 +285,19 @@ spec:
         - name: PORT
           value: '8080'
         - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice:3550
+          value: productcatalogservice:3550
         - name: CURRENCY_SERVICE_ADDR
-          value: cu-rrencyservice:7000
+          value: currencyservice:7000
         - name: CART_SERVICE_ADDR
-          value: c-artservice:7070
+          value: cartservice:7070
         - name: RECOMMENDATION_SERVICE_ADDR
-          value: recommen-dationservice:8080
+          value: recommendationservice:8080
         - name: SHIPPING_SERVICE_ADDR
-          value: ship-pingservice:50051
+          value: shippingservice:50051
         - name: CHECKOUT_SERVICE_ADDR
-          value: check-outservice:5050
+          value: checkoutservice:5050
         - name: AD_SERVICE_ADDR
-          value: ad-service:9555
+          value: adservice:9555
         - name: ENABLE_PROFILER
           value: '0'
         image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:86ac3ba
@@ -346,7 +346,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: front-active
+  name: frontend-active
 spec:
   ports:
   - port: 80
@@ -358,7 +358,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: front-preview
+  name: frontend-preview
 spec:
   ports:
   - port: 80
@@ -428,7 +428,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: pay-mentservice-active
+  name: paymentservice-active
 spec:
   ports:
   - port: 80
@@ -440,7 +440,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: pay-mentservice-preview
+  name: paymentservice-preview
 spec:
   ports:
   - port: 80
@@ -510,7 +510,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-catalogservice-active
+  name: productcatalogservice-active
 spec:
   ports:
   - port: 80
@@ -522,7 +522,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-catalogservice-preview
+  name: productcatalogservice-preview
 spec:
   ports:
   - port: 80
@@ -593,7 +593,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: c-artservice-active
+  name: cartservice-active
 spec:
   ports:
   - port: 80
@@ -605,7 +605,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: c-artservice-preview
+  name: cartservice-preview
 spec:
   ports:
   - port: 80
@@ -676,7 +676,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cu-rrencyservice-active
+  name: currencyservice-active
 spec:
   ports:
   - port: 80
@@ -688,7 +688,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cu-rrencyservice-preview
+  name: currencyservice-preview
 spec:
   ports:
   - port: 80
@@ -758,7 +758,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ship-pingservice-active
+  name: shippingservice-active
 spec:
   ports:
   - port: 80
@@ -770,7 +770,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ship-pingservice-preview
+  name: shippingservice-preview
 spec:
   ports:
   - port: 80
@@ -925,7 +925,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ad-service-active
+  name: adservice-active
 spec:
   ports:
   - port: 80
@@ -937,7 +937,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ad-service-preview
+  name: adservice-preview
 spec:
   ports:
   - port: 80
@@ -949,7 +949,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: ad-service
+  name: adservice
 spec:
   ports:
   - name: grpc
@@ -962,7 +962,7 @@ spec:
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
 metadata:
-  name: front-backend-config
+  name: frontend-backend-config
 spec:
   securityPolicy:
     name: boutique-security-policy
@@ -970,7 +970,7 @@ spec:
 apiVersion: networking.gke.io/v1beta1
 kind: FrontendConfig
 metadata:
-  name: front-frontend-config
+  name: frontend-frontend-config
 spec:
   sslPolicy: boutique-ssl-policy
   redirectToHttps:
@@ -980,15 +980,15 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: front-ingress
+  name: frontend-ingress
   annotations:
     kubernetes.io/ingress.global-static-ip-name: boutique-ip
     networking.gke.io/managed-certificates: boutique-certificate
-    networking.gke.io/v1beta1.FrontendConfig: front-frontend-config
+    networking.gke.io/v1beta1.FrontendConfig: frontend-frontend-config
 spec:
   defaultBackend:
     service:
-      name: front
+      name: frontend
       port:
         number: 80
   rules:
@@ -999,14 +999,14 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: front
+            name: frontend
             port:
               number: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: front
+  name: frontend
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
     cloud.google.com/backend-config: '{"default": "front-backend-config"}'

@@ -909,3 +909,12 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: boutique-certificate
+spec:
+  domains:
+    - www.2280.store
+    - 2280.store

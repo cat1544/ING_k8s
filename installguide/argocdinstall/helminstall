@@ -87,7 +87,7 @@ argocd cluster add <위에 명령어 결과값> --system-namespace argocd
 argocd app create boutique --repo https://github.com/cat1544/ING_k8s.git --path GKE/cluster/app --dest-namespace shopping --dest-server https://kubernetes.default.svc --directory-recurse
 
 # argocd rollouts dashboard 생성
-kubectl argo rollouts dashboard
+kubectl argo rollouts dashboard &
 
 ## 만약 에러 발생시
 kubectl delete crd applicationsets.argoproj.io  applications.argoproj.io appprojects.argoproj.io

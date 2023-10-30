@@ -8,9 +8,9 @@ spec:
       app: emailservice
   strategy:
     blueGreen:
-      activeService: emailservice-active
+      activeService: e-mailservice-active
       autoPromotionEnabled: true
-      previewService: emailservice-preview
+      previewService: e-mailservice-preview
   template:
     metadata:
       labels:
@@ -92,9 +92,9 @@ spec:
       app: checkoutservice
   strategy:
     blueGreen:
-      activeService: checkoutservice-active
+      activeService: check-outservice-active
       autoPromotionEnabled: true
-      previewService: checkoutservice-preview
+      previewService: check-outservice-preview
   template:
     metadata:
       labels:
@@ -183,9 +183,9 @@ spec:
       app: recommendationservice
   strategy:
     blueGreen:
-      activeService: recommendationservice-active
+      activeService: recommen-dationservice-active
       autoPromotionEnabled: true
-      previewService: recommendationservice-preview
+      previewService: recommen-dationservice-preview
   template:
     metadata:
       labels:
@@ -376,9 +376,9 @@ spec:
       app: paymentservice
   strategy:
     blueGreen:
-      activeService: paymentservice-active
+      activeService: pay-mentservice-active
       autoPromotionEnabled: true
-      previewService: paymentservice-preview
+      previewService: pay-mentservice-preview
   template:
     metadata:
       labels:
@@ -458,9 +458,9 @@ spec:
       app: productcatalogservice
   strategy:
     blueGreen:
-      activeService: productcatalogservice-active
+      activeService: product-catalogservice-active
       autoPromotionEnabled: true
-      previewService: productcatalogservice-preview
+      previewService: product-catalogservice-preview
   template:
     metadata:
       labels:
@@ -540,9 +540,9 @@ spec:
       app: cartservice
   strategy:
     blueGreen:
-      activeService: cartservice-active
+      activeService: c-artservice-active
       autoPromotionEnabled: true
-      previewService: cartservice-preview
+      previewService: c-artservice-preview
   template:
     metadata:
       labels:
@@ -623,9 +623,9 @@ spec:
       app: currencyservice
   strategy:
     blueGreen:
-      activeService: currencyservice-active
+      activeService: cu-rrencyservice-active
       autoPromotionEnabled: true
-      previewService: currencyservice-preview
+      previewService: cu-rrencyservice-preview
   template:
     metadata:
       labels:
@@ -706,9 +706,9 @@ spec:
       app: shippingservice
   strategy:
     blueGreen:
-      activeService: shippingservice-active
+      activeService: ship-pingservice-active
       autoPromotionEnabled: true
-      previewService: shippingservice-preview
+      previewService: ship-pingservice-preview
   template:
     metadata:
       labels:
@@ -871,9 +871,9 @@ spec:
       app: adservice
   strategy:
     blueGreen:
-      activeService: adservice-active
+      activeService: ad-service-active
       autoPromotionEnabled: true
-      previewService: adservice-preview
+      previewService: ad-service-preview
   template:
     metadata:
       labels:

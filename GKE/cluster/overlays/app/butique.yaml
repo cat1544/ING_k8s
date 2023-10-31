@@ -313,7 +313,7 @@ spec:
       - env:
         - name: PORT
           value: "9555"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice:e8d7699
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice:cff8918
         livenessProbe:
           grpc:
             port: 9555
@@ -373,7 +373,7 @@ spec:
       - env:
         - name: REDIS_ADDR
           value: redis-cart:6379
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice:8033b00
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice:cff8918
         livenessProbe:
           grpc:
             port: 7070
@@ -444,7 +444,7 @@ spec:
           value: currencyservice:7000
         - name: CART_SERVICE_ADDR
           value: cartservice:7070
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:a7b22d5
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:cff8918
         livenessProbe:
           grpc:
             port: 5050
@@ -501,7 +501,7 @@ spec:
           value: "7000"
         - name: DISABLE_PROFILER
           value: "1"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice:e8d7699
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice:cff8918
         livenessProbe:
           grpc:
             port: 7000
@@ -560,7 +560,7 @@ spec:
           value: "8080"
         - name: DISABLE_PROFILER
           value: "1"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice:a7b22d5
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice:cff8918
         livenessProbe:
           grpc:
             port: 8080
@@ -637,7 +637,7 @@ spec:
           value: adservice:9555
         - name: ENABLE_PROFILER
           value: "0"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:a7b22d5
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:cff8918
         livenessProbe:
           httpGet:
             httpHeaders:
@@ -704,7 +704,7 @@ spec:
           value: "50051"
         - name: DISABLE_PROFILER
           value: "1"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:c9dd7b4
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:cff8918
         livenessProbe:
           grpc:
             port: 50051
@@ -762,7 +762,7 @@ spec:
           value: "3550"
         - name: DISABLE_PROFILER
           value: "1"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice:a7b22d5
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice:cff8918
         livenessProbe:
           grpc:
             port: 3550
@@ -822,7 +822,7 @@ spec:
           value: productcatalogservice:3550
         - name: DISABLE_PROFILER
           value: "1"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice:a7b22d5
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice:cff8918
         livenessProbe:
           grpc:
             port: 8080
@@ -941,7 +941,7 @@ spec:
           value: "50051"
         - name: DISABLE_PROFILER
           value: "1"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice:a7b22d5
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice:cff8918
         livenessProbe:
           grpc:
             port: 50051

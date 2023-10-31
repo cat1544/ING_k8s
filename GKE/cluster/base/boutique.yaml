@@ -679,7 +679,7 @@ metadata:
   name: cu-rrencyservice-active
 spec:
   ports:
-  - port: 7000
+  - port: 80
     protocol: TCP
     targetPort: 7000
   selector:
@@ -691,7 +691,7 @@ metadata:
   name: cu-rrencyservice-preview
 spec:
   ports:
-  - port: 7000
+  - port: 80
     protocol: TCP
     targetPort: 7000
   selector:
@@ -945,19 +945,6 @@ spec:
     targetPort: 9555
   selector:
     app: adservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ad-service
-spec:
-  ports:
-  - name: grpc
-    port: 9555
-    targetPort: 9555
-  selector:
-    app: adservice
-  type: ClusterIP
 ---
 apiVersion: cloud.google.com/v1
 kind: BackendConfig

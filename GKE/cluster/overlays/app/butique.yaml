@@ -637,7 +637,7 @@ spec:
           value: ad-service:9555
         - name: ENABLE_PROFILER
           value: "0"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:894d854
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:43b01e7
         livenessProbe:
           httpGet:
             httpHeaders:

@@ -5,24 +5,24 @@ bases:
   - ../../base
 images:
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice
-  newTag: 43b01e7
+  newTag: d3760f8
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice
-  newTag: 43b01e7
+  newTag: d3760f8

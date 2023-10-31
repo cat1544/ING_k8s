@@ -76,7 +76,7 @@ metadata:
   name: e-mailservice-active
 spec:
   ports:
-  - port: 80
+  - port: 5000
     protocol: TCP
     targetPort: 8080
   selector:
@@ -88,7 +88,7 @@ metadata:
   name: e-mailservice-preview
 spec:
   ports:
-  - port: 80
+  - port: 5000
     protocol: TCP
     targetPort: 8080
   selector:
@@ -179,7 +179,7 @@ metadata:
   name: check-outservice-active
 spec:
   ports:
-  - port: 80
+  - port: 5050
     protocol: TCP
     targetPort: 5050
   selector:
@@ -191,7 +191,7 @@ metadata:
   name: check-outservice-preview
 spec:
   ports:
-  - port: 80
+  - port: 5050
     protocol: TCP
     targetPort: 5050
   selector:
@@ -277,7 +277,7 @@ metadata:
   name: recommen-dationservice-active
 spec:
   ports:
-  - port: 80
+  - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
@@ -289,7 +289,7 @@ metadata:
   name: recommen-dationservice-preview
 spec:
   ports:
-  - port: 80
+  - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
@@ -467,7 +467,7 @@ metadata:
   name: pay-mentservice
 spec:
   ports:
-  - port: 80
+  - port: 50051
     protocol: TCP
     targetPort: 50051
   selector:
@@ -491,7 +491,7 @@ metadata:
   name: pay-mentservice-preview
 spec:
   ports:
-  - port: 80
+  - port: 50051
     protocol: TCP
     targetPort: 50051
   selector:
@@ -573,7 +573,7 @@ metadata:
   name: product-catalogservice-active
 spec:
   ports:
-  - port: 80
+  - port: 3550
     protocol: TCP
     targetPort: 3550
   selector:
@@ -585,7 +585,7 @@ metadata:
   name: product-catalogservice-preview
 spec:
   ports:
-  - port: 80
+  - port: 3550
     protocol: TCP
     targetPort: 3550
   selector:
@@ -668,7 +668,7 @@ metadata:
   name: c-artservice-active
 spec:
   ports:
-  - port: 80
+  - port: 7070
     protocol: TCP
     targetPort: 7070
   selector:
@@ -680,7 +680,7 @@ metadata:
   name: c-artservice-preview
 spec:
   ports:
-  - port: 80
+  - port: 7070
     protocol: TCP
     targetPort: 7070
   selector:
@@ -763,7 +763,7 @@ metadata:
   name: cu-rrencyservice-active
 spec:
   ports:
-  - port: 80
+  - port: 7000
     protocol: TCP
     targetPort: 7000
   selector:
@@ -775,7 +775,7 @@ metadata:
   name: cu-rrencyservice-preview
 spec:
   ports:
-  - port: 80
+  - port: 7000
     protocol: TCP
     targetPort: 7000
   selector:
@@ -857,7 +857,7 @@ metadata:
   name: ship-pingservice-active
 spec:
   ports:
-  - port: 80
+  - port: 50051
     protocol: TCP
     targetPort: 50051
   selector:
@@ -869,7 +869,7 @@ metadata:
   name: ship-pingservice-preview
 spec:
   ports:
-  - port: 80
+  - port: 50051
     protocol: TCP
     targetPort: 50051
   selector:
@@ -952,7 +952,7 @@ metadata:
   name: redis-cart-active
 spec:
   ports:
-  - port: 80
+  - port: 6379
     protocol: TCP
     targetPort: 6379
   selector:
@@ -964,7 +964,7 @@ metadata:
   name: redis-cart-preview
 spec:
   ports:
-  - port: 80
+  - port: 6379
     protocol: TCP
     targetPort: 6379
   selector:
@@ -1048,7 +1048,7 @@ metadata:
   name: ad-service-active
 spec:
   ports:
-  - port: 80
+  - port: 9555
     protocol: TCP
     targetPort: 9555
   selector:
@@ -1060,7 +1060,7 @@ metadata:
   name: ad-service-preview
 spec:
   ports:
-  - port: 80
+  - port: 9555
     protocol: TCP
     targetPort: 9555
   selector:

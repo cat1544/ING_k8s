@@ -1050,14 +1050,14 @@ kind: BackendConfig
 metadata:
   name: frontend-backend-config
 spec:
-  securityPolicy:
-    name: boutique-security-policy
   logging:
     enable: true
     sampleRate: 0.5
+  securityPolicy:
+    name: boutique-security-policy
   sessionAffinity:
-    affinityType: "GENERATED_COOKIE"
     affinityCookieTtlSec: 50
+    affinityType: GENERATED_COOKIE
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate

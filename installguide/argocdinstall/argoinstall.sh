@@ -97,7 +97,12 @@ argocd repo add https://github.com/$USER_NAME/ING_k8s.git --username $USER_NAME 
 #argocd cluster add $CLUSTER_NAME --system-namespace argocd
 
 # ArgoCD 앱 추가
-argocd app create boutique --repo https://github.com/$USER_NAME/ING_k8s.git --path GKE/cluster/overlays/app --dest-namespace boutique --dest-server https://kubernetes.default.svc
+argocd app create boutique \
+  --repo https://github.com/$USER_NAME/ING_k8s.git \
+  --path GKE/cluster/overlays/app \
+  --dest-namespace boutique \
+  --dest-server https://kubernetes.default.svc \
+  --sync-option CreateNamespace=true
 
 # argocd rollouts 대시보드 실행
 kubectl argo rollouts dashboard &

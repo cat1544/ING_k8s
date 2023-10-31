@@ -1,58 +1,56 @@
----
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: emailservice
+  name: ad-service
 spec:
+  ports:
+  - name: grpc
+    port: 9555
+    targetPort: 9555
   selector:
-    matchLabels:
-      app: emailservice
-  template:
-    metadata:
-      labels:
-        app: emailservice
-    spec:
-      containers:
-      - env:
-        - name: PORT
-          value: '8080'
-        - name: DISABLE_PROFILER
-          value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice:43b01e7
-        livenessProbe:
-          grpc:
-            port: 8080
-          periodSeconds: 5
-        name: server
-        ports:
-        - containerPort: 8080
-        readinessProbe:
-          grpc:
-            port: 8080
-          periodSeconds: 5
-        resources:
-          limits:
-            cpu: 200m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-      nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-      serviceAccountName: default
-      terminationGracePeriodSeconds: 5
+    app: adservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: null
+  name: c-artservice
+spec:
+  ports:
+  - name: grpc
+    port: 7070
+    targetPort: 7070
+  selector:
+    app: cartservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: null
+  name: check-outservice
+spec:
+  ports:
+  - name: grpc
+    port: 5050
+    targetPort: 5050
+  selector:
+    app: checkoutservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cu-rrencyservice
+spec:
+  ports:
+  - name: grpc
+    port: 7000
+    targetPort: 7000
+  selector:
+    app: currencyservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -67,282 +65,21 @@ spec:
     app: emailservice
   type: ClusterIP
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: checkoutservice
-spec:
-  selector:
-    matchLabels:
-      app: checkoutservice
-  template:
-    metadata:
-      labels:
-        app: checkoutservice
-    spec:
-      containers:
-      - env:
-        - name: PORT
-          value: '5050'
-        - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice:3550
-        - name: SHIPPING_SERVICE_ADDR
-          value: ship-pingservice:50051
-        - name: PAYMENT_SERVICE_ADDR
-          value: pay-mentservice:50051
-        - name: EMAIL_SERVICE_ADDR
-          value: e-mailservice:5000
-        - name: CURRENCY_SERVICE_ADDR
-          value: cu-rrencyservice:7000
-        - name: CART_SERVICE_ADDR
-          value: c-artservice:7070
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:43b01e7
-        livenessProbe:
-          grpc:
-            port: 5050
-        name: server
-        ports:
-        - containerPort: 5050
-        readinessProbe:
-          grpc:
-            port: 5050
-        resources:
-          limits:
-            cpu: 200m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-      nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-      serviceAccountName: default
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: check-outservice
   annotations:
-spec:
-  ports:
-  - name: grpc
-    port: 5050
-    targetPort: 5050
-  selector:
-    app: checkoutservice
-  type: ClusterIP
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: recommendationservice
-spec:
-  selector:
-    matchLabels:
-      app: recommendationservice
-  template:
-    metadata:
-      labels:
-        app: recommendationservice
-    spec:
-      containers:
-      - env:
-        - name: PORT
-          value: '8080'
-        - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice:3550
-        - name: DISABLE_PROFILER
-          value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice:43b01e7
-        livenessProbe:
-          grpc:
-            port: 8080
-          periodSeconds: 5
-        name: server
-        ports:
-        - containerPort: 8080
-        readinessProbe:
-          grpc:
-            port: 8080
-          periodSeconds: 5
-        resources:
-          limits:
-            cpu: 200m
-            memory: 450Mi
-          requests:
-            cpu: 100m
-            memory: 220Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-      nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-      serviceAccountName: default
-      terminationGracePeriodSeconds: 5
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: recommen-dationservice
-spec:
-  ports:
-  - name: grpc
-    port: 8080
-    targetPort: 8080
-  selector:
-    app: recommendationservice
-  type: ClusterIP
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
+    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
+    cloud.google.com/neg: '{"ingress": true}'
   name: front
 spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
   selector:
-    matchLabels:
-      app: frontend
-  template:
-    metadata:
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: 'true'
-      labels:
-        app: frontend
-    spec:
-      containers:
-      - env:
-        - name: PORT
-          value: '8080'
-        - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice:3550
-        - name: CURRENCY_SERVICE_ADDR
-          value: cu-rrencyservice:7000
-        - name: CART_SERVICE_ADDR
-          value: c-artservice:7070
-        - name: RECOMMENDATION_SERVICE_ADDR
-          value: recommen-dationservice:8080
-        - name: SHIPPING_SERVICE_ADDR
-          value: ship-pingservice:50051
-        - name: CHECKOUT_SERVICE_ADDR
-          value: check-outservice:5050
-        - name: AD_SERVICE_ADDR
-          value: ad-service:9555
-        - name: ENABLE_PROFILER
-          value: '0'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:43b01e7
-        livenessProbe:
-          httpGet:
-            httpHeaders:
-            - name: Cookie
-              value: shop_session-id=x-liveness-probe
-            path: /_healthz
-            port: 8080
-          initialDelaySeconds: 10
-        name: serverfront
-        ports:
-        - containerPort: 8080
-        readinessProbe:
-          httpGet:
-            httpHeaders:
-            - name: Cookie
-              value: shop_session-id=x-readiness-probe
-            path: /_healthz
-            port: 8080
-          initialDelaySeconds: 10
-        resources:
-          limits:
-            cpu: 200m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-      nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-      serviceAccountName: default
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: paymentservice
-spec:
-  selector:
-    matchLabels:
-      app: paymentservice
-  template:
-    metadata:
-      labels:
-        app: paymentservice
-    spec:
-      containers:
-      - env:
-        - name: PORT
-          value: '50051'
-        - name: DISABLE_PROFILER
-          value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:43b01e7
-        livenessProbe:
-          grpc:
-            port: 50051
-        name: server
-        ports:
-        - containerPort: 50051
-        readinessProbe:
-          grpc:
-            port: 50051
-        resources:
-          limits:
-            cpu: 200m
-            memory: 128Mi
-          requests:
-            cpu: 100m
-            memory: 64Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-      nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-      serviceAccountName: default
-      terminationGracePeriodSeconds: 5
+    app: frontend
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -357,42 +94,97 @@ spec:
     app: paymentservice
   type: ClusterIP
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations: null
+  name: product-catalogservice
+spec:
+  ports:
+  - name: grpc
+    port: 3550
+    targetPort: 3550
+  selector:
+    app: productcatalogservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommen-dationservice
+spec:
+  ports:
+  - name: grpc
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: recommendationservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cart
+spec:
+  ports:
+  - name: tcp-redis
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: redis-cart
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ship-pingservice
+spec:
+  ports:
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+  selector:
+    app: shippingservice
+  type: ClusterIP
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: productcatalogservice
+  name: adservice
 spec:
   selector:
     matchLabels:
-      app: productcatalogservice
+      app: adservice
   template:
     metadata:
       labels:
-        app: productcatalogservice
+        app: adservice
     spec:
       containers:
       - env:
         - name: PORT
-          value: '3550'
-        - name: DISABLE_PROFILER
-          value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice:43b01e7
+          value: "9555"
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice:43b01e7
         livenessProbe:
           grpc:
-            port: 3550
+            port: 9555
+          initialDelaySeconds: 20
+          periodSeconds: 15
         name: server
         ports:
-        - containerPort: 3550
+        - containerPort: 9555
         readinessProbe:
           grpc:
-            port: 3550
+            port: 9555
+          initialDelaySeconds: 20
+          periodSeconds: 15
         resources:
           limits:
-            cpu: 200m
-            memory: 128Mi
+            cpu: 300m
+            memory: 300Mi
           requests:
-            cpu: 100m
-            memory: 64Mi
+            cpu: 200m
+            memory: 180Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -409,20 +201,6 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: product-catalogservice
-  annotations:
-spec:
-  ports:
-  - name: grpc
-    port: 3550
-    targetPort: 3550
-  selector:
-    app: productcatalogservice
-  type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -478,71 +256,52 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: c-artservice
-  annotations:
-spec:
-  ports:
-  - name: grpc
-    port: 7070
-    targetPort: 7070
-  selector:
-    app: cartservice
-  type: ClusterIP
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: loadgenerator
+  name: checkoutservice
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: loadgenerator
+      app: checkoutservice
   template:
     metadata:
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: 'true'
       labels:
-        app: loadgenerator
+        app: checkoutservice
     spec:
       containers:
       - env:
-        - name: FRONT_ADDR
-          value: frontend:80
-        - name: USERS
-          value: '10'
-        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.8.0
-        name: main
+        - name: PORT
+          value: "5050"
+        - name: PRODUCT_CATALOG_SERVICE_ADDR
+          value: product-catalogservice:3550
+        - name: SHIPPING_SERVICE_ADDR
+          value: ship-pingservice:50051
+        - name: PAYMENT_SERVICE_ADDR
+          value: pay-mentservice:50051
+        - name: EMAIL_SERVICE_ADDR
+          value: e-mailservice:5000
+        - name: CURRENCY_SERVICE_ADDR
+          value: cu-rrencyservice:7000
+        - name: CART_SERVICE_ADDR
+          value: c-artservice:7070
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:43b01e7
+        livenessProbe:
+          grpc:
+            port: 5050
+        name: server
+        ports:
+        - containerPort: 5050
+        readinessProbe:
+          grpc:
+            port: 5050
         resources:
           limits:
-            cpu: 500m
-            memory: 512Mi
+            cpu: 200m
+            memory: 128Mi
           requests:
-            cpu: 300m
-            memory: 256Mi
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-      initContainers:
-      - command:
-        - /bin/sh
-        - -exc
-        - "echo \"Init container pinging frontend: ${FRONTEND_ADDR}...\"\nSTATUSCODE=$(wget\
-          \ --server-response http://${FRONTEND_ADDR} 2>&1 | awk '/^  HTTP/{print\
-          \ $2}')\nif test $STATUSCODE -ne 200; then\n    echo \"Error: Could not\
-          \ reach frontend - Status code: ${STATUSCODE}\"\n    exit 1\nfi\n"
-        env:
-        - name: FRONT_ADDR
-          value: frontend:80
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator:43b01e7
-        name: front-check
+            cpu: 100m
+            memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -552,14 +311,12 @@ spec:
           readOnlyRootFilesystem: true
       nodeSelector:
         cloud.google.com/gke-nodepool: boutique
-      restartPolicy: Always
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
       serviceAccountName: default
-      terminationGracePeriodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -577,9 +334,9 @@ spec:
       containers:
       - env:
         - name: PORT
-          value: '7000'
+          value: "7000"
         - name: DISABLE_PROFILER
-          value: '1'
+          value: "1"
         image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice:43b01e7
         livenessProbe:
           grpc:
@@ -615,48 +372,36 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: cu-rrencyservice
-spec:
-  ports:
-  - name: grpc
-    port: 7000
-    targetPort: 7000
-  selector:
-    app: currencyservice
-  type: ClusterIP
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shippingservice
+  name: emailservice
 spec:
   selector:
     matchLabels:
-      app: shippingservice
+      app: emailservice
   template:
     metadata:
       labels:
-        app: shippingservice
+        app: emailservice
     spec:
       containers:
       - env:
         - name: PORT
-          value: '50051'
+          value: "8080"
         - name: DISABLE_PROFILER
-          value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice:43b01e7
+          value: "1"
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice:43b01e7
         livenessProbe:
           grpc:
-            port: 50051
+            port: 8080
+          periodSeconds: 5
         name: server
         ports:
-        - containerPort: 50051
+        - containerPort: 8080
         readinessProbe:
           grpc:
-            port: 50051
+            port: 8080
           periodSeconds: 5
         resources:
           limits:
@@ -680,19 +425,320 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
       serviceAccountName: default
+      terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: ship-pingservice
+  name: front
 spec:
-  ports:
-  - name: grpc
-    port: 50051
-    targetPort: 50051
   selector:
-    app: shippingservice
-  type: ClusterIP
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "8080"
+        - name: PRODUCT_CATALOG_SERVICE_ADDR
+          value: product-catalogservice:3550
+        - name: CURRENCY_SERVICE_ADDR
+          value: cu-rrencyservice:7000
+        - name: CART_SERVICE_ADDR
+          value: c-artservice:7070
+        - name: RECOMMENDATION_SERVICE_ADDR
+          value: recommen-dationservice:8080
+        - name: SHIPPING_SERVICE_ADDR
+          value: ship-pingservice:50051
+        - name: CHECKOUT_SERVICE_ADDR
+          value: check-outservice:5050
+        - name: AD_SERVICE_ADDR
+          value: ad-service:9555
+        - name: ENABLE_PROFILER
+          value: "0"
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:43b01e7
+        livenessProbe:
+          httpGet:
+            httpHeaders:
+            - name: Cookie
+              value: shop_session-id=x-liveness-probe
+            path: /_healthz
+            port: 8080
+          initialDelaySeconds: 10
+        name: serverfront
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            httpHeaders:
+            - name: Cookie
+              value: shop_session-id=x-readiness-probe
+            path: /_healthz
+            port: 8080
+          initialDelaySeconds: 10
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        cloud.google.com/gke-nodepool: boutique
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: default
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgenerator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loadgenerator
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: "true"
+      labels:
+        app: loadgenerator
+    spec:
+      containers:
+      - env:
+        - name: FRONT_ADDR
+          value: frontend:80
+        - name: USERS
+          value: "10"
+        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.8.0
+        name: main
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      initContainers:
+      - command:
+        - /bin/sh
+        - -exc
+        - |
+          echo "Init container pinging frontend: ${FRONTEND_ADDR}..."
+          STATUSCODE=$(wget --server-response http://${FRONTEND_ADDR} 2>&1 | awk '/^  HTTP/{print $2}')
+          if test $STATUSCODE -ne 200; then
+              echo "Error: Could not reach frontend - Status code: ${STATUSCODE}"
+              exit 1
+          fi
+        env:
+        - name: FRONT_ADDR
+          value: frontend:80
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator:43b01e7
+        name: front-check
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        cloud.google.com/gke-nodepool: boutique
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paymentservice
+spec:
+  selector:
+    matchLabels:
+      app: paymentservice
+  template:
+    metadata:
+      labels:
+        app: paymentservice
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "50051"
+        - name: DISABLE_PROFILER
+          value: "1"
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:43b01e7
+        livenessProbe:
+          grpc:
+            port: 50051
+        name: server
+        ports:
+        - containerPort: 50051
+        readinessProbe:
+          grpc:
+            port: 50051
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        cloud.google.com/gke-nodepool: boutique
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productcatalogservice
+spec:
+  selector:
+    matchLabels:
+      app: productcatalogservice
+  template:
+    metadata:
+      labels:
+        app: productcatalogservice
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "3550"
+        - name: DISABLE_PROFILER
+          value: "1"
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice:43b01e7
+        livenessProbe:
+          grpc:
+            port: 3550
+        name: server
+        ports:
+        - containerPort: 3550
+        readinessProbe:
+          grpc:
+            port: 3550
+        resources:
+          limits:
+            cpu: 200m
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        cloud.google.com/gke-nodepool: boutique
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendationservice
+spec:
+  selector:
+    matchLabels:
+      app: recommendationservice
+  template:
+    metadata:
+      labels:
+        app: recommendationservice
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: "8080"
+        - name: PRODUCT_CATALOG_SERVICE_ADDR
+          value: product-catalogservice:3550
+        - name: DISABLE_PROFILER
+          value: "1"
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice:43b01e7
+        livenessProbe:
+          grpc:
+            port: 8080
+          periodSeconds: 5
+        name: server
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          grpc:
+            port: 8080
+          periodSeconds: 5
+        resources:
+          limits:
+            cpu: 200m
+            memory: 450Mi
+          requests:
+            cpu: 100m
+            memory: 220Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        cloud.google.com/gke-nodepool: boutique
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 5
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -748,57 +794,43 @@ spec:
       - emptyDir: {}
         name: redis-data
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis-cart
-spec:
-  ports:
-  - name: tcp-redis
-    port: 6379
-    targetPort: 6379
-  selector:
-    app: redis-cart
-  type: ClusterIP
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adservice
+  name: shippingservice
 spec:
   selector:
     matchLabels:
-      app: adservice
+      app: shippingservice
   template:
     metadata:
       labels:
-        app: adservice
+        app: shippingservice
     spec:
       containers:
       - env:
         - name: PORT
-          value: '9555'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice:43b01e7
+          value: "50051"
+        - name: DISABLE_PROFILER
+          value: "1"
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice:43b01e7
         livenessProbe:
           grpc:
-            port: 9555
-          initialDelaySeconds: 20
-          periodSeconds: 15
+            port: 50051
         name: server
         ports:
-        - containerPort: 9555
+        - containerPort: 50051
         readinessProbe:
           grpc:
-            port: 9555
-          initialDelaySeconds: 20
-          periodSeconds: 15
+            port: 50051
+          periodSeconds: 5
         resources:
           limits:
-            cpu: 300m
-            memory: 300Mi
-          requests:
             cpu: 200m
-            memory: 180Mi
+            memory: 128Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -814,20 +846,6 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
       serviceAccountName: default
-      terminationGracePeriodSeconds: 5
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ad-service
-spec:
-  ports:
-  - name: grpc
-    port: 9555
-    targetPort: 9555
-  selector:
-    app: adservice
-  type: ClusterIP
 ---
 apiVersion: cloud.google.com/v1
 kind: BackendConfig
@@ -837,24 +855,33 @@ spec:
   securityPolicy:
     name: boutique-security-policy
 ---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: boutique-certificate
+spec:
+  domains:
+  - www.2280.store
+  - 2280.store
+---
 apiVersion: networking.gke.io/v1beta1
 kind: FrontendConfig
 metadata:
   name: front-frontend-config
 spec:
+  redirectToHttps:
+    enabled: true
+    responseCodeName: ""
   sslPolicy: boutique-ssl-policy
-  # redirectToHttps:
-  #   enabled: true
-  #   responseCodeName: ""
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: front-ingress
   annotations:
     kubernetes.io/ingress.global-static-ip-name: boutique-ip
     networking.gke.io/managed-certificates: boutique-certificate
     networking.gke.io/v1beta1.FrontendConfig: front-frontend-config
+  name: front-ingress
 spec:
   defaultBackend:
     service:
@@ -862,38 +889,13 @@ spec:
       port:
         number: 80
   rules:
-  - host: "www.2280.store"
+  - host: www.2280.store
     http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
+      - backend:
           service:
             name: front
             port:
               number: 80
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: front
-  annotations:
-    cloud.google.com/neg: '{"ingress": true}'
-    cloud.google.com/backend-config: '{"default": "front-backend-config"}'
-spec:
-  type: ClusterIP
-  selector:
-    app: frontend
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
----
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: boutique-certificate
-spec:
-  domains:
-    - www.2280.store
-    - 2280.store
+        path: /
+        pathType: Prefix

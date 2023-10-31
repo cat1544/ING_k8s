@@ -11,7 +11,7 @@ images:
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice
   newTag: 894d854
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice
-  newTag: cff8918
+  newTag: 894d854
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice
   newTag: 894d854
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice

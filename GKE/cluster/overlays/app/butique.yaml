@@ -843,9 +843,9 @@ metadata:
   name: front-frontend-config
 spec:
   sslPolicy: boutique-ssl-policy
-  redirectToHttps:
-    enabled: true
-    responseCodeName: ""
+  # redirectToHttps:
+  #   enabled: true
+  #   responseCodeName: ""
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

@@ -1,5 +1,5 @@
 # 실행 방법
 ```
-chmod +x argoinstall.sh
-bash argoinstall.sh
+chmod +x ING_k8s/installguide/argocdinstall/argoinstall.sh
+bash ING_k8s/installguide/argocdinstall/argoinstall.sh
 ```

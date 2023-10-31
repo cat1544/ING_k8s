@@ -31,6 +31,8 @@ cat <<EOF > values.yaml
 controller:
   nodeSelector:
     cloud.google.com/gke-nodepool: argocd
+dashboard:
+  enabled: true
 EOF
 
 # argo-rollouts 설치
@@ -59,7 +61,7 @@ kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}
 echo "Waiting for ArgoCD External IP..."
 while true; do
     ARGOCD_SERVER=$(kubectl get svc argocd-server -n argocd -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-    if [[ ! -z "$IP" ]]; then
+    if [[ ! -z "$ARGOCD_SERVER" ]]; then
         break
     fi
     sleep 10

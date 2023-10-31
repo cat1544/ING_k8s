@@ -20,6 +20,8 @@ images:
   newTag: cff8918
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend
   newTag: cff8918
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator
+  newTag: cff8918
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice
   newTag: cff8918
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice

@@ -216,7 +216,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front
+  name: frontend
 spec:
   selector:
     matchLabels:
@@ -248,7 +248,7 @@ spec:
           value: ad-service:9555
         - name: ENABLE_PROFILER
           value: '0'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:d3760f8
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:032e32c
         livenessProbe:
           httpGet:
             httpHeaders:

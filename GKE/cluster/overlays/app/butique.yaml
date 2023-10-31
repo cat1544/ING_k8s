@@ -983,7 +983,7 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: front
+      name: front-active
       port:
         number: 80
   rules:

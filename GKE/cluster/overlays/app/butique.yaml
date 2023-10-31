@@ -452,8 +452,8 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: loadgenerator
 spec:
@@ -461,11 +461,6 @@ spec:
   selector:
     matchLabels:
       app: loadgenerator
-  strategy:
-    blueGreen:
-      activeService: loadgenerator-active
-      autoPromotionEnabled: true
-      previewService: loadgenerator-preview
     type: BlueGreen
   template:
     metadata:

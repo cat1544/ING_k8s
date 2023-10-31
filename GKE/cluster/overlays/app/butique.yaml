@@ -285,7 +285,7 @@ spec:
           value: cu-rrencyservice:7000
         - name: CART_SERVICE_ADDR
           value: c-artservice:7070
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:032e32c
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:3c80ceb
         livenessProbe:
           grpc:
             port: 5050

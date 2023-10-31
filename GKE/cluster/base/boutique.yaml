@@ -1,4 +1,4 @@
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: emailservice
@@ -59,7 +59,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: checkoutservice
@@ -127,7 +127,7 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: recommendationservice
@@ -190,7 +190,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: frontend
@@ -274,7 +274,7 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: paymentservice
@@ -333,7 +333,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: productcatalogservice
@@ -392,7 +392,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: cartservice
@@ -452,7 +452,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: loadgenerator
@@ -527,7 +527,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: currencyservice
@@ -587,7 +587,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: shippingservice
@@ -646,7 +646,7 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: redis-cart
@@ -706,7 +706,7 @@ spec:
       - emptyDir: {}
         name: redis-data
 ---
-apiVersion: apps/v1
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: adservice

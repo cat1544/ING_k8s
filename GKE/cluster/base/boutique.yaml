@@ -994,7 +994,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: front
+            name: front-active
             port:
               number: 80
 ---

@@ -23,4 +23,4 @@ images:
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice
   newTag: a7b22d5
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice
-  newTag: a7b22d5
+  newTag: cff8918

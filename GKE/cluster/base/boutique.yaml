@@ -926,338 +926,288 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: active
-  name: emailservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: emailservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: checkoutservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: checkoutservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: recommendationservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: recommendationservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: frontend-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: frontend
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: paymentservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: paymentservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: productcatalogservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: productcatalogservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: cartservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: cartservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: loadgenerator-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: loadgenerator
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: currencyservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: currencyservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: shippingservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: shippingservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: redis-cart-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: redis-cart
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: active
-  name: adservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: adservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: preview
   name: emailservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 8080
+    targetPort: 8080
   selector:
     app: emailservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: checkoutservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 5050
+    targetPort: 5050
   selector:
     app: checkoutservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: recommendationservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 8080
+    targetPort: 8080
   selector:
     app: recommendationservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: frontend-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: http
+    port: 8080
+    targetPort: 8080
   selector:
     app: frontend
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: paymentservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 50051
+    targetPort: 50051
   selector:
     app: paymentservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: productcatalogservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 3550
+    targetPort: 3550
   selector:
     app: productcatalogservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: cartservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 7070
+    targetPort: 7070
   selector:
     app: cartservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
-  name: loadgenerator-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: loadgenerator
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    boutique/rollout: preview
   name: currencyservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 7000
+    targetPort: 7000
   selector:
     app: currencyservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: shippingservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 50051
+    targetPort: 50051
   selector:
     app: shippingservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: redis-cart-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: tcp-redis
+    port: 6379
+    targetPort: 6379
   selector:
     app: redis-cart
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    boutique/rollout: preview
   name: adservice-preview
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
+  - name: grpc
+    port: 9555
+    targetPort: 9555
   selector:
     app: adservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emailservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: emailservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkoutservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 5050
+    targetPort: 5050
+  selector:
+    app: checkoutservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommendationservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: recommendationservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-preview
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: frontend
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paymentservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+  selector:
+    app: paymentservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: productcatalogservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 3550
+    targetPort: 3550
+  selector:
+    app: productcatalogservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cartservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 7070
+    targetPort: 7070
+  selector:
+    app: cartservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: currencyservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 7000
+    targetPort: 7000
+  selector:
+    app: currencyservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shippingservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+  selector:
+    app: shippingservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cart-preview
+spec:
+  ports:
+  - name: tcp-redis
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: redis-cart
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adservice-preview
+spec:
+  ports:
+  - name: grpc
+    port: 9555
+    targetPort: 9555
+  selector:
+    app: adservice
+  type: ClusterIP
 ---
 apiVersion: cloud.google.com/v1
 kind: BackendConfig

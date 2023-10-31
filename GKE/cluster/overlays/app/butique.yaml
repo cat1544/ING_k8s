@@ -736,7 +736,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator:asd
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator:cd9445f
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"

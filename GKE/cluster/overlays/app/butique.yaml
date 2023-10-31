@@ -61,7 +61,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: emailservice-active
+  name: e-mailservice-active
 spec:
   ports:
   - port: 80
@@ -73,7 +73,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: emailservice-preview
+  name: e-mailservice-preview
 spec:
   ports:
   - port: 80
@@ -152,7 +152,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: checkoutservice-active
+  name: check-outservice-active
 spec:
   ports:
   - port: 80
@@ -164,7 +164,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: checkoutservice-preview
+  name: check-outservice-preview
 spec:
   ports:
   - port: 80
@@ -238,7 +238,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommendationservice-active
+  name: recommen-dationservice-active
 spec:
   ports:
   - port: 80
@@ -250,7 +250,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommendationservice-preview
+  name: recommen-dationservice-preview
 spec:
   ports:
   - port: 80
@@ -346,7 +346,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-active
+  name: front-active
 spec:
   ports:
   - port: 80
@@ -358,7 +358,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-preview
+  name: front-preview
 spec:
   ports:
   - port: 80
@@ -428,7 +428,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentservice-active
+  name: pay-mentservice-active
 spec:
   ports:
   - port: 80
@@ -440,7 +440,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentservice-preview
+  name: pay-mentservice-preview
 spec:
   ports:
   - port: 80
@@ -510,7 +510,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: productcatalogservice-active
+  name: product-catalogservice-active
 spec:
   ports:
   - port: 80
@@ -522,7 +522,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: productcatalogservice-preview
+  name: product-catalogservice-preview
 spec:
   ports:
   - port: 80
@@ -593,7 +593,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cartservice-active
+  name: c-artservice-active
 spec:
   ports:
   - port: 80
@@ -605,7 +605,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cartservice-preview
+  name: c-artservice-preview
 spec:
   ports:
   - port: 80
@@ -676,7 +676,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: currencyservice-active
+  name: cu-rrencyservice-active
 spec:
   ports:
   - port: 80
@@ -688,7 +688,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: currencyservice-preview
+  name: cu-rrencyservice-preview
 spec:
   ports:
   - port: 80
@@ -758,7 +758,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shippingservice-active
+  name: ship-pingservice-active
 spec:
   ports:
   - port: 80
@@ -770,7 +770,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shippingservice-preview
+  name: ship-pingservice-preview
 spec:
   ports:
   - port: 80
@@ -925,7 +925,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice-active
+  name: ad-service-active
 spec:
   ports:
   - port: 80
@@ -937,7 +937,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice-preview
+  name: ad-service-preview
 spec:
   ports:
   - port: 80

@@ -313,7 +313,7 @@ spec:
       - env:
         - name: PORT
           value: "9555"
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice:894d854
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice:43b01e7
         livenessProbe:
           grpc:
             port: 9555

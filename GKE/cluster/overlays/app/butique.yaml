@@ -64,7 +64,7 @@ metadata:
   name: e-mailservice
 spec:
   ports:
-  - port: 80
+  - port: 5000
     protocol: TCP
     targetPort: 8080
   selector:
@@ -167,7 +167,7 @@ metadata:
   name: check-outservice
 spec:
   ports:
-  - port: 80
+  - port: 5050
     protocol: TCP
     targetPort: 5050
   selector:
@@ -265,7 +265,7 @@ metadata:
   name: recommen-dationservice
 spec:
   ports:
-  - port: 80
+  - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
@@ -479,7 +479,7 @@ metadata:
   name: pay-mentservice-active
 spec:
   ports:
-  - port: 80
+  - port: 50051
     protocol: TCP
     targetPort: 50051
   selector:
@@ -561,7 +561,7 @@ metadata:
   name: product-catalogservice
 spec:
   ports:
-  - port: 80
+  - port: 3550
     protocol: TCP
     targetPort: 3550
   selector:
@@ -656,7 +656,7 @@ metadata:
   name: c-artservice
 spec:
   ports:
-  - port: 80
+  - port: 7070
     protocol: TCP
     targetPort: 7070
   selector:
@@ -751,7 +751,7 @@ metadata:
   name: cu-rrencyservice
 spec:
   ports:
-  - port: 80
+  - port: 7000
     protocol: TCP
     targetPort: 7000
   selector:
@@ -845,7 +845,7 @@ metadata:
   name: ship-pingservice
 spec:
   ports:
-  - port: 80
+  - port: 50051
     protocol: TCP
     targetPort: 50051
   selector:
@@ -940,7 +940,7 @@ metadata:
   name: redis-cart
 spec:
   ports:
-  - port: 80
+  - port: 6379
     protocol: TCP
     targetPort: 6379
   selector:
@@ -1036,7 +1036,7 @@ metadata:
   name: ad-service
 spec:
   ports:
-  - port: 80
+  - port: 9555
     protocol: TCP
     targetPort: 9555
   selector:

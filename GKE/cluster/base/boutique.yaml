@@ -61,6 +61,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: e-mailservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: emailservice
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: e-mailservice-active
 spec:
   ports:
@@ -105,17 +117,17 @@ spec:
         - name: PORT
           value: '5050'
         - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice-active:3550
+          value: product-catalogservice:3550
         - name: SHIPPING_SERVICE_ADDR
-          value: ship-pingservice-active:50051
+          value: ship-pingservice:50051
         - name: PAYMENT_SERVICE_ADDR
-          value: pay-mentservice-active:50051
+          value: pay-mentservice:50051
         - name: EMAIL_SERVICE_ADDR
-          value: e-mailservice-active:5000
+          value: e-mailservice:5000
         - name: CURRENCY_SERVICE_ADDR
-          value: cu-rrencyservice-active:7000
+          value: cu-rrencyservice:7000
         - name: CART_SERVICE_ADDR
-          value: c-artservice-active:7070
+          value: c-artservice:7070
         image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:43b01e7
         livenessProbe:
           grpc:
@@ -148,6 +160,18 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
       serviceAccountName: default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: check-outservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5050
+  selector:
+    app: checkoutservice
 ---
 apiVersion: v1
 kind: Service
@@ -196,7 +220,7 @@ spec:
         - name: PORT
           value: '8080'
         - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice-active:3550
+          value: product-catalogservice:3550
         - name: DISABLE_PROFILER
           value: '1'
         image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice:43b01e7
@@ -234,6 +258,18 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommen-dationservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: recommendationservice
 ---
 apiVersion: v1
 kind: Service
@@ -285,19 +321,19 @@ spec:
         - name: PORT
           value: '8080'
         - name: PRODUCT_CATALOG_SERVICE_ADDR
-          value: product-catalogservice-active:3550
+          value: product-catalogservice:3550
         - name: CURRENCY_SERVICE_ADDR
-          value: cu-rrencyservice-active:7000
+          value: cu-rrencyservice:7000
         - name: CART_SERVICE_ADDR
-          value: c-artservice-active:7070
+          value: c-artservice:7070
         - name: RECOMMENDATION_SERVICE_ADDR
-          value: recommen-dationservice-active:8080
+          value: recommen-dationservice:8080
         - name: SHIPPING_SERVICE_ADDR
-          value: ship-pingservice-active:50051
+          value: ship-pingservice:50051
         - name: CHECKOUT_SERVICE_ADDR
-          value: check-outservice-active:5050
+          value: check-outservice:5050
         - name: AD_SERVICE_ADDR
-          value: ad-service-active:9555
+          value: ad-service:9555
         - name: ENABLE_PROFILER
           value: '0'
         image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:43b01e7
@@ -428,6 +464,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: pay-mentservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 50051
+  selector:
+    app: paymentservice
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: pay-mentservice-active
 spec:
   ports:
@@ -506,6 +554,18 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-catalogservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3550
+  selector:
+    app: productcatalogservice
 ---
 apiVersion: v1
 kind: Service
@@ -593,6 +653,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: c-artservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 7070
+  selector:
+    app: cartservice
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: c-artservice-active
 spec:
   ports:
@@ -676,6 +748,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: cu-rrencyservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 7000
+  selector:
+    app: currencyservice
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: cu-rrencyservice-active
 spec:
   ports:
@@ -754,6 +838,18 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
       serviceAccountName: default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ship-pingservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 50051
+  selector:
+    app: shippingservice
 ---
 apiVersion: v1
 kind: Service
@@ -841,6 +937,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: redis-cart
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: redis-cart
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: redis-cart-active
 spec:
   ports:
@@ -921,6 +1029,18 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ad-service
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 9555
+  selector:
+    app: adservice
 ---
 apiVersion: v1
 kind: Service

@@ -514,7 +514,7 @@ spec:
           value: frontend:80
         - name: USERS
           value: '10'
-        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.8.0
+        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator:032e32c
         name: main
         resources:
           limits:

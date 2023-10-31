@@ -1,4 +1,4 @@
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: emailservice
@@ -11,6 +11,7 @@ spec:
       activeService: emailservice-active
       autoPromotionEnabled: true
       previewService: emailservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -22,7 +23,7 @@ spec:
           value: '8080'
         - name: DISABLE_PROFILER
           value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/emailservice:v0.8.0
         livenessProbe:
           grpc:
             port: 8080
@@ -49,7 +50,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -58,31 +59,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: emailservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: emailservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: emailservice-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: emailservice
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: checkoutservice
@@ -95,6 +72,7 @@ spec:
       activeService: checkoutservice-active
       autoPromotionEnabled: true
       previewService: checkoutservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -116,7 +94,7 @@ spec:
           value: currencyservice:7000
         - name: CART_SERVICE_ADDR
           value: cartservice:7070
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/checkoutservice:v0.8.0
         livenessProbe:
           grpc:
             port: 5050
@@ -141,7 +119,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -149,31 +127,7 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: checkoutservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 5050
-  selector:
-    app: checkoutservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: checkoutservice-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 5050
-  selector:
-    app: checkoutservice
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: recommendationservice
@@ -186,6 +140,7 @@ spec:
       activeService: recommendationservice-active
       autoPromotionEnabled: true
       previewService: recommendationservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -199,7 +154,7 @@ spec:
           value: productcatalogservice:3550
         - name: DISABLE_PROFILER
           value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.8.0
         livenessProbe:
           grpc:
             port: 8080
@@ -226,7 +181,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -235,36 +190,11 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: recommendationservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: recommendationservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: recommendationservice-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: recommendationservice
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: frontend
 spec:
-  replicas: 5
   selector:
     matchLabels:
       app: frontend
@@ -273,6 +203,7 @@ spec:
       activeService: frontend-active
       autoPromotionEnabled: true
       previewService: frontend-preview
+    type: BlueGreen
   template:
     metadata:
       annotations:
@@ -300,7 +231,7 @@ spec:
           value: adservice:9555
         - name: ENABLE_PROFILER
           value: '0'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend:86ac3ba
+        image: gcr.io/google-samples/microservices-demo/frontend:v0.8.0
         livenessProbe:
           httpGet:
             httpHeaders:
@@ -335,7 +266,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -344,100 +275,6 @@ spec:
       serviceAccountName: default
 ---
 apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: loadgenerator
-spec:
-  selector:
-    matchLabels:
-      app: loadgenerator
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: loadgenerator
-      annotations:
-        sidecar.istio.io/rewriteAppHTTPProbers: "true"
-    spec:
-      serviceAccountName: default
-      terminationGracePeriodSeconds: 5
-      restartPolicy: Always
-      securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-      initContainers:
-      - command:
-        - /bin/sh
-        - -exc
-        - |
-          echo "Init container pinging frontend: ${FRONTEND_ADDR}..."
-          STATUSCODE=$(wget --server-response http://${FRONTEND_ADDR} 2>&1 | awk '/^  HTTP/{print $2}')
-          if test $STATUSCODE -ne 200; then
-              echo "Error: Could not reach frontend - Status code: ${STATUSCODE}"
-              exit 1
-          fi
-        name: frontend-check
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-        image: busybox:latest
-        env:
-        - name: FRONTEND_ADDR
-          value: "frontend:80"
-      containers:
-      - name: main
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-              - ALL
-          privileged: false
-          readOnlyRootFilesystem: true
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/loadgenerator:cd9445f
-        env:
-        - name: FRONTEND_ADDR
-          value: "frontend:80"
-        - name: USERS
-          value: "10"
-        resources:
-          requests:
-            cpu: 300m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: frontend
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 8080
-  selector:
-    app: frontend
----
-apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: paymentservice
@@ -450,6 +287,7 @@ spec:
       activeService: paymentservice-active
       autoPromotionEnabled: true
       previewService: paymentservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -461,7 +299,7 @@ spec:
           value: '50051'
         - name: DISABLE_PROFILER
           value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/paymentservice:v0.8.0
         livenessProbe:
           grpc:
             port: 50051
@@ -486,7 +324,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -495,31 +333,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: paymentservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 50051
-  selector:
-    app: paymentservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: paymentservice-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 50051
-  selector:
-    app: paymentservice
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: productcatalogservice
@@ -532,6 +346,7 @@ spec:
       activeService: productcatalogservice-active
       autoPromotionEnabled: true
       previewService: productcatalogservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -543,7 +358,7 @@ spec:
           value: '3550'
         - name: DISABLE_PROFILER
           value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice:9c8c002
+        image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.8.0
         livenessProbe:
           grpc:
             port: 3550
@@ -568,7 +383,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -577,31 +392,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: productcatalogservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 3550
-  selector:
-    app: productcatalogservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: productcatalogservice-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 3550
-  selector:
-    app: productcatalogservice
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: cartservice
@@ -614,6 +405,7 @@ spec:
       activeService: cartservice-active
       autoPromotionEnabled: true
       previewService: cartservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -623,7 +415,7 @@ spec:
       - env:
         - name: REDIS_ADDR
           value: redis-cart:6379
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice:47ab7d4
+        image: gcr.io/google-samples/microservices-demo/cartservice:v0.8.0
         livenessProbe:
           grpc:
             port: 7070
@@ -651,7 +443,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -660,31 +452,82 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Rollout
 metadata:
-  name: cartservice-active
+  name: loadgenerator
 spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 7070
+  replicas: 1
   selector:
-    app: cartservice
+    matchLabels:
+      app: loadgenerator
+  strategy:
+    blueGreen:
+      activeService: loadgenerator-active
+      autoPromotionEnabled: true
+      previewService: loadgenerator-preview
+    type: BlueGreen
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/rewriteAppHTTPProbers: 'true'
+      labels:
+        app: loadgenerator
+    spec:
+      containers:
+      - env:
+        - name: FRONTEND_ADDR
+          value: frontend:80
+        - name: USERS
+          value: '10'
+        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.8.0
+        name: main
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 300m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      initContainers:
+      - command:
+        - /bin/sh
+        - -exc
+        - "echo \"Init container pinging frontend: ${FRONTEND_ADDR}...\"\nSTATUSCODE=$(wget\
+          \ --server-response http://${FRONTEND_ADDR} 2>&1 | awk '/^  HTTP/{print\
+          \ $2}')\nif test $STATUSCODE -ne 200; then\n    echo \"Error: Could not\
+          \ reach frontend - Status code: ${STATUSCODE}\"\n    exit 1\nfi\n"
+        env:
+        - name: FRONTEND_ADDR
+          value: frontend:80
+        image: busybox:latest
+        name: frontend-check
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+      nodeSelector:
+        boutique: 'true'
+      restartPolicy: Always
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: cartservice-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 7070
-  selector:
-    app: cartservice
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: currencyservice
@@ -697,6 +540,7 @@ spec:
       activeService: currencyservice-active
       autoPromotionEnabled: true
       previewService: currencyservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -708,7 +552,7 @@ spec:
           value: '7000'
         - name: DISABLE_PROFILER
           value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice:c966881
+        image: gcr.io/google-samples/microservices-demo/currencyservice:v0.8.0
         livenessProbe:
           grpc:
             port: 7000
@@ -734,7 +578,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -743,31 +587,7 @@ spec:
       serviceAccountName: default
       terminationGracePeriodSeconds: 5
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: currencyservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 7000
-  selector:
-    app: currencyservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: currencyservice-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 7000
-  selector:
-    app: currencyservice
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: shippingservice
@@ -780,6 +600,7 @@ spec:
       activeService: shippingservice-active
       autoPromotionEnabled: true
       previewService: shippingservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -791,7 +612,7 @@ spec:
           value: '50051'
         - name: DISABLE_PROFILER
           value: '1'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/shippingservice:v0.8.0
         livenessProbe:
           grpc:
             port: 50051
@@ -817,7 +638,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -825,31 +646,7 @@ spec:
         runAsUser: 1000
       serviceAccountName: default
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: shippingservice-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 50051
-  selector:
-    app: shippingservice
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: shippingservice-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 50051
-  selector:
-    app: shippingservice
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: redis-cart
@@ -862,6 +659,7 @@ spec:
       activeService: redis-cart-active
       autoPromotionEnabled: true
       previewService: redis-cart-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -898,7 +696,7 @@ spec:
         - mountPath: /data
           name: redis-data
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -908,31 +706,7 @@ spec:
       - emptyDir: {}
         name: redis-data
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis-cart-active
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 6379
-  selector:
-    app: redis-cart
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis-cart-preview
-spec:
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 6379
-  selector:
-    app: redis-cart
----
-apiVersion: argoproj.io/v1alpha1
+apiVersion: apps/v1
 kind: Rollout
 metadata:
   name: adservice
@@ -945,6 +719,7 @@ spec:
       activeService: adservice-active
       autoPromotionEnabled: true
       previewService: adservice-preview
+    type: BlueGreen
   template:
     metadata:
       labels:
@@ -954,7 +729,7 @@ spec:
       - env:
         - name: PORT
           value: '9555'
-        image: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice:0381ee5
+        image: gcr.io/google-samples/microservices-demo/adservice:v0.8.0
         livenessProbe:
           grpc:
             port: 9555
@@ -983,7 +758,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
       nodeSelector:
-        cloud.google.com/gke-nodepool: boutique
+        boutique: 'true'
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
@@ -995,26 +770,145 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice-active
+  name: emailservice
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 9555
+  - name: grpc
+    port: 5000
+    targetPort: 8080
   selector:
-    app: adservice
+    app: emailservice
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice-preview
+  name: checkoutservice
 spec:
   ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 9555
+  - name: grpc
+    port: 5050
+    targetPort: 5050
   selector:
-    app: adservice
+    app: checkoutservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommendationservice
+spec:
+  ports:
+  - name: grpc
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: recommendationservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: frontend
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-external
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: frontend
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: paymentservice
+spec:
+  ports:
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+  selector:
+    app: paymentservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: productcatalogservice
+spec:
+  ports:
+  - name: grpc
+    port: 3550
+    targetPort: 3550
+  selector:
+    app: productcatalogservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cartservice
+spec:
+  ports:
+  - name: grpc
+    port: 7070
+    targetPort: 7070
+  selector:
+    app: cartservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: currencyservice
+spec:
+  ports:
+  - name: grpc
+    port: 7000
+    targetPort: 7000
+  selector:
+    app: currencyservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shippingservice
+spec:
+  ports:
+  - name: grpc
+    port: 50051
+    targetPort: 50051
+  selector:
+    app: shippingservice
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-cart
+spec:
+  ports:
+  - name: tcp-redis
+    port: 6379
+    targetPort: 6379
+  selector:
+    app: redis-cart
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -1028,6 +922,342 @@ spec:
   selector:
     app: adservice
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: emailservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: emailservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: checkoutservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: checkoutservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: recommendationservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: recommendationservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: frontend-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: paymentservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: paymentservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: productcatalogservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: productcatalogservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: cartservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: cartservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: loadgenerator-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: loadgenerator
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: currencyservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: currencyservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: shippingservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: shippingservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: redis-cart-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: redis-cart
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: active
+  name: adservice-active
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: adservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: emailservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: emailservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: checkoutservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: checkoutservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: recommendationservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: recommendationservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: frontend-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: paymentservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: paymentservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: productcatalogservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: productcatalogservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: cartservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: cartservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: loadgenerator-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: loadgenerator
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: currencyservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: currencyservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: shippingservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: shippingservice
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: redis-cart-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: redis-cart
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    boutique/rollout: preview
+  name: adservice-preview
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: adservice
 ---
 apiVersion: cloud.google.com/v1
 kind: BackendConfig

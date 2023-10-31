@@ -461,7 +461,6 @@ spec:
   selector:
     matchLabels:
       app: loadgenerator
-    type: BlueGreen
   template:
     metadata:
       annotations:

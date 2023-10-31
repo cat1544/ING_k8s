@@ -11,7 +11,6 @@ spec:
       activeService: emailservice-active
       autoPromotionEnabled: true
       previewService: emailservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -72,7 +71,6 @@ spec:
       activeService: checkoutservice-active
       autoPromotionEnabled: true
       previewService: checkoutservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -140,7 +138,6 @@ spec:
       activeService: recommendationservice-active
       autoPromotionEnabled: true
       previewService: recommendationservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -203,7 +200,6 @@ spec:
       activeService: frontend-active
       autoPromotionEnabled: true
       previewService: frontend-preview
-    type: BlueGreen
   template:
     metadata:
       annotations:
@@ -287,7 +283,6 @@ spec:
       activeService: paymentservice-active
       autoPromotionEnabled: true
       previewService: paymentservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -346,7 +341,6 @@ spec:
       activeService: productcatalogservice-active
       autoPromotionEnabled: true
       previewService: productcatalogservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -405,7 +399,6 @@ spec:
       activeService: cartservice-active
       autoPromotionEnabled: true
       previewService: cartservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -534,7 +527,6 @@ spec:
       activeService: currencyservice-active
       autoPromotionEnabled: true
       previewService: currencyservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -594,7 +586,6 @@ spec:
       activeService: shippingservice-active
       autoPromotionEnabled: true
       previewService: shippingservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -653,7 +644,6 @@ spec:
       activeService: redis-cart-active
       autoPromotionEnabled: true
       previewService: redis-cart-preview
-    type: BlueGreen
   template:
     metadata:
       labels:
@@ -713,7 +703,6 @@ spec:
       activeService: adservice-active
       autoPromotionEnabled: true
       previewService: adservice-preview
-    type: BlueGreen
   template:
     metadata:
       labels:

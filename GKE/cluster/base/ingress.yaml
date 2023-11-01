@@ -40,13 +40,23 @@ spec:
   - host: "www.2280.store"
     http:
       paths:
-      - path: /
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: frontend-active
+            port:
+              number: 80
+    http: "34.64.255.126"
+      paths:
+      - path: /argocd
         pathType: Prefix
         backend:
           service:
             name: frontend-active
             port:
               number: 80
+
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate

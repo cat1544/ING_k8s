@@ -309,7 +309,7 @@ spec:
             path: /_healthz
             port: 8080
           initialDelaySeconds: 10
-        name: serverfront
+        name: server
         ports:
         - containerPort: 8080
         readinessProbe:

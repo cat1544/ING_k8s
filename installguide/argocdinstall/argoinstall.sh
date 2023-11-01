@@ -73,6 +73,27 @@ echo "Fetching the initial admin password..."
 argocd admin initial-password -n argocd
 ARGOCD_PASSWORD=$(argocd admin initial-password -n argocd | awk 'NR==1')
 
+# Define a retry function
+retry_command() {
+    local RETRIES=3
+    local SLEEP_TIME=10
+    local COUNTER=0
+
+    until [ $COUNTER -gt $RETRIES ]; do
+        $@ && break
+        COUNTER=$((COUNTER + 1))
+        if [ $COUNTER -le $RETRIES ]; then
+            echo "Retrying ($COUNTER/$RETRIES)..."
+            sleep $SLEEP_TIME
+        fi
+    done
+
+    if [ $COUNTER -gt $RETRIES ]; then
+        echo "Failed after $RETRIES attempts."
+        exit 1
+    fi
+}
+
 # ArgoCD 로그인
 echo "ArgoCD 로그인 중..."
 argocd login $ARGOCD_SERVER --username admin --password $ARGOCD_PASSWORD --insecure
@@ -99,7 +120,7 @@ argocd repo add https://github.com/$USER_NAME/ING_k8s.git --username $USER_NAME 
 # ArgoCD 앱 추가
 argocd app create boutique \
   --repo https://github.com/$USER_NAME/ING_k8s.git \
-  --path GKE/cluster/app \
+  --path GKE/cluster/overlays/app \
   --dest-namespace boutique \
   --dest-server https://kubernetes.default.svc \
   --sync-option CreateNamespace=true

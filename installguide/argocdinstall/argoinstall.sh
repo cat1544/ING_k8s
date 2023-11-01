@@ -16,9 +16,54 @@
 
 # Create values.yaml
 cat <<EOF > values.yaml
+# apiVersionOverrides:
+#   cloudgoogle: "cloud.google.com/v1"
+
 global:
   nodeSelector:
     cloud.google.com/gke-nodepool: argocd
+
+server:
+  # metrics:
+  #   service:
+  #     annotations:
+  #       cloud.google.com/neg: '{"ingress": true}'
+  #       cloud.google.com/load-balancer-neg-ready: true
+  ingress:
+    enabled: true
+  #   annotations: 
+  #     kubernetes.io/ingress.global-static-ip-name: argocd-ip
+  #   hosts:
+  #     - www.dev-boutique.shop
+  #   paths:
+  #     - /
+  #   pathType: Prefix
+
+  # GKEbackendConfig:
+  #   enabled: true
+  #   spec:
+  #     securityPolicy:
+  #       name: argocd-security-policy
+  #     logging:
+  #       enable: true
+  #       sampleRate: 0.5
+  #     sessionAffinity:
+  #       affinityType: "GENERATED_COOKIE"
+  #       affinityCookieTtlSec: 50
+
+  # GKEmanagedCertificate:
+  #   enabled: ture
+  #   domains:
+  #   - www.dev-boutique.shop
+  #   - dev-boutique.shop
+
+  # GKEfrontendConfig:
+  #   enabled: true
+  #   spec:
+  #     sslPolicy: argocd-ssl-policy
+  #     redirectToHttps:
+  #       enabled: true
+  #       responseCodeName: ""
 EOF
 
 # Install argocd

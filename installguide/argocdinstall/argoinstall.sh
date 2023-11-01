@@ -16,28 +16,45 @@
 
 # Create values.yaml
 cat <<EOF > values.yaml
-# apiVersionOverrides:
-#   cloudgoogle: "cloud.google.com/v1"
+apiVersionOverrides:
+  cloudgoogle: "cloud.google.com/v1"
 
 global:
   nodeSelector:
     cloud.google.com/gke-nodepool: argocd
 
+# server:
+#   metrics:
+#     service:
+#       annotations:
+#         cloud.google.com/neg: '{"ingress": true}'
+#         cloud.google.com/load-balancer-neg-ready: true
+#   ingress:
+#     enabled: true
+#     annotations: 
+#       kubernetes.io/ingress.global-static-ip-name: argocd-ip
+#     hosts:
+#       - www.dev-boutique.shop
+#     paths:
+#       - /
+#     pathType: Prefix
+
+# gpt
 server:
-  # metrics:
-  #   service:
-  #     annotations:
-  #       cloud.google.com/neg: '{"ingress": true}'
-  #       cloud.google.com/load-balancer-neg-ready: true
   ingress:
     enabled: true
-  #   annotations: 
-  #     kubernetes.io/ingress.global-static-ip-name: argocd-ip
-  #   hosts:
-  #     - www.dev-boutique.shop
-  #   paths:
-  #     - /
-  #   pathType: Prefix
+    annotations:
+      kubernetes.io/ingress.global-static-ip-name: "argocd-ip"
+      # kubernetes.io/ingress.allow-http: "false"
+      # networking.gke.io/managed-certificates: "argocd-ssl-policy"
+      kubernetes.io/ingress.class: "gce"
+      beta.cloud.google.com/backend-config: '{"ports": {"http":"argocd-backendconfig"}}'
+    hosts:
+      - www.dev-boutique.shop
+    # tls:
+    #   - secretName: argocd-ssl
+    #     hosts:
+    #       - argocd.example.com
 
   # GKEbackendConfig:
   #   enabled: true

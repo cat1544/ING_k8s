@@ -31,11 +31,11 @@ metadata:
     networking.gke.io/managed-certificates: boutique-certificate
     networking.gke.io/v1beta1.FrontendConfig: frontend-frontend-config
 spec:
-  # defaultBackend:
-  #   service:
-  #     name: frontend-active
-  #     port:
-  #       number: 80
+  defaultBackend:
+    service:
+      name: frontend-active
+      port:
+        number: 80
   rules:
   - host: "www.2280.store"
     http:

@@ -7,22 +7,22 @@ bases:
 
 images:
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice
-  newTag: 3c80ceb
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice
-  newTag: d3dfa10
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice
-  newTag: 3c80ceb
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice
-  newTag: 3c80ceb
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice
-  newTag: d3dfa10
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice
-  newTag: 3c80ceb
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice
-  newTag: 3c80ceb
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend
-  newTag: 7d24785
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice
-  newTag: 3c80ceb
+  newTag: f48d475
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice
-  newTag: 3c80ceb
+  newTag: f48d475

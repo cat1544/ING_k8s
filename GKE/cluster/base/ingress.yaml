@@ -5,6 +5,12 @@ metadata:
 spec:
   securityPolicy:
     name: boutique-security-policy
+  logging:
+    enable: true
+    sampleRate: 0.5
+  sessionAffinity:
+    affinityType: "GENERATED_COOKIE"
+    affinityCookieTtlSec: 50
 ---
 apiVersion: networking.gke.io/v1beta1
 kind: FrontendConfig

@@ -50,7 +50,7 @@ spec:
   - host: "www.2280.store"
     http:
       paths:
-      - path: /argo
+      - path: /applications
         pathType: Prefix
         backend:
           service:

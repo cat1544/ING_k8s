@@ -28,5 +28,23 @@ images:
   newTag: 0567ff9
 
 patches:
-  - ingress-patch.yaml
-  - certificate-patch.yaml
+  - target:
+      group: networking.k8s.io
+      version: v1
+      kind: Ingress
+      name: frontend-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: "www.dev-boutique.shop"
+  - target:
+      group: networking.gke.io
+      version: v1
+      kind: ManagedCertificate
+      name: boutique-certificate
+    patch: |-
+      - op: replace
+        path: /spec/domains
+        value:
+          - www.dev-boutique.shop
+          - dev-boutique.shop

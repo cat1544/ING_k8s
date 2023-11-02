@@ -26,3 +26,23 @@ images:
   newTag: 0567ff9
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice
   newTag: 0567ff9
+
+patches:
+  - target:
+      group: networking.k8s.io
+      version: v1
+      kind: Ingress
+      name: frontend-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: "www.dev-boutique.shop"
+  - target:
+      group: networking.gke.io
+      version: v1
+      kind: ManagedCertificate
+      name: boutique-certificate
+    patch: |-
+      - op: replace
+        path: /spec/domains/0
+        value: www.dev-boutique.shop

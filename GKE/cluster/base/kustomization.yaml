@@ -14,5 +14,5 @@ resources:
 - recommendationservice.yaml
 - redis.yaml
 - shippingservice.yaml
-- boutique-certificate.yaml
-- frontend-ingress.yaml
+- certificate.yaml
+- ingress.yaml

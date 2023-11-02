@@ -26,3 +26,7 @@ images:
   newTag: 0567ff9
 - name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice
   newTag: 0567ff9
+
+patchesStrategicMerge:
+  - ingress-patch.yaml
+  - certificate-patch.yaml

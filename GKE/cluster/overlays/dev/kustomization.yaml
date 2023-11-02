@@ -41,4 +41,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/domains/0
-        value: www.dev-boutique.shop, dev-boutique.shop
+        value: www.dev-boutique.shop
+      - op: replace
+        path: /spec/domains/1
+        value: dev-boutique.shop

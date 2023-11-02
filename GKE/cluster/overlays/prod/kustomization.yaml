@@ -2,7 +2,7 @@ images:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-bases:
+resources:
   - ../../base
 
 images:
@@ -28,5 +28,20 @@ images:
   newTag: 0567ff9
 
 patches:
-  - ingress-patch.yaml
-  - certificate-patch.yaml
+  - target:
+      kind: Ingress
+      name: frontend-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: "www.ing-boutique.shop"
+  - target:
+      kind: ManagedCertificate
+      name: boutique-certificate
+    patch: |-
+      - op: replace
+        path: /spec/domains/0
+        value: www.ing-boutique.shop
+      - op: replace
+        path: /spec/domains/1
+        value: ing-boutique.shop

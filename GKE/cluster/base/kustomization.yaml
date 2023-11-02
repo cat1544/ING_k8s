@@ -13,7 +13,4 @@ resources:
 - recommendationservice.yaml
 - redis.yaml
 - shippingservice.yaml
-- boutique-certificate.yaml
-- frontend-backend-config.yaml
-- frontend-frontend-config.yaml
-- frontend-ingress.yaml
+- ingress.yaml

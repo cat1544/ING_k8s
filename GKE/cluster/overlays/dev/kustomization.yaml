@@ -2,7 +2,7 @@ images:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-bases:
+resources:
   - ../../base
 
 images:
@@ -29,8 +29,6 @@ images:
 
 patches:
   - target:
-      group: networking.k8s.io
-      version: v1
       kind: Ingress
       name: frontend-ingress
     patch: |-
@@ -38,8 +36,6 @@ patches:
         path: /spec/rules/0/host
         value: "www.dev-boutique.shop"
   - target:
-      group: networking.gke.io
-      version: v1
       kind: ManagedCertificate
       name: boutique-certificate
     patch: |-

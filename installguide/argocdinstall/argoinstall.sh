@@ -136,7 +136,6 @@ argocd app create boutique \
   --dest-namespace boutique \
   --dest-server https://kubernetes.default.svc \
   --sync-option CreateNamespace=true
-  --grpc-web
 
 # argocd rollouts 대시보드 실행
 kubectl argo rollouts dashboard &

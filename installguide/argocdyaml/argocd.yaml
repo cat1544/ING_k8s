@@ -18856,6 +18856,19 @@ metadata:
     app.kubernetes.io/part-of: argocd
   name: argocd-cm
   namespace: argocd
+data:
+  admin.enabled: "false"
+  url: https://www.2280.store
+  dex.config: |
+    connectors:
+      - type: github
+        id: github
+        name: GitHub
+        config:
+          clientID: 692a6103c22a1f442065
+          clientSecret: 5f16e7a1143ae3df31d59c84f38647b016766798
+          orgs:
+          - name: dev-boutique
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -18892,6 +18905,14 @@ metadata:
     app.kubernetes.io/part-of: argocd
   name: argocd-rbac-cm
   namespace: argocd
+data:
+  policy.csv: |
+    p, role:github-role, applications, *, */*, allow
+    p, role:github-role, clusters, get, *, allow
+    p, role:github-role, repositories, get, *, allow
+
+    g, dev-boutique:ING, role:github-role
+  # policy.default: role:readonly
 ---
 apiVersion: v1
 data:
@@ -20575,9 +20596,9 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
-    # ingress.kubernetes.io/rewrite-target: /
+    ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.global-static-ip-name: argocd-ip
-    # kubernetes.io/ingress.allow-http: "false"
+    kubernetes.io/ingress.allow-http: "false"
     networking.gke.io/managed-certificates: argocd-certificate
     networking.gke.io/v1beta1.FrontendConfig: argocd-frontend-config
 spec:

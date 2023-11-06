@@ -217,7 +217,7 @@ patches:
     metadata:
       name: cartservice
       annotations:
-        iam.gke.io/gcp-service-account: ALLOYDB_USER_GSA_ID
+        iam.gke.io/gcp-service-account: postdb-user-sa@yoondaegyoung-01-400304.iam.gserviceaccount.com
 # redis - remove the redis-cart Deployment
 - patch: |-
     apiVersion: argoproj.io/v1alpha1

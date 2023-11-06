@@ -11,6 +11,6 @@ resources:
 - paymentservice.yaml
 - productcatalogservice.yaml
 - recommendationservice.yaml
-- redis.yaml
+# - redis.yaml
 - shippingservice.yaml
 - ingress.yaml

@@ -3,6 +3,7 @@ kind: Rollout
 metadata:
   name: cartservice
 spec:
+  replicas: 5
   selector:
     matchLabels:
       app: cartservice
@@ -80,3 +81,44 @@ spec:
     targetPort: 7070
   selector:
     app: cartservice
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cartservice
+  annotations:
+    iam.gke.io/gcp-service-account: postdb-user-sa@yoondaegyoung-01-400304.iam.gserviceaccount.com
+---
+apiVersion: autoscaling.gke.io/v1beta1
+kind: MultidimPodAutoscaler
+metadata:
+  name: cartservice-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: cartservice
+  goals:
+    metrics:
+    - type: Resource
+      resource:
+      # Define the target CPU utilization request here
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 20
+  constraints:
+    global:
+      minReplicas: 5
+      maxReplicas: 15
+    containerControlledResources: [ memory ]
+    container:
+    - name: '*'
+    # Define boundaries for the memory request here
+      requests:
+        minAllowed:
+          memory: 300Mi
+        maxAllowed:
+          memory: 2Gi
+  policy:
+    updateMode: Auto

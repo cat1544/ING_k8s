@@ -3,6 +3,7 @@ kind: Rollout
 metadata:
   name: recommendationservice
 spec:
+  replicas: 5
   selector:
     matchLabels:
       app: recommendationservice
@@ -83,3 +84,37 @@ spec:
     targetPort: 8080
   selector:
     app: recommendationservice
+---
+apiVersion: autoscaling.gke.io/v1beta1
+kind: MultidimPodAutoscaler
+metadata:
+  name: recommendationservice-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: recommendationservice
+  goals:
+    metrics:
+    - type: Resource
+      resource:
+      # Define the target CPU utilization request here
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+  constraints:
+    global:
+      minReplicas: 3
+      maxReplicas: 15
+    containerControlledResources: [ memory ]
+    container:
+    - name: '*'
+    # Define boundaries for the memory request here
+      requests:
+        minAllowed:
+          memory: 300Mi
+        maxAllowed:
+          memory: 2Gi
+  policy:
+    updateMode: Auto

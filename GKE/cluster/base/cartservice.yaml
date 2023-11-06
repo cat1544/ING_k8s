@@ -19,6 +19,8 @@ spec:
     spec:
       containers:
       - env:
+        - name: REDIS_ADDR
+          value: redis-cart-active:6379
         image: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/cartservice:ca4265b
         livenessProbe:
           grpc:

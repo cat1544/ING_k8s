@@ -207,3 +207,5 @@ patches:
       - op: add
         path: /spec/template/spec/containers/0/env/-
         value: { "name": "PROJECT_ID", "value": "yoondaegyoung-01-400304" }
+      - op: remove
+        path: /spec/template/spec/containers/0/env/0

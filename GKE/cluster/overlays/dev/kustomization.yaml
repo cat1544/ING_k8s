@@ -185,56 +185,25 @@ patches:
         path: /spec/replicas
         value: 5
 
-# postgreSQL 추가하기
-- patch: |-
-    apiVersion: argoproj.io/v1alpha1
-    kind: Rollout
-    metadata:
+# postgreSQL추가
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
       name: cartservice
-    spec:
-      template:
-        spec:
-          containers:
-            - name: server
-              env:
-              - name: REDIS_ADDR
-                $patch: delete
-              - name: ALLOYDB_PRIMARY_IP
-                value: 10.46.176.3
-              - name: ALLOYDB_DATABASE_NAME
-                value: carts
-              - name: ALLOYDB_TABLE_NAME
-                value: cart_items
-              - name: ALLOYDB_SECRET_NAME
-                value: test-db-pw
-              - name: PROJECT_ID
-                value: yoondaegyoung-01-400304
-# cartservice - add the GSA annotation for the cartservice KSA
-- patch: |-
-    apiVersion: v1
-    kind: ServiceAccount
-    metadata:
-      name: cartservice
-      annotations:
-        iam.gke.io/gcp-service-account: postdb-user-sa@yoondaegyoung-01-400304.iam.gserviceaccount.com
-# redis - remove the redis-cart Deployment
-- patch: |-
-    apiVersion: argoproj.io/v1alpha1
-    kind: Rollout
-    metadata:
-      name: redis-cart
-    $patch: delete
-# redis - remove the redis-cart Service
-- patch: |-
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: redis-cart-preview
-    $patch: delete
-
-- patch: |-
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: redis-cart-active
-    $patch: delete
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "ALLOYDB_PRIMARY_IP", "value": "10.46.176.3" }
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "ALLOYDB_DATABASE_NAME", "value": "carts" }
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "ALLOYDB_TABLE_NAME", "value": "cart_items" }
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "ALLOYDB_SECRET_NAME", "value": "test-db-pw" }
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "PROJECT_ID", "value": "yoondaegyoung-01-400304" }

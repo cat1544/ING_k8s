@@ -80,3 +80,37 @@ spec:
     targetPort: 3550
   selector:
     app: productcatalogservice
+---
+apiVersion: autoscaling.gke.io/v1beta1
+kind: MultidimPodAutoscaler
+metadata:
+  name: productcatalogservice-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: productcatalogservice
+  goals:
+    metrics:
+    - type: Resource
+      resource:
+      # Define the target CPU utilization request here
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+  constraints:
+    global:
+      minReplicas: 3
+      maxReplicas: 15
+    containerControlledResources: [ memory ]
+    container:
+    - name: '*'
+    # Define boundaries for the memory request here
+      requests:
+        minAllowed:
+          memory: 300Mi
+        maxAllowed:
+          memory: 2Gi
+  policy:
+    updateMode: Auto

@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ../../base
 
+# image tag 수정
 images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/cartservice
   newTag: 5791e4b
@@ -29,6 +30,7 @@ images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/loadgenerator
   newTag: 36a034f
 
+# ingress 수정
 patches:
   - target:
       group: networking.k8s.io
@@ -82,83 +84,103 @@ patches:
         path: /spec/sslPolicy
         value: dev-boutique-ssl-policy
 
-patchesStrategicMerge:
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+# replica 수정
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: adservice
-      spec:
-        replicas: 5
+      name: adservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: cartservice
-      spec:
-        replicas: 5
+      name: cartservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: checkoutservice
-      spec:
-        replicas: 5
+      name: checkoutservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: currencyservice
-      spec:
-        replicas: 5
+      name: currencyservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: emailservice
-      spec:
-        replicas: 5
+      name: emailservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: paymentservice
-      spec:
-        replicas: 5
+      name: paymentservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: productcatalogservice
-      spec:
-        replicas: 5
+      name: productcatalogservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: recommendationservice
-      spec:
-        replicas: 5
+      name: recommendationservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: shippingservice
-      spec:
-        replicas: 5
+      name: shippingservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
 
-  - patch: |-
-      apiVersion: argoproj.io/v1alpha1
+  - target:
+      group: argoproj.io
+      version: v1alpha1
       kind: Rollout
-      metadata:
-        name: frontend
-      spec:
-        replicas: 5
+      name: frontend
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5

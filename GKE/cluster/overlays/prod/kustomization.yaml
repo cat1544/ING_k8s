@@ -26,6 +26,8 @@ images:
   newTag: 5791e4b
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/checkoutservice
   newTag: 5791e4b
+- name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/loadgenerator
+  newTag: 5791e4b
 
 patches:
   - target:

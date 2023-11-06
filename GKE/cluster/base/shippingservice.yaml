@@ -22,7 +22,7 @@ spec:
           value: '50051'
         - name: DISABLE_PROFILER
           value: '1'
-        image: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/my-image/shippingservice:0381ee5
+        image: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/shippingservice:0381ee5
         livenessProbe:
           grpc:
             port: 50051

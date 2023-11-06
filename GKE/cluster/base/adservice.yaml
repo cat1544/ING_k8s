@@ -20,7 +20,7 @@ spec:
       - env:
         - name: PORT
           value: '9555'
-        image: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/my-image/adservice:0381ee5
+        image: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/adservice:0381ee5
         livenessProbe:
           grpc:
             port: 9555

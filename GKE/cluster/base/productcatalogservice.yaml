@@ -22,7 +22,7 @@ spec:
           value: '3550'
         - name: DISABLE_PROFILER
           value: '1'
-        image: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/my-image/productcatalogservice:9c8c002
+        image: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/productcatalogservice:9c8c002
         livenessProbe:
           grpc:
             port: 3550

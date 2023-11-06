@@ -6,25 +6,25 @@ resources:
   - ../../base
 
 images:
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/cartservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/cartservice
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/currencyservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/currencyservice
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/paymentservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/paymentservice
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/productcatalogservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/productcatalogservice
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/adservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/adservice
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/recommendationservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/recommendationservice
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/emailservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/emailservice
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/frontend
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/frontend
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/shippingservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/shippingservice
   newTag: 0567ff9
-- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/my-image/checkoutservice
+- name: asia-northeast3-docker.pkg.dev/protean-blend-398805/gcf-artifacts/boutique-image/checkoutservice
   newTag: 0567ff9
 
 patches:

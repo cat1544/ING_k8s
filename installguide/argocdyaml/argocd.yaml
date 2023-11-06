@@ -18857,7 +18857,7 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
-  admin.enabled: "false"
+  # admin.enabled: "false"
   url: https://www.2280.store
   dex.config: |
     connectors:
@@ -18921,8 +18921,9 @@ metadata:
 data:
   policy.csv: |
     p, role:github-role, applications, *, */*, allow
-    p, role:github-role, clusters, get, *, allow
-    p, role:github-role, repositories, get, *, allow
+    p, role:github-role, clusters, *, *, allow
+    p, role:github-role, repositories, *, *, allow
+    p, role:github-role, *, *, *, allow
 
     g, dev-boutique:ING, role:github-role
   # policy.default: role:readonly

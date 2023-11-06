@@ -13,7 +13,7 @@ provider "google" {
 }
 
 locals {
-  project_id = "trusty-mantra-398012"
+  project_id = "yoondaegyoung-01-400304"
   region     = "asia-northeast3"
   location   = "asia-northeast3"
   service    = "boutique"
@@ -23,7 +23,7 @@ locals {
 
 terraform {
   backend "gcs" {
-    bucket = "boutique-tf"
+    bucket = "yoondaegyoung-01-400304"
     prefix = "tfstate/"
     # lock_timeout_seconds = 180
   }

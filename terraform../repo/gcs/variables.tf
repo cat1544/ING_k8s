@@ -16,5 +16,5 @@ variable "location" {
 }
 
 variable "project_id" {
-  default = "trusty-mantra-398012"
+  default = "yoondaegyoung-01-400304"
 }

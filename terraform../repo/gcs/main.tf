@@ -1,6 +1,6 @@
 resource "google_storage_bucket" "backend" {
   project = var.project_id
-  name = var.backend_gcs_name
+  name = var.project_id
   force_destroy = true
   location = var.location
   storage_class = "STANDARD" #autoclass

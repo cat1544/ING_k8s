@@ -64,7 +64,7 @@ module "dev-gke" {
   location               = local.location
   master_ipv4_cidr_block = "172.16.0.0/28"
   peering = module.vpc.peering
-  cidr_block = module.subnet.ip_cidr_range
+  cidr_block = "218.235.89.0/24"
   master_network_name = "test"
 
   label = {
@@ -81,7 +81,7 @@ module "dev-nodepool" {
   disk_size      = 50
   max_pods = 60
   min_node = 3
-  max_node = 6
+  max_node = 5
   cluster_name        = module.dev-gke.cluster_name
 
   label = {
@@ -97,7 +97,7 @@ module "argo-nodepool" {
   disk_size      = 20
   max_pods = 30
   min_node = 1
-  max_node = 3
+  max_node = 2
   cluster_name        = module.dev-gke.cluster_name
 
   label = {

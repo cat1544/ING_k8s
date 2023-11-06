@@ -1,6 +1,6 @@
 variable "backend_gcs_name" {
   type    = string
-  default = "boutique-tf"
+  default = "yoondaegyoung-01-400304"
 }
 
 variable "label" {

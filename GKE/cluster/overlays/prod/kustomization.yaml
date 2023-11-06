@@ -29,19 +29,53 @@ images:
 
 patches:
   - target:
+      group: networking.k8s.io
+      version: v1
       kind: Ingress
       name: frontend-ingress
     patch: |-
       - op: replace
+        path: /metadata/annotations/kubernetes.io~1ingress.global-static-ip-name
+        value: ing-boutique-ip
+      - op: replace
+        path: /metadata/annotations/networking.gke.io~1managed-certificates
+        value: ing-boutique-certificate
+      - op: replace
         path: /spec/rules/0/host
-        value: "www.ing-boutique.shop"
+        value: www.ing-boutique.shop
+
   - target:
+      group: networking.gke.io
+      version: v1
       kind: ManagedCertificate
       name: boutique-certificate
     patch: |-
+      - op: replace
+        path: /metadata/name
+        value: ing-boutique-certificate
       - op: replace
         path: /spec/domains/0
         value: www.ing-boutique.shop
       - op: replace
         path: /spec/domains/1
         value: ing-boutique.shop
+
+  - target:
+      group: cloud.google.com
+      version: v1
+      kind: BackendConfig
+      name: frontend-backend-config
+    patch: |-
+      - op: replace
+        path: /spec/securityPolicy/name
+        value: ing-boutique-security-policy
+
+  - target:
+      group: networking.gke.io
+      version: v1beta1
+      kind: FrontendConfig
+      name: frontend-frontend-config
+    patch: |-
+      - op: replace
+        path: /spec/sslPolicy
+        value: ing-boutique-ssl-policy

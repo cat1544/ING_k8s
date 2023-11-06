@@ -18856,32 +18856,32 @@ metadata:
     app.kubernetes.io/part-of: argocd
   name: argocd-cm
   namespace: argocd
-# data:
-#   admin.enabled: "false"
-#   url: https://www.2280.store
-#   dex.config: |
-#     connectors:
-#       - type: github
-#         id: github
-#         name: GitHub
-#         config:
-#           clientID: 692a6103c22a1f442065
-#           clientSecret: 5f16e7a1143ae3df31d59c84f38647b016766798
-#           orgs:
-#           - name: dev-boutique
 data:
-  oidc.tls.insecure.skip.verify: "true" #Since Dex is used
+  admin.enabled: "false"
   url: https://www.2280.store
-  admin.enabled: "false" #Disable Admin Account and local login
   dex.config: |
     connectors:
-    - config:
-        issuer: https://accounts.google.com
-        clientID: 726340762673-p78hish3p7q11kagrfv27p0na6ldjv4v.apps.googleusercontent.com
-        clientSecret: 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
-      type: oidc
-      id: google
-      name: Google
+      - type: github
+        id: github
+        name: GitHub
+        config:
+          clientID: 692a6103c22a1f442065
+          clientSecret: 5f16e7a1143ae3df31d59c84f38647b016766798
+          orgs:
+          - name: dev-boutique
+# data:
+#   oidc.tls.insecure.skip.verify: "true" #Since Dex is used
+#   url: https://www.2280.store
+#   admin.enabled: "false" #Disable Admin Account and local login
+#   dex.config: |
+#     connectors:
+#     - config:
+#         issuer: https://accounts.google.com
+#         clientID: 726340762673-p78hish3p7q11kagrfv27p0na6ldjv4v.apps.googleusercontent.com
+#         clientSecret: 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
+#       type: oidc
+#       id: google
+#       name: Google
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -1,18 +1,23 @@
 #!/bin/bash
 
 # Install Helm
-# echo "Installing Helm..."
-# curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-# chmod 700 get_helm.sh
-# ./get_helm.sh
-# rm get_helm.sh
-# echo "Helm installation complete."
+echo "Installing Helm..."
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+rm get_helm.sh
+echo "Helm installation complete."
 
 # Add Helm Chart
-# echo "Adding Helm chart for Argo..."
-# helm repo add argo https://argoproj.github.io/argo-helm
-# helm repo update
-# echo "Helm chart added."
+echo "Adding Helm chart for Argo..."
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+echo "Helm chart added."
+
+# naspace 생성
+echo "create ns ArgoCD..."
+kubectl create namespace argocd
+echo "create ns complete."
 
 # Install argocd
 echo "Installing ArgoCD..."
@@ -67,8 +72,8 @@ chmod +x ./kubectl-argo-rollouts-linux-amd64
 sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
 
 # Change the ArgoCD's Cluster IP to LoadBalancer
-echo "Changing ArgoCD's service type to LoadBalancer..."
-kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+# echo "Changing ArgoCD's service type to LoadBalancer..."
+# kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
 
 # # Wait for External IP
 # echo "Waiting for ArgoCD External IP..."

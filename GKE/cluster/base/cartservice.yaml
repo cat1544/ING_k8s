@@ -20,7 +20,7 @@ spec:
       - env:
         - name: REDIS_ADDR
           value: redis-cart-active:6379
-        image: asia-northeast3-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/my-image/cartservice:ca4265b
+        image: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/my-image/cartservice:ca4265b
         livenessProbe:
           grpc:
             port: 7070

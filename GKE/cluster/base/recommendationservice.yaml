@@ -88,12 +88,12 @@ spec:
 apiVersion: autoscaling.gke.io/v1beta1
 kind: MultidimPodAutoscaler
 metadata:
-  name: recommendataionservice-autoscaler
+  name: recommendationservice-autoscaler
 spec:
   scaleTargetRef:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
-    name: recommendataionservice
+    name: recommendationservice
   goals:
     metrics:
     - type: Resource

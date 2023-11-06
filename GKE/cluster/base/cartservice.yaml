@@ -109,7 +109,7 @@ spec:
           averageUtilization: 20
   constraints:
     global:
-      minReplicas: 3
+      minReplicas: 5
       maxReplicas: 15
     containerControlledResources: [ memory ]
     container:

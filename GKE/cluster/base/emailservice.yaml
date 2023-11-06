@@ -3,6 +3,7 @@ kind: Rollout
 metadata:
   name: emailservice
 spec:
+  replicas: 5
   selector:
     matchLabels:
       app: emailservice

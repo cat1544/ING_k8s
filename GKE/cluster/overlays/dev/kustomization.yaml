@@ -81,3 +81,84 @@ patches:
       - op: replace
         path: /spec/sslPolicy
         value: dev-boutique-ssl-policy
+
+patchesStrategicMerge:
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: adservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: cartservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: checkoutservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: currencyservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: emailservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: paymentservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: productcatalogservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: recommendationservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: shippingservice
+      spec:
+        replicas: 5
+
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Rollout
+      metadata:
+        name: frontend
+      spec:
+        replicas: 5

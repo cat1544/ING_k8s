@@ -3,6 +3,7 @@ kind: Rollout
 metadata:
   name: shippingservice
 spec:
+  replicas: 5
   selector:
     matchLabels:
       app: shippingservice

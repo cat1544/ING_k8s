@@ -81,3 +81,8 @@ spec:
     targetPort: 7070
   selector:
     app: cartservice
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cartservice

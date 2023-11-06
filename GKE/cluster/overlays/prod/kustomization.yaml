@@ -184,3 +184,58 @@ patches:
       - op: replace
         path: /spec/replicas
         value: 5
+
+
+# postgreSQL 추가하기
+- patch: |-
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    metadata:
+      name: cartservice
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              env:
+              - name: REDIS_ADDR
+                $patch: delete
+              - name: ALLOYDB_PRIMARY_IP
+                value: ALLOYDB_PRIMARY_IP_VAL
+              - name: ALLOYDB_DATABASE_NAME
+                value: ALLOYDB_DATABASE_NAME_VAL
+              - name: ALLOYDB_TABLE_NAME
+                value: ALLOYDB_TABLE_NAME_VAL
+              - name: ALLOYDB_SECRET_NAME
+                value: ALLOYDB_SECRET_NAME_VAL
+              - name: PROJECT_ID
+                value: PROJECT_ID_VAL
+# cartservice - add the GSA annotation for the cartservice KSA
+- patch: |-
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: cartservice
+      annotations:
+        iam.gke.io/gcp-service-account: ALLOYDB_USER_GSA_ID
+# redis - remove the redis-cart Deployment
+- patch: |-
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    metadata:
+      name: redis-cart
+    $patch: delete
+# redis - remove the redis-cart Service
+- patch: |-
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: redis-cart-preview
+    $patch: delete
+
+- patch: |-
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: redis-cart-active
+    $patch: delete

@@ -99,16 +99,6 @@ spec:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
     name: checkoutservice
-  goals:
-    metrics:
-    - type: Resource
-      resource:
-      # Define the target CPU utilization request here
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 60
-  constraints:
-    global:
-      minReplicas: 1
-      maxReplicas: 15
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50

@@ -3,6 +3,7 @@ kind: Rollout
 metadata:
   name: shippingservice
 spec:
+  replicas: 5
   selector:
     matchLabels:
       app: shippingservice
@@ -79,3 +80,37 @@ spec:
     targetPort: 50051
   selector:
     app: shippingservice
+---
+apiVersion: autoscaling.gke.io/v1beta1
+kind: MultidimPodAutoscaler
+metadata:
+  name: shippingservice-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout
+    name: shippingservice
+  goals:
+    metrics:
+    - type: Resource
+      resource:
+      # Define the target CPU utilization request here
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+  constraints:
+    global:
+      minReplicas: 3
+      maxReplicas: 15
+    containerControlledResources: [ memory ]
+    container:
+    - name: '*'
+    # Define boundaries for the memory request here
+      requests:
+        minAllowed:
+          memory: 300Mi
+        maxAllowed:
+          memory: 2Gi
+  policy:
+    updateMode: Auto

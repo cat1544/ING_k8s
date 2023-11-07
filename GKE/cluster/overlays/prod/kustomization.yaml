@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ../../base
 
+# image tag 수정
 images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/cartservice
   newTag: 5791e4b
@@ -26,7 +27,10 @@ images:
   newTag: 5791e4b
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/checkoutservice
   newTag: 5791e4b
+- name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/loadgenerator
+  newTag: 36a034f
 
+# ingress 수정
 patches:
   - target:
       group: networking.k8s.io
@@ -36,13 +40,13 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/annotations/kubernetes.io~1ingress.global-static-ip-name
-        value: ing-boutique-ip
+        value: dev-boutique-ip
       - op: replace
         path: /metadata/annotations/networking.gke.io~1managed-certificates
-        value: ing-boutique-certificate
+        value: dev-boutique-certificate
       - op: replace
         path: /spec/rules/0/host
-        value: www.ing-boutique.shop
+        value: www.dev-boutique.shop
 
   - target:
       group: networking.gke.io
@@ -52,13 +56,13 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/name
-        value: ing-boutique-certificate
+        value: dev-boutique-certificate
       - op: replace
         path: /spec/domains/0
-        value: www.ing-boutique.shop
+        value: www.dev-boutique.shop
       - op: replace
         path: /spec/domains/1
-        value: ing-boutique.shop
+        value: dev-boutique.shop
 
   - target:
       group: cloud.google.com
@@ -68,7 +72,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/securityPolicy/name
-        value: ing-boutique-security-policy
+        value: dev-boutique-security-policy
 
   - target:
       group: networking.gke.io
@@ -78,4 +82,130 @@ patches:
     patch: |-
       - op: replace
         path: /spec/sslPolicy
-        value: ing-boutique-ssl-policy
+        value: dev-boutique-ssl-policy
+
+# replica 수정
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: adservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: cartservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: checkoutservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: currencyservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: emailservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: paymentservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: productcatalogservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: recommendationservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: shippingservice
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: frontend
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 5
+
+# postgreSQL추가
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: cartservice
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "ALLOYDB_PRIMARY_IP", "value": "10.46.176.3" }
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "ALLOYDB_DATABASE_NAME", "value": "carts" }
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "ALLOYDB_TABLE_NAME", "value": "cart_items" }
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "ALLOYDB_SECRET_NAME", "value": "test-db-pw" }
+      - op: add
+        path: /spec/template/spec/containers/0/env/-
+        value: { "name": "PROJECT_ID", "value": "yoondaegyoung-01-400304" }
+      - op: remove
+        path: /spec/template/spec/containers/0/env/0

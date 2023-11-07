@@ -39,10 +39,10 @@ spec:
           periodSeconds: 5
         resources:
           limits:
-            cpu: 40m
+            cpu: 80m
             memory: 110Mi
           requests:
-            cpu: 40m
+            cpu: 80m
             memory: 110Mi
         securityContext:
           allowPrivilegeEscalation: false

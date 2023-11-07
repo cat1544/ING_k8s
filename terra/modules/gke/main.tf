@@ -30,8 +30,11 @@ resource "google_container_cluster" "cluster" {
 
   private_cluster_config {
     enable_private_nodes = true
-    enable_private_endpoint = false
+    enable_private_endpoint = true
     master_ipv4_cidr_block = var.master_ipv4_cidr_block
+    master_global_access_config {
+      enabled = true
+    }
   }
 
   ip_allocation_policy {
@@ -68,16 +71,11 @@ resource "google_container_cluster" "cluster" {
     }
   }
 
-    # master_global_access_config {
-    #   private_cluster_config.master_global_access_config = enabled #전역액세스
-    # }
-#   }
-
   master_authorized_networks_config {
     cidr_blocks {
       # cidr_block = google_compute_subnetwork.subnet.ip_cidr_range
       # display_name = "test" # 승인된 네트워크
-      cidr_block = var.cidr_block
+      cidr_block = "10.0.0.0/16"
       display_name = var.master_network_name
     }
   }
@@ -98,10 +96,6 @@ resource "google_container_cluster" "cluster" {
 #  }
 
   resource_labels = var.label
-
-  # resource_labels = {
-  #   "env" = "prod"
-  # }
 
   workload_identity_config {
     workload_pool = var.workload_identity_config

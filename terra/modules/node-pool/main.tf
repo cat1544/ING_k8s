@@ -4,15 +4,20 @@ resource "google_container_node_pool" "node-pool" {
 #  cluster    = google_container_cluster.cluster.name
 #  node_count = 3 autoscaling과 함께 사용 불가
   cluster = var.cluster_name
+  initial_node_count = 1
   max_pods_per_node = var.max_pods
 
   node_config {
     preemptible  = true
     image_type = "COS_CONTAINERD"
-    machine_type = "e2-medium"
+    machine_type = var.type
     disk_size_gb = var.disk_size
     disk_type = "pd-balanced"
     labels = var.label
+    service_account = var.service_account
+    # oauth_scopes = [
+    #   "https://www.googleapis.com/auth/cloud-platform"
+    # ]
   }
   autoscaling {
     # total_min_node_count = var.min_node

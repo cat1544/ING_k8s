@@ -3,7 +3,6 @@ kind: Rollout
 metadata:
   name: cartservice
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: cartservice

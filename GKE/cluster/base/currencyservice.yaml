@@ -3,7 +3,6 @@ kind: Rollout
 metadata:
   name: currencyservice
 spec:
-  replicas: 5
   selector:
     matchLabels:
       app: currencyservice

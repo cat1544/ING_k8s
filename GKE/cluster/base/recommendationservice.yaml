@@ -3,7 +3,6 @@ kind: Rollout
 metadata:
   name: recommendationservice
 spec:
-  replicas: 5
   selector:
     matchLabels:
       app: recommendationservice

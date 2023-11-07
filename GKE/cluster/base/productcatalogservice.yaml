@@ -3,7 +3,6 @@ kind: Rollout
 metadata:
   name: productcatalogservice
 spec:
-  replicas: 5
   selector:
     matchLabels:
       app: productcatalogservice

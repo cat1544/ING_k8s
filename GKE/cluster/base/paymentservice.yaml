@@ -3,7 +3,6 @@ kind: Rollout
 metadata:
   name: paymentservice
 spec:
-  replicas: 5
   selector:
     matchLabels:
       app: paymentservice

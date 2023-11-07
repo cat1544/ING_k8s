@@ -86,103 +86,103 @@ patches:
 
 # replica 수정
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: adservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: cartservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 7
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: checkoutservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: currencyservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: emailservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: paymentservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: productcatalogservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: recommendationservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: shippingservice
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
   - target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: Rollout
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: frontend
     patch: |-
       - op: replace
-        path: /spec/replicas
+        path: /spec/minReplicas
         value: 1
 
 # postgreSQL추가

@@ -36,11 +36,11 @@ spec:
           initialDelaySeconds: 15
         resources:
           limits:
-            cpu: 300m
+            cpu: 700m
             memory: 128Mi
           requests:
-            cpu: 200m
-            memory: 64Mi
+            cpu: 700m
+            memory: 128Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -89,8 +89,8 @@ metadata:
   annotations:
     iam.gke.io/gcp-service-account: postdb-user-sa@yoondaegyoung-01-400304.iam.gserviceaccount.com
 ---
-apiVersion: autoscaling.gke.io/v1beta1
-kind: MultidimPodAutoscaler
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
 metadata:
   name: cartservice-autoscaler
 spec:
@@ -106,19 +106,8 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 20
+          averageUtilization: 60
   constraints:
     global:
-      minReplicas: 5
+      minReplicas: 1
       maxReplicas: 15
-    containerControlledResources: [ memory ]
-    container:
-    - name: '*'
-    # Define boundaries for the memory request here
-      requests:
-        minAllowed:
-          memory: 300Mi
-        maxAllowed:
-          memory: 2Gi
-  policy:
-    updateMode: Auto

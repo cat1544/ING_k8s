@@ -36,10 +36,10 @@ spec:
             port: 7000
         resources:
           limits:
-            cpu: 200m
-            memory: 128Mi
+            cpu: 150m
+            memory: 64Mi
           requests:
-            cpu: 100m
+            cpu: 150m
             memory: 64Mi
         securityContext:
           allowPrivilegeEscalation: false
@@ -82,8 +82,8 @@ spec:
   selector:
     app: currencyservice
 ---
-apiVersion: autoscaling.gke.io/v1beta1
-kind: MultidimPodAutoscaler
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
 metadata:
   name: currencyservice-autoscaler
 spec:
@@ -104,14 +104,3 @@ spec:
     global:
       minReplicas: 1
       maxReplicas: 15
-    containerControlledResources: [ memory ]
-    container:
-    - name: '*'
-    # Define boundaries for the memory request here
-      requests:
-        minAllowed:
-          memory: 300Mi
-        maxAllowed:
-          memory: 2Gi
-  policy:
-    updateMode: Auto

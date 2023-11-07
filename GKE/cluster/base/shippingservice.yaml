@@ -36,11 +36,11 @@ spec:
           periodSeconds: 5
         resources:
           limits:
-            cpu: 200m
-            memory: 128Mi
+            cpu: 20m
+            memory: 32Mi
           requests:
-            cpu: 100m
-            memory: 64Mi
+            cpu: 20m
+            memory: 32Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -81,8 +81,8 @@ spec:
   selector:
     app: shippingservice
 ---
-apiVersion: autoscaling.gke.io/v1beta1
-kind: MultidimPodAutoscaler
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
 metadata:
   name: shippingservice-autoscaler
 spec:
@@ -103,14 +103,3 @@ spec:
     global:
       minReplicas: 1
       maxReplicas: 15
-    containerControlledResources: [ memory ]
-    container:
-    - name: '*'
-    # Define boundaries for the memory request here
-      requests:
-        minAllowed:
-          memory: 300Mi
-        maxAllowed:
-          memory: 2Gi
-  policy:
-    updateMode: Auto

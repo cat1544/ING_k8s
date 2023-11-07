@@ -37,10 +37,10 @@ spec:
           periodSeconds: 15
         resources:
           limits:
-            cpu: 300m
-            memory: 300Mi
+            cpu: 20m
+            memory: 180Mi
           requests:
-            cpu: 200m
+            cpu: 20m
             memory: 180Mi
         securityContext:
           allowPrivilegeEscalation: false
@@ -83,8 +83,8 @@ spec:
   selector:
     app: adservice
 ---
-apiVersion: autoscaling.gke.io/v1beta1
-kind: MultidimPodAutoscaler
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
 metadata:
   name: adservice-autoscaler
 spec:
@@ -105,14 +105,3 @@ spec:
     global:
       minReplicas: 1
       maxReplicas: 15
-    containerControlledResources: [ memory ]
-    container:
-    - name: '*'
-    # Define boundaries for the memory request here
-      requests:
-        minAllowed:
-          memory: 300Mi
-        maxAllowed:
-          memory: 2Gi
-  policy:
-    updateMode: Auto

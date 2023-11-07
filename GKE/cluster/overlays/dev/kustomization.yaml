@@ -103,7 +103,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/replicas
-        value: 5
+        value: 7
 
   - target:
       group: argoproj.io

@@ -89,7 +89,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: adservice
+      name: adservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -99,7 +99,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: cartservice
+      name: cartservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -109,7 +109,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: checkoutservice
+      name: checkoutservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -119,7 +119,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: currencyservice
+      name: currencyservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -129,7 +129,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: emailservice
+      name: emailservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -139,7 +139,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: paymentservice
+      name: paymentservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -149,7 +149,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: productcatalogservice
+      name: productcatalogservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -159,7 +159,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: recommendationservice
+      name: recommendationservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -169,7 +169,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: shippingservice
+      name: shippingservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
@@ -179,7 +179,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: frontend
+      name: frontend-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas

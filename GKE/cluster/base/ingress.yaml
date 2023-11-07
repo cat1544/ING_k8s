@@ -8,9 +8,9 @@ spec:
   logging:
     enable: true
     sampleRate: 0.5
-  sessionAffinity:
-    affinityType: "GENERATED_COOKIE"
-    affinityCookieTtlSec: 50
+  # sessionAffinity:
+  #   affinityType: "GENERATED_COOKIE"
+  #   affinityCookieTtlSec: 50
   cdn:
     enabled: true
     cachePolicy:

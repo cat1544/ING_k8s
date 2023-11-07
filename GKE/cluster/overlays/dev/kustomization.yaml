@@ -103,7 +103,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 7
+        value: 5
 
   - target:
       group: autoscaling

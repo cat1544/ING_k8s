@@ -6,6 +6,10 @@ variable "location" {
   type    = string
 }
 
+variable "type" {
+  type    = string
+}
+
 variable "disk_size" {
   type    = number
 }
@@ -27,3 +31,8 @@ variable "min_node" {
 variable "max_node" {
   type = number
 }
+
+variable "service_account" {
+  type = string
+}
+

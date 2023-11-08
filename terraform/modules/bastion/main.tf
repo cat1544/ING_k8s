@@ -22,7 +22,7 @@
 resource "google_compute_instance" "bastion" {
     name = var.instance_name
     machine_type = "e2-medium"
-    zone = "asia-northeast3"
+    zone = "asia-northeast3-a"
 
     tags = ["bastion"]
 
@@ -35,15 +35,15 @@ resource "google_compute_instance" "bastion" {
         }
       }
     }
-    scratch_disk {
-      interface = "NVME"
-    }
+    # scratch_disk {
+    #   interface = "NVME"
+    # }
     
     network_interface {
       network = var.network
-    #   subnetwork = var.subnetwork
+      subnetwork = var.subnetwork
       access_config {
-        nat_ip = "ephemeral"
+        nat_ip = null
       }
     }
 

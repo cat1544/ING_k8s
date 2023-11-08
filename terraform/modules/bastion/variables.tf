@@ -14,6 +14,6 @@ variable "sa_email" {
     type = string
 }
 
-# variable "subnetwork" {
-#     type = string
-# }
+variable "subnetwork" {
+    type = string
+}

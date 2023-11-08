@@ -13,7 +13,7 @@ provider "google" {
 }
 
 locals {
-  project_id = "subtle-display-404304"
+  project_id = "fiery-cabinet-404400"
   region     = "asia-northeast3"
   location   = "asia-northeast3"
   service    = "boutique"
@@ -21,13 +21,13 @@ locals {
 
 }
 
-terraform {
-  backend "gcs" {
-    bucket = "subtle-display-404304"
-    prefix = "tfstate/prod/"
-    # lock_timeout_seconds = 180
-  }
-}
+# terraform {
+#   backend "gcs" {
+#     bucket = "fiery-cabinet-404400"
+#     prefix = "tfstate/prod/"
+#     # lock_timeout_seconds = 180
+#   }
+# }
 
 module "vpc" {
   source = "../modules/vpc"
@@ -37,6 +37,7 @@ module "vpc" {
 
   private_ip_name        = "private-prod"    #
   vpc_connection_service = "servicenetworking.googleapis.com" #
+  name = "prod-allow-ingress-from-iap"
 }
 
 module "subnet" {
@@ -71,9 +72,17 @@ module "prod-gke" {
   workload_identity_config = "${local.project_id}.svc.id.goog"
 }
 
-resource "google_service_account" "prod-sa" {
-  account_id   = "prod-sa"
-  display_name = "prod-sa"
+resource "google_service_account" "prod_sa" {
+  account_id   = "prod-node-sa"
+  display_name = "prod-node-sa"
+}
+
+resource "google_project_iam_binding" "node_role_binding" {
+  project = local.project_id
+  role    = "roles/container.nodeServiceAccount"
+  members = [
+    "serviceAccount:${google_service_account.prod_sa.email}",
+  ]
 }
 
 module "prod-nodepool" {
@@ -86,7 +95,7 @@ module "prod-nodepool" {
   min_node = 3
   max_node = 6
   cluster_name        = module.prod-gke.cluster_name
-  service_account = google_service_account.prod-sa.email
+  service_account = google_service_account.prod_sa.email
 
   label = {
     "env" : "prod"
@@ -94,8 +103,17 @@ module "prod-nodepool" {
   }
 }
 
-data "google_service_account" "prod-bastion" {
-  account_id = "bastion-sa"
+resource "google_service_account" "bastion_sa" {
+    account_id = "prod-bastion-sa"
+    display_name = "prod-bastion-sa"
+}
+
+resource "google_project_iam_binding" "container_developer_binding" {
+  project = local.project_id
+  role    = "roles/container.developer"
+  members = [
+    "serviceAccount:${google_service_account.bastion_sa.email}",
+  ]
 }
 
 module "bastion_vm" {
@@ -103,7 +121,8 @@ module "bastion_vm" {
   instance_name = "prod-bastion"
   project_id = local.project_id
   network = module.vpc.network
-  sa_email = data.google_service_account.prod-bastion.name
+  subnetwork = module.subnet.subnetwork
+  sa_email = google_service_account.bastion_sa.email
 
   depends_on = [ module.prod-gke ]
 }

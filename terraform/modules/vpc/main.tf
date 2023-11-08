@@ -32,3 +32,17 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   service                 = var.vpc_connection_service #"servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_ip.name]
 }
+
+resource "google_compute_firewall" "iap" {
+    name = var.name
+    network = google_compute_network.vpc.name
+    priority = 800
+
+    allow {
+      protocol = "tcp"
+      ports = ["22"]
+    }
+
+    source_ranges = ["35.235.240.0/20"]
+    target_tags = ["bastion"]
+}

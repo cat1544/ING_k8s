@@ -23,3 +23,7 @@ variable "private_ip_name" {
 variable "vpc_connection_service" {
   type    = string
 }
+
+variable "name" {
+    type  = string
+}

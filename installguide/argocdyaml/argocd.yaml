@@ -20734,3 +20734,10 @@ spec:
       - configMap:
           name: argocd-tls-certs-cm
         name: tls-certs
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-notifications-secret
+stringData:
+  slack-token: xoxb-6184797071568-6161724551491-cM5NzSSiDyurLscIe2mGudl7

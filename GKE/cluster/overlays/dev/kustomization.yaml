@@ -183,7 +183,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
 # postgreSQL추가
   - target:

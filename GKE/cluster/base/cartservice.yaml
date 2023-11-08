@@ -99,4 +99,4 @@ spec:
     name: cartservice
   minReplicas: 5
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 50
+  targetCPUUtilizationPercentage: 35

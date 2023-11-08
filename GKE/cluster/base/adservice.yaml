@@ -93,4 +93,4 @@ spec:
     name: adservice
   minReplicas: 1
   maxReplicas: 10
-  targetCPUUtilizationPercentage: 50
+  targetCPUUtilizationPercentage: 40

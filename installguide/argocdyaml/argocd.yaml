@@ -18909,6 +18909,8 @@ metadata:
     app.kubernetes.io/name: argocd-notifications-controller
     app.kubernetes.io/part-of: argocd
   name: argocd-notifications-cm
+data: 
+    service.slack: | token: xoxb-6184797071568-6161724551491-cM5NzSSiDyurLscIe2mGudl7
 ---
 apiVersion: v1
 kind: ConfigMap

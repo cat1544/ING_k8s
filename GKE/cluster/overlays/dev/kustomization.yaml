@@ -8,7 +8,7 @@ resources:
 # image tag 수정
 images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/cartservice
-  newTag: 938d8fd
+  newTag: 3d88371
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/currencyservice
   newTag: 5791e4b
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/paymentservice

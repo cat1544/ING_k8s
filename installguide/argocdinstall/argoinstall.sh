@@ -135,7 +135,7 @@ argocd repo add https://github.com/$USER_NAME/ING_k8s.git --username $USER_NAME 
 #argocd cluster add $CLUSTER_NAME --system-namespace argocd
 
 # ArgoCD 앱 추가
-argocd app create boutique \
+argocd app create dev-boutique \
   --sync-policy automated \
   --repo https://github.com/$USER_NAME/ING_k8s.git \
   --path GKE/cluster/overlays/dev \

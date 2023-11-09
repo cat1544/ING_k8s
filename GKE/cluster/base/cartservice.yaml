@@ -102,20 +102,18 @@ spec:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 51
+          averageUtilization: 30
   constraints:
     global:
       minReplicas: 1
       maxReplicas: 3
-    containerControlledResources: [ "memory", "cpu" ]
+    containerControlledResources: [ memory ]
     container:
     - name: '*'
       requests:
         minAllowed:
           memory: 1Gi
-          cpu: 200m
         maxAllowed:
           memory: 4Gi
-          cpu: 5000m
   policy:
     updateMode: Auto

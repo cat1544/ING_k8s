@@ -35,11 +35,9 @@ spec:
           initialDelaySeconds: 15
         resources:
           requests:
-            memory: "1Gi"
             cpu: "500m"
           limits:
-            memory: "4Gi"
-            cpu: "2000m"
+            cpu: "4000m"
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
@@ -109,15 +107,13 @@ spec:
     global:
       minReplicas: 1
       maxReplicas: 3
-    containerControlledResources: [ memory, cpu ]
+    containerControlledResources: [ memory ]
     container:
     - name: '*'
       requests:
         minAllowed:
           memory: 1Gi
-          cpu: 1000m
         maxAllowed:
           memory: 4Gi
-          cpu: 4000m
   policy:
     updateMode: Auto

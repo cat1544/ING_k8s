@@ -100,7 +100,7 @@ patches:
       version: v1beta1
       kind: MultidimPodAutoscaler
       name: cartservice-autoscaler
-    path: |-
+    patch: |-
       - op: replace
         path: /spec/constraints/global/minReplicas
         value: 1

@@ -18866,9 +18866,9 @@ data:
         name: GitHub
         config:
           clientID: 692a6103c22a1f442065
-          clientSecret: 5f16e7a1143ae3df31d59c84f38647b016766798
+          clientSecret: 3d5dbd713ade9c6b2e69a097800bbc4ebff3d9c9
           orgs:
-          - name: dev-boutique
+          - name: GCP-ING
 # data:
 #   oidc.tls.insecure.skip.verify: "true" #Since Dex is used
 #   url: https://www.2280.store
@@ -18923,13 +18923,26 @@ metadata:
   namespace: argocd
 data:
   policy.csv: |
-    p, role:github-role, applications, *, */*, allow
-    p, role:github-role, clusters, *, *, allow
-    p, role:github-role, repositories, *, *, allow
-    p, role:github-role, *, *, *, allow
+    p, role:pro-role, applications, *, */*, allow
+    p, role:pro-role, clusters, *, *, allow
+    p, role:pro-role, repositories, *, *, allow
+    p, role:pro-role, *, *, *, allow
 
-    g, dev-boutique:ING, role:github-role
-  # policy.default: role:readonly
+    p, role:dev-role, applications, *, */*, allow
+    p, role:dev-role, clusters, get, *, allow
+    p, role:dev-role, repositories, get, *, allow
+    p, role:dev-role, repositories, create, *, allow
+    p, role:dev-role, repositories, update, *, allow
+    p, role:dev-role, repositories, delete, *, allow
+    p, role:dev-role, projects, get, *, allow
+    p, role:dev-role, projects, create, *, allow
+    p, role:dev-role, projects, update, *, allow
+    p, role:dev-role, projects, delete, *, allow
+    p, role:dev-role, logs, get, *, allow
+    p, role:dev-role, exec, create, */*, allow
+
+    g, GCP-ING:dev, role:dev-role
+    g, GCP-ING:pro, role:pro-role
 ---
 apiVersion: v1
 data:

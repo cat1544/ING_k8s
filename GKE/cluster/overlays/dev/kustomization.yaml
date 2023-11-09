@@ -96,14 +96,26 @@ patches:
         value: 2
 
   - target:
-      group: autoscaling
-      version: v1
-      kind: HorizontalPodAutoscaler
+      group: autoscaling.gke.io
+      version: v1beta1
+      kind: MultidimPodAutoscaler
       name: cartservice-autoscaler
-    patch: |-
+    path: |-
       - op: replace
-        path: /spec/minReplicas
-        value: 2
+        path: /spec/constraints/global/minReplicas
+        value: 1
+      - op: replace
+        path: /spec/constraints/global/maxReplicas
+        value: 3
+      - op: replace
+        path: /spec/constraints/container/0/requests/minAllowed/memory
+        value: "1Gi"
+      - op: replace
+        path: /spec/constraints/container/0/requests/maxAllowed/memory
+        value: "4Gi"
+      - op: replace
+        path: /spec/goals/metrics/0/resource/target/averageUtilization
+        value: 30
 
   - target:
       group: autoscaling

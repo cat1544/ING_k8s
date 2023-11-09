@@ -89,7 +89,7 @@ sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
 # # Print the admin password
 # echo "Fetching the initial admin password..."
 # argocd admin initial-password -n argocd
-# ARGOCD_PASSWORD=$(argocd admin initial-password -n argocd | awk 'NR==1')
+ARGOCD_PASSWORD=$(argocd admin initial-password -n argocd | awk 'NR==1')
 
 # # Define a retry function
 # retry_command() {

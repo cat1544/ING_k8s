@@ -114,8 +114,14 @@ patches:
         path: /spec/constraints/container/0/requests/maxAllowed/memory
         value: "4Gi"
       - op: replace
+        path: /spec/constraints/container/0/requests/minAllowed/cpu
+        value: "1000m"
+      - op: replace
+        path: /spec/constraints/container/0/requests/maxAllowed/cpu
+        value: "4000m"
+      - op: replace
         path: /spec/goals/metrics/0/resource/target/averageUtilization
-        value: 30
+        value: 51
 
   - target:
       group: autoscaling

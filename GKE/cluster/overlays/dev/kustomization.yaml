@@ -114,14 +114,21 @@ patches:
         path: /spec/constraints/container/0/requests/maxAllowed/memory
         value: "4.5Gi"
       - op: replace
+        path: /spec/goals/metrics/0/resource/target/averageUtilization
+        value: 51
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: cartservice
+    patch: |-
+      - op: replace
         path: /spec/template/spec/containers/0/resources/requests/cpu
         value: "200m"
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/cpu
         value: "4500m"
-      - op: replace
-        path: /spec/goals/metrics/0/resource/target/averageUtilization
-        value: 51
 
   - target:
       group: autoscaling

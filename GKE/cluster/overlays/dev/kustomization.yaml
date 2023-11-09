@@ -206,6 +206,6 @@ patches:
         value: { "name": "ALLOYDB_SECRET_NAME", "value": "test-db-pw" }
       - op: add
         path: /spec/template/spec/containers/0/env/-
-        value: { "name": "PROJECT_ID", "value": 1081479304655 }
+        value: { "name": "PROJECT_ID", "value": '1081479304655" }
       - op: remove
         path: /spec/template/spec/containers/0/env/0

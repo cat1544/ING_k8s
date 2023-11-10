@@ -115,7 +115,7 @@ patches:
         value: "500Mi"
       - op: replace
         path: /spec/constraints/container/0/requests/maxAllowed/memory
-        value: "1.5Gi"
+        value: "2Gi"
       - op: replace
         path: /spec/goals/metrics/0/resource/target/averageUtilization
         value: 30
@@ -131,7 +131,7 @@ patches:
         value: "200m"
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/cpu
-        value: "1500m"
+        value: "2000m"
 
   - target:
       group: autoscaling

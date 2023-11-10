@@ -87,8 +87,8 @@ sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
 # echo "ArgoCD External IP: $ARGOCD_SERVER"
 
 # # Print the admin password
-# echo "Fetching the initial admin password..."
-# argocd admin initial-password -n argocd
+echo "Fetching the initial admin password..."
+argocd admin initial-password -n argocd
 ARGOCD_PASSWORD=$(argocd admin initial-password -n argocd | awk 'NR==1')
 
 # # Define a retry function
@@ -122,25 +122,43 @@ SECRET_VALUE=$(gcloud secrets versions access 1 --secret="GIT_ACCESS_TOKEN")
 # ArgoCD에 repo 등록
 USER_NAME=$(git config user.name)
 argocd repo add https://github.com/$USER_NAME/ING_k8s.git --username $USER_NAME --password $SECRET_VALUE --insecure --grpc-web
-# 다른 클러스터에 접속하기 위한 설정
-#gcloud container clusters get-credentials production --region asia-northeast3 --project protean-blend-398805
 
-# 필요한 네임스페이스 생성
-#kubectl create namespace argocd
-#kubectl create namespace boutique
-
-# 클러스터 이름 형식 설정 및 추가 등록
-#CLUSTER_NAME=gke_<project>_asia-northeast3_<clusername>
-#CLUSTER_NAME=gke_protean-blend-398805_asia-northeast3_production
-#argocd cluster add $CLUSTER_NAME --system-namespace argocd
-
-# ArgoCD 앱 추가
+# ArgoCD 앱 추가 (dev)
 argocd app create dev-boutique \
   --sync-policy automated \
   --repo https://github.com/$USER_NAME/ING_k8s.git \
   --path GKE/cluster/overlays/dev \
   --dest-namespace boutique \
   --dest-server https://kubernetes.default.svc \
+  --sync-option CreateNamespace=true \
+  --grpc-web
+
+# 환경변수 등록
+CLUSTER_NAME=prod
+PROJECT_ID=yoondaegyoung-01-400304
+#CLUSTER_FULL_NAME=gke_<project>_asia-northeast3_<clusername>
+CLUSTER_FULL_NAME=gke_${PROJECT_ID}_asia-northeast3_${CLUSTER_NAME}
+
+# prod 클러스터에 접속하기
+gcloud container clusters get-credentials $CLUSTER_NAME --region asia-northeast3 --project $PROJECT_ID
+
+# prod 클러스터에 argocd-rollout 설치
+echo "argo-rollouts 설치 중..."
+helm install argocd-rollouts -f values.yaml argo/argo-rollouts --namespace argocd-rollouts --create-namespace
+echo "ArgoCD-rolluts installation complete."
+
+# argocd cluster 추가 및 출력을 변수에 저장
+output=$(argocd cluster add $CLUSTER_FULL_NAME --system-namespace argocd --grpc-web)
+
+# 출력 메시지에서 IP 주소 추출
+CLUSTER_URL=$(echo "$output" | grep -o 'https://[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+')
+
+# ArgoCD 앱 추가
+argocd app create prod-boutique \
+  --repo https://github.com/$USER_NAME/ING_k8s.git \
+  --path GKE/cluster/overlays/prod \
+  --dest-namespace boutique \
+  --dest-server $CLUSTER_URL \
   --sync-option CreateNamespace=true \
   --grpc-web
 

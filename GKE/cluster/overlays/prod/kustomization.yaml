@@ -89,101 +89,126 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: adservice
+      name: adservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
   - target:
-      group: autoscaling
-      version: v1
-      kind: HorizontalPodAutoscaler
+      group: autoscaling.gke.io
+      version: v1beta1
+      kind: MultidimPodAutoscaler
+      name: cartservice-autoscaler
+    patch: |-
+      - op: replace
+        path: /spec/constraints/global/minReplicas
+        value: 1
+      - op: replace
+        path: /spec/constraints/global/maxReplicas
+        value: 3
+      - op: replace
+        path: /spec/constraints/container/0/requests/minAllowed/memory
+        value: "500Mi"
+      - op: replace
+        path: /spec/constraints/container/0/requests/maxAllowed/memory
+        value: "4.5Gi"
+      - op: replace
+        path: /spec/goals/metrics/0/resource/target/averageUtilization
+        value: 51
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
       name: cartservice
     patch: |-
       - op: replace
-        path: /spec/minReplicas
-        value: 7
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "200m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "4500m"
 
   - target:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: checkoutservice
+      name: checkoutservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
   - target:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: currencyservice
+      name: currencyservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
   - target:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: emailservice
+      name: emailservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
   - target:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: paymentservice
+      name: paymentservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
   - target:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: productcatalogservice
+      name: productcatalogservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
   - target:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: recommendationservice
+      name: recommendationservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
   - target:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: shippingservice
+      name: shippingservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
   - target:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: frontend
+      name: frontend-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 1
+        value: 2
 
 # postgreSQL추가
   - target:
@@ -206,6 +231,6 @@ patches:
         value: { "name": "ALLOYDB_SECRET_NAME", "value": "test-db-pw" }
       - op: add
         path: /spec/template/spec/containers/0/env/-
-        value: { "name": "PROJECT_ID", "value": "yoondaegyoung-01-400304" }
+        value: { "name": "PROJECT_ID", "value": "1081479304655" }
       - op: remove
         path: /spec/template/spec/containers/0/env/0

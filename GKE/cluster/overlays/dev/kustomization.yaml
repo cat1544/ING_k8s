@@ -39,6 +39,9 @@ patches:
       name: frontend-ingress
     patch: |-
       - op: replace
+        path: /metadata/name
+        value: dev-frontend-ingress
+      - op: replace
         path: /metadata/annotations/kubernetes.io~1ingress.global-static-ip-name
         value: dev-boutique-ip
       - op: replace

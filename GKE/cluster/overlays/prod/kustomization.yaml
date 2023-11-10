@@ -109,7 +109,7 @@ patches:
         value: 1
       - op: replace
         path: /spec/constraints/global/maxReplicas
-        value: 3
+        value: 4
       - op: replace
         path: /spec/constraints/container/0/requests/minAllowed/memory
         value: "500Mi"
@@ -118,7 +118,7 @@ patches:
         value: "1.5Gi"
       - op: replace
         path: /spec/goals/metrics/0/resource/target/averageUtilization
-        value: 51
+        value: 30
 
   - target:
       group: argoproj.io

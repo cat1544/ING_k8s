@@ -40,13 +40,13 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/annotations/kubernetes.io~1ingress.global-static-ip-name
-        value: dev-boutique-ip
+        value: ing-boutique-ip
       - op: replace
         path: /metadata/annotations/networking.gke.io~1managed-certificates
-        value: dev-boutique-certificate
+        value: ing-boutique-certificate
       - op: replace
         path: /spec/rules/0/host
-        value: www.dev-boutique.shop
+        value: www.ing-boutique.shop
 
   - target:
       group: networking.gke.io
@@ -56,13 +56,13 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/name
-        value: dev-boutique-certificate
+        value: ing-boutique-certificate
       - op: replace
         path: /spec/domains/0
-        value: www.dev-boutique.shop
+        value: www.ing-boutique.shop
       - op: replace
         path: /spec/domains/1
-        value: dev-boutique.shop
+        value: ing-boutique.shop
 
   - target:
       group: cloud.google.com
@@ -72,7 +72,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/securityPolicy/name
-        value: dev-boutique-security-policy
+        value: ing-boutique-security-policy
 
   - target:
       group: networking.gke.io
@@ -82,7 +82,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/sslPolicy
-        value: dev-boutique-ssl-policy
+        value: ing-boutique-ssl-policy
 
 # replica 수정
   - target:

@@ -106,7 +106,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/constraints/global/minReplicas
-        value: 1
+        value: 4
       - op: replace
         path: /spec/constraints/global/maxReplicas
         value: 4

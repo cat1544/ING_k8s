@@ -86,8 +86,40 @@ metadata:
   annotations:
     iam.gke.io/gcp-service-account: postdb-user-sa@yoondaegyoung-01-400304.iam.gserviceaccount.com
 ---
-apiVersion: autoscaling.gke.io/v1beta1
-kind: MultidimPodAutoscaler
+# apiVersion: autoscaling.gke.io/v1beta1
+# kind: MultidimPodAutoscaler
+# metadata:
+#   name: cartservice-autoscaler
+# spec:
+#   scaleTargetRef:
+#     apiVersion: argoproj.io/v1alpha1
+#     kind: Rollout
+#     name: cartservice
+#   goals:
+#     metrics:
+#     - type: Resource
+#       resource:
+#         name: cpu
+#         target:
+#           type: Utilization
+#           averageUtilization: 30
+#   constraints:
+#     global:
+#       minReplicas: 1
+#       maxReplicas: 3
+#     containerControlledResources: [ memory ]
+#     container:
+#     - name: '*'
+#       requests:
+#         minAllowed:
+#           memory: 1Gi
+#         maxAllowed:
+#           memory: 4Gi
+#   policy:
+#     updateMode: Auto
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
 metadata:
   name: cartservice-autoscaler
 spec:
@@ -95,25 +127,6 @@ spec:
     apiVersion: argoproj.io/v1alpha1
     kind: Rollout
     name: cartservice
-  goals:
-    metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 30
-  constraints:
-    global:
-      minReplicas: 1
-      maxReplicas: 3
-    containerControlledResources: [ memory ]
-    container:
-    - name: '*'
-      requests:
-        minAllowed:
-          memory: 1Gi
-        maxAllowed:
-          memory: 4Gi
-  policy:
-    updateMode: Auto
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 40

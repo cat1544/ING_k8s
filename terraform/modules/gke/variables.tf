@@ -35,6 +35,8 @@ variable "workload_identity_config" {
   type    = string
 }
 
-variable "cidr_block" {}
+# variable "cidr_block" {}
 variable "master_network_name" {}
 variable "peering" {}
+variable "pod_ip" {}
+variable "svc_ip" {}

@@ -8,12 +8,12 @@ terraform {
 }
 
 provider "google" {
-  project = "fiery-cabinet-404400"
+  project = "yoondaegyoung-01-400304"
   region  = "asia-northeast3"
 }
 
 locals {
-  project_id = "fiery-cabinet-404400"
+  project_id = "yoondaegyoung-01-400304"
   region     = "asia-northeast3"
   location   = "asia-northeast3"
   service    = "boutique"
@@ -22,13 +22,13 @@ locals {
 
 }
 
-# terraform {
-#   backend "gcs" {
-#     bucket = "fiery-cabinet-404400"
-#     prefix = "tfstate/dev/"
-#     # lock_timeout_seconds = 180
-#   }
-# }
+terraform {
+  backend "gcs" {
+    bucket = "terraform-backend"
+    prefix = "tfstate/dev/"
+    # lock_timeout_seconds = 180
+  }
+}
 
 module "vpc" {
   source = "../modules/vpc"
@@ -36,7 +36,7 @@ module "vpc" {
   project_id = local.project_id
   vpc_name   = "${local.service}-${local.env}"
 
-  private_ip_name        = "private"    #
+  private_ip_name        = "dev-private"    #
   vpc_connection_service = "servicenetworking.googleapis.com" #
   name = "dev-allow-ingress-from-iap"
 }
@@ -46,10 +46,9 @@ module "subnet" {
 
   network       = module.vpc.network
   subnet_name   = "${local.env}-sbn"
-  ip_cidr_range = "10.0.0.0/16"
+  ip_cidr_range = "172.163.0.0/29"
   region        = local.region
 }
-
 
 # =========================================
 # ***************prod-cluster**************
@@ -64,10 +63,12 @@ module "dev-gke" {
 #   vpc_connection_service = "servicenetworking.googleapis.com" #
   name                   = "${local.service}-${local.env}"
   location               = local.location
-  master_ipv4_cidr_block = "172.16.0.0/28"
+  master_ipv4_cidr_block = "172.16.0.64/28"
+  pod_ip = "172.16.8.0/21"
+  svc_ip = "172.16.16.0/24"
   peering = module.vpc.peering
-  cidr_block = "218.235.89.0/24"
-  master_network_name = "${local.env}-cp"
+  # cidr_block = "218.235.89.0/24"
+  master_network_name = "${local.env}-master"
 
   label = {
     "app" : "boutique"
@@ -95,11 +96,11 @@ module "dev-nodepool" {
   source         = "../modules/node-pool"
   node_pool_name = local.service
   location       = local.location
-  type = "e2-medium"
-  disk_size      = 30
-  max_pods = 50
+  type = "e2-highcpu-8"
+  disk_size      = 40
+  max_pods = 40
   min_node = 0
-  max_node = 3
+  max_node = 2
   cluster_name        = module.dev-gke.cluster_name
   service_account = google_service_account.dev_sa.email
   label = {
@@ -127,11 +128,11 @@ module "argo-nodepool" {
   source         = "../modules/node-pool"
   node_pool_name = "argocd"
   location       = local.location
-  type = "e2-medium"
+  type = "e2-standard-4"
   disk_size      = 20
-  max_pods = 20
-  min_node = 2
-  max_node = 3
+  max_pods = 40
+  min_node = 1
+  max_node = 2
   cluster_name        = module.dev-gke.cluster_name
   service_account = google_service_account.argo_sa.email
 

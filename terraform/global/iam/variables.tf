@@ -1,3 +1,3 @@
 variable "project_id" {
-    default = "vivid-outcome-403704"
+    default = "yoondaegyoung-01-400304"
 }

@@ -13,7 +13,7 @@ provider "google" {
 }
 
 locals {
-  project_id = "fiery-cabinet-404400"
+  project_id = "yoondaegyoung-01-400304"
   region     = "asia-northeast3"
   location   = "asia-northeast3"
   service    = "boutique"
@@ -21,13 +21,13 @@ locals {
 
 }
 
-# terraform {
-#   backend "gcs" {
-#     bucket = "fiery-cabinet-404400"
-#     prefix = "tfstate/prod/"
-#     # lock_timeout_seconds = 180
-#   }
-# }
+terraform {
+  backend "gcs" {
+    bucket = "terraform-backend"
+    prefix = "tfstate/prod/"
+    # lock_timeout_seconds = 180
+  }
+}
 
 module "vpc" {
   source = "../modules/vpc"
@@ -35,7 +35,7 @@ module "vpc" {
   project_id = local.project_id
   vpc_name   = "${local.service}-${local.env}"
 
-  private_ip_name        = "private-prod"    #
+  private_ip_name        = "prod-private"    #
   vpc_connection_service = "servicenetworking.googleapis.com" #
   name = "prod-allow-ingress-from-iap"
 }
@@ -45,7 +45,7 @@ module "subnet" {
 
   network       = module.vpc.network
   subnet_name   = "${local.env}-sbn"
-  ip_cidr_range = "10.0.0.0/16"
+  ip_cidr_range = "192.168.0.0/29"
   region        = local.region
 }
 
@@ -58,10 +58,12 @@ module "prod-gke" {
 #   vpc_connection_service = "servicenetworking.googleapis.com" #
   name                   = "${local.service}-${local.env}"
   location               = local.location
-  master_ipv4_cidr_block = "172.16.0.0/28"
+  master_ipv4_cidr_block = "192.168.0.64/28"
   peering = module.vpc.peering
-  cidr_block = "218.235.89.0/24"
+  # cidr_block = "218.235.89.0/24"
   master_network_name = "${local.env}-cp"
+  pod_ip = "192.168.8.0/21"
+  svc_ip = "192.168.16.0/24"
 
   label = {
     "app" : "boutique"
@@ -90,10 +92,10 @@ module "prod-nodepool" {
   node_pool_name = local.service
   location       = local.location
   type = "e2-medium"
-  disk_size      = 60
-  max_pods = 90
-  min_node = 3
-  max_node = 6
+  disk_size      = 40
+  max_pods = 40
+  min_node = 1
+  max_node = 3
   cluster_name        = module.prod-gke.cluster_name
   service_account = google_service_account.prod_sa.email
 

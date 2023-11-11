@@ -1,6 +1,6 @@
 variable "backend_gcs_name" {
   type    = string
-  default = "windy-furnace-404312"
+  default = "terraform-backend"
 }
 
 variable "label" {
@@ -17,5 +17,5 @@ variable "location" {
 }
 
 variable "project_id" {
-  default = "windy-furnace-404312"
+  default = "yoondaegyoung-01-400304"
 }

@@ -13,7 +13,7 @@ provider "google" {
 }
 
 resource "google_project_service" "runtime_project" {
- project = local.project_id
+ project = var.project_id
  service = [
    "compute.googleapis.com",
    "cloudresourcemanager.googleapis.com",

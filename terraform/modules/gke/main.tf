@@ -40,8 +40,8 @@ resource "google_container_cluster" "cluster" {
   ip_allocation_policy {
     # cluster_secondary_range_name = "pod-ip"
     # services_secondary_range_name = "svc-ip"
-    cluster_ipv4_cidr_block = ""
-    services_ipv4_cidr_block = ""
+    cluster_ipv4_cidr_block = var.pod_ip
+    services_ipv4_cidr_block = var.svc_ip
   }
   
   dns_config {

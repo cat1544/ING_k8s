@@ -222,7 +222,7 @@ patches:
     patch: |-
       - op: add
         path: /spec/template/spec/containers/0/env/-
-        value: { "name": "ALLOYDB_PRIMARY_IP", "value": "10.46.176.3" }
+        value: { "name": "ALLOYDB_PRIMARY_IP", "value": "10.223.0.3" }
       - op: add
         path: /spec/template/spec/containers/0/env/-
         value: { "name": "ALLOYDB_DATABASE_NAME", "value": "carts" }

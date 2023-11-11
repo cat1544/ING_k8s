@@ -36,3 +36,6 @@ variable "service_account" {
   type = string
 }
 
+variable "initial_node_count" {
+  type = string  
+}

@@ -17,14 +17,14 @@ resource "google_container_cluster" "cluster" {
   location = var.location
 
   release_channel {
-    channel = "REGULAR"
+    channel = "STABLE" #STABLE
   }
-
+  #master_version = "1.27.3-gke.100"
   network = var.network
   subnetwork = var.subnet
 
   remove_default_node_pool = true
-  initial_node_count       = 1
+  initial_node_count       = 3
 
   networking_mode = "VPC_NATIVE"
 

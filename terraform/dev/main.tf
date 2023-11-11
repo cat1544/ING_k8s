@@ -80,8 +80,8 @@ module "dev-gke" {
 }
 
 resource "google_service_account" "dev_sa" {
-  account_id   = "dev-prod-sa"
-  display_name = "dev-prod-sa"
+  account_id   = "dev-boutique-sa"
+  display_name = "dev-boutique-sa"
 }
 
 resource "google_project_iam_binding" "dev_node_role_binding" {
@@ -96,6 +96,7 @@ module "dev-nodepool" {
   source         = "../modules/node-pool"
   node_pool_name = local.service
   location       = local.location
+  initial_node_count = 3
   type = "e2-highcpu-8"
   disk_size      = 40
   max_pods = 40
@@ -112,8 +113,8 @@ module "dev-nodepool" {
 }
 
 resource "google_service_account" "argo_sa" {
-  account_id   = "argo-sa"
-  display_name = "argo-sa"
+  account_id   = "dev-argo-sa"
+  display_name = "dev-argo-sa"
 }
 
 resource "google_project_iam_binding" "argo_node_role_binding" {
@@ -129,10 +130,11 @@ module "argo-nodepool" {
   node_pool_name = "argocd"
   location       = local.location
   type = "e2-standard-4"
+  initial_node_count = 2
   disk_size      = 20
   max_pods = 40
   min_node = 1
-  max_node = 2
+  max_node = 1
   cluster_name        = module.dev-gke.cluster_name
   service_account = google_service_account.argo_sa.email
 

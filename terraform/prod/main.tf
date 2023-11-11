@@ -75,8 +75,8 @@ module "prod-gke" {
 }
 
 resource "google_service_account" "prod_sa" {
-  account_id   = "prod-node-sa"
-  display_name = "prod-node-sa"
+  account_id   = "prod-boutique-sa"
+  display_name = "prod-boutique-sa"
 }
 
 resource "google_project_iam_binding" "node_role_binding" {
@@ -91,6 +91,7 @@ module "prod-nodepool" {
   source         = "../modules/node-pool"
   node_pool_name = local.service
   location       = local.location
+  initial_node_count = 3
   type = "e2-medium"
   disk_size      = 40
   max_pods = 40
@@ -103,6 +104,40 @@ module "prod-nodepool" {
     "env" : "prod"
     "app" : "boutique"
   }
+}
+
+resource "google_service_account" "argo_sa" {
+  account_id   = "prod-argo-sa"
+  display_name = "prod-argo-sa"
+}
+
+resource "google_project_iam_binding" "argo_node_role_binding" {
+  project = local.project_id
+  role    = "roles/container.nodeServiceAccount"
+  members = [
+    "serviceAccount:${google_service_account.argo_sa.email}",
+  ]
+}
+
+module "argo-nodepool" {
+  source         = "../modules/node-pool"
+  node_pool_name = "argocd"
+  location       = local.location
+  initial_node_count = 3
+  type = "e2-standard-4"
+  disk_size      = 20
+  max_pods = 40
+  min_node = 1
+  max_node = 2
+  cluster_name        = module.dev-gke.cluster_name
+  service_account = google_service_account.argo_sa.email
+
+  label = {
+    "env" : "dev"
+    "app" : "argo"
+  }
+
+  depends_on = [ google_service_account.argo_sa ]
 }
 
 resource "google_service_account" "bastion_sa" {

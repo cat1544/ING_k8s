@@ -4,7 +4,7 @@ resource "google_container_node_pool" "node-pool" {
 #  cluster    = google_container_cluster.cluster.name
 #  node_count = 3 autoscaling과 함께 사용 불가
   cluster = var.cluster_name
-  initial_node_count = 1
+  initial_node_count = var.initial_node_count
   max_pods_per_node = var.max_pods
 
   node_config {

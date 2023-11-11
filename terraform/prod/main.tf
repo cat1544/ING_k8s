@@ -92,7 +92,7 @@ module "prod-nodepool" {
   node_pool_name = local.service
   location       = local.location
   initial_node_count = 3
-  type = "e2-medium"
+  type = "e2-highcpu-8"
   disk_size      = 40
   max_pods = 40
   min_node = 1
@@ -123,7 +123,7 @@ module "argo-nodepool" {
   source         = "../modules/node-pool"
   node_pool_name = "argocd"
   location       = local.location
-  initial_node_count = 3
+  initial_node_count = 2
   type = "e2-standard-4"
   disk_size      = 20
   max_pods = 40

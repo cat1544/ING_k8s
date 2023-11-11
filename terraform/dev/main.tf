@@ -24,7 +24,7 @@ locals {
 
 terraform {
   backend "gcs" {
-    bucket = "terraform-backend"
+    bucket = "ing-tf-backend"
     prefix = "tfstate/dev/"
     # lock_timeout_seconds = 180
   }
@@ -46,7 +46,7 @@ module "subnet" {
 
   network       = module.vpc.network
   subnet_name   = "${local.env}-sbn"
-  ip_cidr_range = "172.163.0.0/29"
+  ip_cidr_range = "172.16.0.0/29"
   region        = local.region
 }
 

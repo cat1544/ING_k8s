@@ -1,6 +1,6 @@
 variable "backend_gcs_name" {
   type    = string
-  default = "terraform-backend"
+  default = "ing-tf-backend"
 }
 
 variable "label" {

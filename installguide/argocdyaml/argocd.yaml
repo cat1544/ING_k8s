@@ -18865,8 +18865,8 @@ data:
         id: github
         name: GitHub
         config:
-          clientID: 692a6103c22a1f442065
-          clientSecret: 3d5dbd713ade9c6b2e69a097800bbc4ebff3d9c9
+          clientID: $argocd-iap-oauth-client:client_id
+          clientSecret: $argocd-iap-oauth-client:client_secret
           orgs:
           - name: GCP-ING
 # data:
@@ -20754,3 +20754,15 @@ metadata:
   name: argocd-notifications-secret
 stringData:
   slack-token: xoxb-6184797071568-6161724551491-cM5NzSSiDyurLscIe2mGudl7
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    app.kubernetes.io/part-of: argocd
+  name: argocd-iap-oauth-client
+  namespace: argocd
+type: Opaque
+stringData:
+  client_id: 692a6103c22a1f442065
+  client_secret: 3d5dbd713ade9c6b2e69a097800bbc4ebff3d9c9

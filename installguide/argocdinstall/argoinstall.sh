@@ -157,16 +157,16 @@ KSA=cron-ksa
 
 # KSA 생성
 kubectl create serviceaccount --namespace argocd $KSA
-kubectl create serviceaccount --namespace boutique $KSA
+kubectl create serviceaccount --namespace dev-boutique $KSA
 
 # GSA - KSA 바인딩
 gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[argocd/$KSA]" $GSA@$PROJECT_ID.iam.gserviceaccount.com
-gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[boutique/$KSA]" $GSA@$PROJECT_ID.iam.gserviceaccount.com
+gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[dev-boutique/$KSA]" $GSA@$PROJECT_ID.iam.gserviceaccount.com
 
 
 # Annotation 추가
 kubectl annotate serviceaccount --namespace argocd $KSA iam.gke.io/gcp-service-account=$GSA@$PROJECT_ID.iam.gserviceaccount.com
-kubectl annotate serviceaccount --namespace boutique $KSA iam.gke.io/gcp-service-account=$GSA@$PROJECT_ID.iam.gserviceaccount.com
+kubectl annotate serviceaccount --namespace dev-boutique $KSA iam.gke.io/gcp-service-account=$GSA@$PROJECT_ID.iam.gserviceaccount.com
 
 
 # # 환경변수 등록

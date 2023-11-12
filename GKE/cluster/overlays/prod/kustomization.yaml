@@ -98,27 +98,37 @@ patches:
         path: /spec/minReplicas
         value: 2
 
+  # - target:
+  #     group: autoscaling.gke.io
+  #     version: v1beta1
+  #     kind: MultidimPodAutoscaler
+  #     name: cartservice-autoscaler
+  #   patch: |-
+  #     - op: replace
+  #       path: /spec/constraints/global/minReplicas
+  #       value: 4
+  #     - op: replace
+  #       path: /spec/constraints/global/maxReplicas
+  #       value: 4
+  #     - op: replace
+  #       path: /spec/constraints/container/0/requests/minAllowed/memory
+  #       value: "500Mi"
+  #     - op: replace
+  #       path: /spec/constraints/container/0/requests/maxAllowed/memory
+  #       value: "1.5Gi"
+  #     - op: replace
+  #       path: /spec/goals/metrics/0/resource/target/averageUtilization
+  #       value: 30
+
   - target:
-      group: autoscaling.gke.io
-      version: v1beta1
-      kind: MultidimPodAutoscaler
-      name: cartservice-autoscaler
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
+      name: adservice-autoscaler
     patch: |-
       - op: replace
-        path: /spec/constraints/global/minReplicas
+        path: /spec/minReplicas
         value: 4
-      - op: replace
-        path: /spec/constraints/global/maxReplicas
-        value: 4
-      - op: replace
-        path: /spec/constraints/container/0/requests/minAllowed/memory
-        value: "500Mi"
-      - op: replace
-        path: /spec/constraints/container/0/requests/maxAllowed/memory
-        value: "1.5Gi"
-      - op: replace
-        path: /spec/goals/metrics/0/resource/target/averageUtilization
-        value: 30
 
   - target:
       group: argoproj.io
@@ -128,10 +138,16 @@ patches:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/resources/requests/cpu
-        value: "200m"
+        value: "600m"
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/cpu
-        value: "1500m"
+        value: "6000m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "512Mi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "4Gi"
 
   - target:
       group: autoscaling

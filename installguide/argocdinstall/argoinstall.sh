@@ -133,34 +133,70 @@ argocd app create dev-boutique \
   --sync-option CreateNamespace=true \
   --grpc-web
 
-# 환경변수 등록
+# role binding
+PROJECT_ID=yoondaegyoung-01-400304
+GSA=wlid-argocd-sa
+KSA=cron-ksa
+
+# # GSA 생성
+# gcloud iam service-accounts create $GSA
+
+# # GSA 롤 바인딩 (identityUser + 필요한 역할)
+# gcloud projects add-iam-policy-binding $PROJECT_ID \
+#             --member "serviceAccount:$GSA@$PROJECT_ID.iam.gserviceaccount.com" \
+#                 --role "roles/container.clusterAdmin"
+# gcloud projects add-iam-policy-binding $PROJECT_ID \
+#             --member "serviceAccount:$GSA@$PROJECT_ID.iam.gserviceaccount.com" \
+#                 --role "roles/iam.workloadIdentityUser"
+# gcloud projects add-iam-policy-binding $PROJECT_ID \
+#             --member "serviceAccount:$GSA@$PROJECT_ID.iam.gserviceaccount.com" \
+#                 --role "roles/artifactregistry.reader"
+# gcloud projects add-iam-policy-binding $PROJECT_ID \
+#             --member "serviceAccount:$GSA@$PROJECT_ID.iam.gserviceaccount.com" \
+#                 --role "roles/secretmanager.secretAccessor"
+
+# KSA 생성
+kubectl create serviceaccount --namespace argocd $KSA
+kubectl create serviceaccount --namespace boutique $KSA
+
+# GSA - KSA 바인딩
+gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[argocd/$KSA]" $GSA@$PROJECT_ID.iam.gserviceaccount.com
+gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[boutique/$KSA]" $GSA@$PROJECT_ID.iam.gserviceaccount.com
+
+
+# Annotation 추가
+kubectl annotate serviceaccount --namespace argocd $KSA iam.gke.io/gcp-service-account=$GSA@$PROJECT_ID.iam.gserviceaccount.com
+kubectl annotate serviceaccount --namespace boutique $KSA iam.gke.io/gcp-service-account=$GSA@$PROJECT_ID.iam.gserviceaccount.com
+
+
+# # 환경변수 등록
 CLUSTER_NAME=boutique-prod
 PROJECT_ID=yoondaegyoung-01-400304
 #CLUSTER_FULL_NAME=gke_<project>_asia-northeast3_<clusername>
 CLUSTER_FULL_NAME=gke_${PROJECT_ID}_asia-northeast3_${CLUSTER_NAME}
 
-# prod 클러스터에 접속하기
-gcloud container clusters get-credentials $CLUSTER_NAME --region asia-northeast3 --project $PROJECT_ID
+# # prod 클러스터에 접속하기
+# gcloud container clusters get-credentials $CLUSTER_NAME --region asia-northeast3 --project $PROJECT_ID
 
-# prod 클러스터에 argocd-rollout 설치
-echo "argo-rollouts 설치 중..."
-helm install argocd-rollouts -f values.yaml argo/argo-rollouts --namespace argocd-rollouts --create-namespace
-echo "ArgoCD-rolluts installation complete."
+# # prod 클러스터에 argocd-rollout 설치
+# echo "argo-rollouts 설치 중..."
+# helm install argocd-rollouts -f values.yaml argo/argo-rollouts --namespace argocd-rollouts --create-namespace
+# echo "ArgoCD-rolluts installation complete."
 
-# argocd cluster 추가 및 출력을 변수에 저장
-output=$(argocd cluster add $CLUSTER_FULL_NAME --system-namespace argocd --grpc-web)
+# # argocd cluster 추가 및 출력을 변수에 저장
+# output=$(argocd cluster add $CLUSTER_FULL_NAME --system-namespace argocd --grpc-web)
 
-# 출력 메시지에서 IP 주소 추출
-CLUSTER_URL=$(echo "$output" | grep -o 'https://[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+')
+# # 출력 메시지에서 IP 주소 추출
+# CLUSTER_URL=$(echo "$output" | grep -o 'https://[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+')
 
-# ArgoCD 앱 추가
-argocd app create prod-boutique \
-  --repo https://github.com/$USER_NAME/ING_k8s.git \
-  --path GKE/cluster/overlays/prod \
-  --dest-namespace boutique \
-  --dest-server $CLUSTER_URL \
-  --sync-option CreateNamespace=true \
-  --grpc-web
+# # ArgoCD 앱 추가
+# argocd app create prod-boutique \
+#   --repo https://github.com/$USER_NAME/ING_k8s.git \
+#   --path GKE/cluster/overlays/prod \
+#   --dest-namespace boutique \
+#   --dest-server $CLUSTER_URL \
+#   --sync-option CreateNamespace=true \
+#   --grpc-web
 
-# argocd rollouts 대시보드 실행
-kubectl argo rollouts dashboard &
+# # argocd rollouts 대시보드 실행
+# kubectl argo rollouts dashboard &

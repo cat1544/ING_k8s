@@ -134,7 +134,7 @@ argocd app create dev-boutique \
   --grpc-web
 
 # 환경변수 등록
-CLUSTER_NAME=prod
+CLUSTER_NAME=boutique-prod
 PROJECT_ID=yoondaegyoung-01-400304
 #CLUSTER_FULL_NAME=gke_<project>_asia-northeast3_<clusername>
 CLUSTER_FULL_NAME=gke_${PROJECT_ID}_asia-northeast3_${CLUSTER_NAME}

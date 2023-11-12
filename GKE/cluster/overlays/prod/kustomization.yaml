@@ -124,7 +124,7 @@ patches:
       group: autoscaling
       version: v1
       kind: HorizontalPodAutoscaler
-      name: adservice-autoscaler
+      name: cartservice-autoscaler
     patch: |-
       - op: replace
         path: /spec/minReplicas

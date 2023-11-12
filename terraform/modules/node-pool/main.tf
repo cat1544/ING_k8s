@@ -15,9 +15,9 @@ resource "google_container_node_pool" "node-pool" {
     disk_type = "pd-balanced"
     labels = var.label
     service_account = var.service_account
-    # oauth_scopes = [
-    #   "https://www.googleapis.com/auth/cloud-platform"
-    # ]
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
   }
   autoscaling {
     # total_min_node_count = var.min_node
@@ -33,7 +33,7 @@ resource "google_container_node_pool" "node-pool" {
   }
 
   upgrade_settings {
-    max_surge = 1
+    max_surge = 2
     max_unavailable = 0
     #strategy = "BLUE_GREEN"
     #blue_green_settings {

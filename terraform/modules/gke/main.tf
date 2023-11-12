@@ -24,7 +24,7 @@ resource "google_container_cluster" "cluster" {
   subnetwork = var.subnet
 
   remove_default_node_pool = true
-  initial_node_count       = 3
+  initial_node_count       = 1
 
   networking_mode = "VPC_NATIVE"
 

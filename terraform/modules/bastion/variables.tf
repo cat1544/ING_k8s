@@ -10,9 +10,9 @@ variable "instance_name" {
     type = string
 }
 
-variable "sa_email" {
-    type = string
-}
+# variable "sa_email" {
+#     type = string
+# }
 
 variable "subnetwork" {
     type = string

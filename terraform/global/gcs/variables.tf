@@ -1,6 +1,6 @@
 variable "backend_gcs_name" {
   type    = string
-  default = "ing-tf-backend"
+  default = "boutique-tf-backend"
 }
 
 variable "label" {

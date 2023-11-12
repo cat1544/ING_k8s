@@ -47,10 +47,15 @@ resource "google_compute_instance" "bastion" {
       }
     }
 
+    metadata = {
+      enable-oslogin : "TRUE"
+      enable-oslogin-2fa : "TRUE"
+    }
+
     metadata_startup_script = file("userdata.sh")
 
-    service_account {
-      email = var.sa_email
-      scopes = ["cloud-platform"] # To allow full access to all Cloud APIs
-    }
+#     service_account {
+# #      email = var.sa_email
+#       scopes = ["cloud-platform"] # To allow full access to all Cloud APIs
+#     }
 }

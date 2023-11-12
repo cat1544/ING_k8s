@@ -135,38 +135,52 @@ argocd app create dev-boutique \
 
 # role binding
 PROJECT_ID=yoondaegyoung-01-400304
-GSA=wlid-argocd-sa
-KSA=cron-ksa
+GSA_ARGOCD=wlid-argocd-sa
+GSA_BOUTIQUE=wlid-boutique-sa
+KSA_ARGOCD=argocd
+KSA_BOUTIQUE=boutique
 
 # # GSA 생성
-# gcloud iam service-accounts create $GSA
+# gcloud iam service-accounts create $GSA_ARGOCD
+# gcloud iam service-accounts create $GSA_BOUTIQUE
 
 # # GSA 롤 바인딩 (identityUser + 필요한 역할)
 # gcloud projects add-iam-policy-binding $PROJECT_ID \
-#             --member "serviceAccount:$GSA@$PROJECT_ID.iam.gserviceaccount.com" \
+#             --member "serviceAccount:$GSA_ARGOCD@$PROJECT_ID.iam.gserviceaccount.com" \
 #                 --role "roles/container.clusterAdmin"
 # gcloud projects add-iam-policy-binding $PROJECT_ID \
-#             --member "serviceAccount:$GSA@$PROJECT_ID.iam.gserviceaccount.com" \
+#             --member "serviceAccount:$GSA_ARGOCD@$PROJECT_ID.iam.gserviceaccount.com" \
 #                 --role "roles/iam.workloadIdentityUser"
 # gcloud projects add-iam-policy-binding $PROJECT_ID \
-#             --member "serviceAccount:$GSA@$PROJECT_ID.iam.gserviceaccount.com" \
+#             --member "serviceAccount:GSA_ARGOCD@$PROJECT_ID.iam.gserviceaccount.com" \
+#                 --role "roles/secretmanager.secretAccessor"
+
+# # GSA 롤 바인딩 (identityUser + 필요한 역할)
+# gcloud projects add-iam-policy-binding $PROJECT_ID \
+#             --member "serviceAccount:$GSA_BOUTIQUE@$PROJECT_ID.iam.gserviceaccount.com" \
+#                 --role "roles/container.clusterAdmin"
+# gcloud projects add-iam-policy-binding $PROJECT_ID \
+#             --member "serviceAccount:$GSA_BOUTIQUE@$PROJECT_ID.iam.gserviceaccount.com" \
+#                 --role "roles/iam.workloadIdentityUser"
+# gcloud projects add-iam-policy-binding $PROJECT_ID \
+#             --member "serviceAccount:$GSA_BOUTIQUE@$PROJECT_ID.iam.gserviceaccount.com" \
 #                 --role "roles/artifactregistry.reader"
 # gcloud projects add-iam-policy-binding $PROJECT_ID \
-#             --member "serviceAccount:$GSA@$PROJECT_ID.iam.gserviceaccount.com" \
+#             --member "serviceAccount:$GSA_BOUTIQUE@$PROJECT_ID.iam.gserviceaccount.com" \
 #                 --role "roles/secretmanager.secretAccessor"
 
 # KSA 생성
-kubectl create serviceaccount --namespace argocd $KSA
-kubectl create serviceaccount --namespace dev-boutique $KSA
+kubectl create serviceaccount --namespace argocd $KSA_ARGOCD
+kubectl create serviceaccount --namespace dev-boutique $KSA_BOUTIQUE
 
 # GSA - KSA 바인딩
-gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[argocd/$KSA]" $GSA@$PROJECT_ID.iam.gserviceaccount.com
-gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[dev-boutique/$KSA]" $GSA@$PROJECT_ID.iam.gserviceaccount.com
+gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[argocd/$KSA_ARGOCD]" $GSA_ARGOCD@$PROJECT_ID.iam.gserviceaccount.com
+gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$PROJECT_ID.svc.id.goog[dev-boutique/$KSA_BOUTIQUE]" $GSA_BOUTIQUE@$PROJECT_ID.iam.gserviceaccount.com
 
 
 # Annotation 추가
-kubectl annotate serviceaccount --namespace argocd $KSA iam.gke.io/gcp-service-account=$GSA@$PROJECT_ID.iam.gserviceaccount.com
-kubectl annotate serviceaccount --namespace dev-boutique $KSA iam.gke.io/gcp-service-account=$GSA@$PROJECT_ID.iam.gserviceaccount.com
+kubectl annotate serviceaccount --namespace argocd $KSA_ARGOCD iam.gke.io/gcp-service-account=$GSA_ARGOCD@$PROJECT_ID.iam.gserviceaccount.com
+kubectl annotate serviceaccount --namespace dev-boutique $KSA_BOUTIQUE iam.gke.io/gcp-service-account=$GSA_BOUTIQUE@$PROJECT_ID.iam.gserviceaccount.com
 
 
 # # 환경변수 등록

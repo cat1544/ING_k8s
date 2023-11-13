@@ -22,10 +22,12 @@ echo "create ns complete."
 # Install argocd
 echo "Installing ArgoCD..."
 kubectl apply -n argocd -f ~/ING_k8s/installguide/argocdyaml/dev-argocd.yaml
+# kubectl apply -n argocd -f ~/ING_k8s/installguide/argocdyaml/prod-argocd.yaml
 echo "ArgoCD installation complete."
 
 # ManagedCertificate가 Active 상태가 될 때까지 확인
 CERT_NAME="dev-argocd-certificate" # ManagedCertificate 이름
+# CERT_NAME="prod-argocd-certificate"
 NAMESPACE="argocd" # 네임스페이스
 
 echo "ManagedCertificate의 상태를 확인합니다."
@@ -115,6 +117,7 @@ ARGOCD_PASSWORD=$(argocd admin initial-password -n argocd | awk 'NR==1')
 # ArgoCD 로그인
 echo "ArgoCD 로그인 중..."
 argocd login www.2280.store --username admin --password $ARGOCD_PASSWORD --insecure
+# argocd login www.the-body.shop --username admin --password $ARGOCD_PASSWORD --insecure
 
 # Secret Manager에서 시크릿 키 가져오기
 SECRET_VALUE=$(gcloud secrets versions access 1 --secret="GIT_ACCESS_TOKEN")
@@ -132,6 +135,14 @@ argocd app create dev-boutique \
   --dest-server https://kubernetes.default.svc \
   --sync-option CreateNamespace=true \
   --grpc-web
+
+# argocd app create prod-boutique \
+#   --repo https://github.com/$USER_NAME/ING_k8s.git \
+#   --path GKE/cluster/overlays/prod \
+#   --dest-namespace prod-boutique \
+#   --dest-server https://kubernetes.default.svc \
+#   --sync-option CreateNamespace=true \
+#   --grpc-web 
 
 # role binding
 PROJECT_ID=yoondaegyoung-01-400304

@@ -18865,10 +18865,10 @@ data:
         id: github
         name: GitHub
         config:
-          clientID: $argocd-iap-oauth-client:client_id
-          clientSecret: $argocd-iap-oauth-client:client_secret
+          clientID: d2d566438425a70a134c
+          clientSecret: 4cc445a5ca412cac7c533b6e5b9fb7840388b7e5
           orgs:
-          - name: GCP-ING
+          - name: ING-boutique
 # data:
 #   oidc.tls.insecure.skip.verify: "true" #Since Dex is used
 #   url: https://www.2280.store
@@ -18928,7 +18928,7 @@ data:
     p, role:pro-role, repositories, *, *, allow
     p, role:pro-role, *, *, *, allow
 
-    g, GCP-ING:pro, role:pro-role
+    g, ING-boutique:pro, role:pro-role
 ---
 apiVersion: v1
 data:
@@ -20741,14 +20741,14 @@ metadata:
 stringData:
   slack-token: xoxb-6184797071568-6161724551491-cM5NzSSiDyurLscIe2mGudl7
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  labels:
-    app.kubernetes.io/part-of: argocd
-  name: argocd-iap-oauth-client
-  namespace: argocd
-type: Opaque
-stringData:
-  client_id: abe926fdf35a14884038
-  client_secret: 3e9554cb49a2463f40e89c633285c0ea676bf112
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   labels:
+#     app.kubernetes.io/part-of: argocd
+#   name: argocd-iap-oauth-client
+#   namespace: argocd
+# type: Opaque
+# stringData:
+#   client_id: 20d49887978d69eda698
+#   client_secret: 1839014c2e1bfe6dd6700869c012b360e29f8d35

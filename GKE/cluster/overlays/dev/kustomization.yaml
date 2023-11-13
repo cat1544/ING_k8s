@@ -8,27 +8,38 @@ resources:
 # image tag 수정
 images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/cartservice
-  newTag: 559dc28
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/cartservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/currencyservice
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/currencyservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/paymentservice
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/paymentservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/productcatalogservice
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/productcatalogservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/adservice
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/adservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/recommendationservice
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/recommendationservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/emailservice
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/emailservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/frontend
-  newTag: c8e923e
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/frontend
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/shippingservice
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/shippingservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/checkoutservice
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/checkoutservice
+  newTag: fbdf305
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/loadgenerator
-  newTag: 9b91bc1
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/loadgenerator
+  newTag: fbdf305
 
 # ingress 수정
 patches:

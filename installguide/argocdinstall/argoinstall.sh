@@ -137,8 +137,8 @@ argocd app create dev-boutique \
 PROJECT_ID=yoondaegyoung-01-400304
 GSA_ARGOCD=wlid-argocd-sa
 GSA_BOUTIQUE=wlid-boutique-sa
-KSA_ARGOCD=argocd
-KSA_BOUTIQUE=boutique
+KSA_ARGOCD=argocd-sa
+KSA_BOUTIQUE=boutique-sa
 
 # # GSA 생성
 # gcloud iam service-accounts create $GSA_ARGOCD

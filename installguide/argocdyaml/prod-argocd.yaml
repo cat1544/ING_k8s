@@ -18858,7 +18858,7 @@ metadata:
   namespace: argocd
 data:
   # admin.enabled: "false"
-  url: https://the-body.shop
+  url: https://www.the-body.shop
   dex.config: |
     connectors:
       - type: github
@@ -18868,7 +18868,7 @@ data:
           clientID: d2d566438425a70a134c
           clientSecret: 4cc445a5ca412cac7c533b6e5b9fb7840388b7e5
           orgs:
-          - name: ING-boutique
+          - name: GCP-ING
 # data:
 #   oidc.tls.insecure.skip.verify: "true" #Since Dex is used
 #   url: https://www.2280.store
@@ -18928,7 +18928,7 @@ data:
     p, role:pro-role, repositories, *, *, allow
     p, role:pro-role, *, *, *, allow
 
-    g, ING-boutique:pro, role:pro-role
+    g, GCP-ING:pro, role:pro-role
 ---
 apiVersion: v1
 data:

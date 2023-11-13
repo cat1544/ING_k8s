@@ -28,7 +28,7 @@ images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/checkoutservice
   newTag: 9b91bc1
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/loadgenerator
-  newTag: 9b91bc1
+  newTag: 42d8fb2
 
 # ingress 수정
 patches:

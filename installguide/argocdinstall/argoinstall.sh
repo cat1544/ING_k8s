@@ -21,11 +21,11 @@ echo "create ns complete."
 
 # Install argocd
 echo "Installing ArgoCD..."
-kubectl apply -n argocd -f ~/ING_k8s/installguide/argocdyaml/argocd.yaml
+kubectl apply -n argocd -f ~/ING_k8s/installguide/argocdyaml/dev-argocd.yaml
 echo "ArgoCD installation complete."
 
 # ManagedCertificate가 Active 상태가 될 때까지 확인
-CERT_NAME="argocd-certificate" # ManagedCertificate 이름
+CERT_NAME="dev-argocd-certificate" # ManagedCertificate 이름
 NAMESPACE="argocd" # 네임스페이스
 
 echo "ManagedCertificate의 상태를 확인합니다."
@@ -128,7 +128,7 @@ argocd app create dev-boutique \
   --sync-policy automated \
   --repo https://github.com/$USER_NAME/ING_k8s.git \
   --path GKE/cluster/overlays/dev \
-  --dest-namespace boutique \
+  --dest-namespace dev-boutique \
   --dest-server https://kubernetes.default.svc \
   --sync-option CreateNamespace=true \
   --grpc-web

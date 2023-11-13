@@ -12,7 +12,7 @@ images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/currencyservice
   newTag: 9b91bc1
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/paymentservice
-  newTag: 9b91bc1
+  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/productcatalogservice
   newTag: 9b91bc1
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/adservice

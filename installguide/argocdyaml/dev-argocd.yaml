@@ -18857,7 +18857,7 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
-  # admin.enabled: "false"
+  admin.enabled: "false"
   url: https://www.2280.store
   dex.config: |
     connectors:

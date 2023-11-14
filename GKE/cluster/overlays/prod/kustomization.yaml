@@ -8,38 +8,38 @@ resources:
 # image tag 수정
 images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/cartservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/cartservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/currencyservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/currencyservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/paymentservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/paymentservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/productcatalogservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/productcatalogservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/adservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/adservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/recommendationservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/recommendationservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/emailservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/emailservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/frontend
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/frontend
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/shippingservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/shippingservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/checkoutservice
+  newTag: 42d8fb2
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/checkoutservice
-  newTag: 42d8fb2
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/loadgenerator
-  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/loadgenerator
   newTag: 42d8fb2
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/prod-boutique-image/loadgenerator
 
 # ingress 수정
 patches:

@@ -29,7 +29,7 @@ images:
   newTag: fbdf305
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/emailservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/frontend
-  newTag: 268792b
+  newTag: a5776d3
   newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/frontend
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/shippingservice
   newTag: fbdf305

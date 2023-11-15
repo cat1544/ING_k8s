@@ -264,3 +264,15 @@ patches:
         value: { "name": "PROJECT_ID", "value": "1081479304655" }
       - op: remove
         path: /spec/template/spec/containers/0/env/0
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: frontend
+    patch: |-
+      - op: remove
+        path: /spec/strategy/canary
+    # blueGreen
+    # - op: remove
+    #   path: /spec/strategy/blueGreen

@@ -7,14 +7,14 @@ spec:
     matchLabels:
       app: frontend
   strategy:
-    blueGreen:
-      activeService: frontend-active
-      autoPromotionEnabled: true
-      previewService: frontend-preview
+    # blueGreen:
+    #   activeService: frontend-active
+    #   autoPromotionEnabled: true
+    #   previewService: frontend-preview
     canary:
       steps:
       - setWeight: 10
-      - pause: {duration: 2m}
+      - pause: {duration: 24h}
   template:
     metadata:
       annotations:

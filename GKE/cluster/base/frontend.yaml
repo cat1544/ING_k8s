@@ -11,6 +11,10 @@ spec:
       activeService: frontend-active
       autoPromotionEnabled: true
       previewService: frontend-preview
+    canary:
+      steps:
+      - setWeight: 10
+      - pause: {duration: 2m}
   template:
     metadata:
       annotations:

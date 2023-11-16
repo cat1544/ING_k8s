@@ -3,7 +3,6 @@ kind: Rollout
 metadata:
   name: checkoutservice
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: checkoutservice

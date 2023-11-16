@@ -3,7 +3,6 @@ kind: Rollout
 metadata:
   name: frontend
 spec:
-  replicas: 4
   selector:
     matchLabels:
       app: frontend

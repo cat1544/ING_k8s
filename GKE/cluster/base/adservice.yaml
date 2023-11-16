@@ -16,7 +16,6 @@ spec:
       labels:
         app: adservice
     spec:
-      replicas: 2
       containers:
       - env:
         - name: PORT

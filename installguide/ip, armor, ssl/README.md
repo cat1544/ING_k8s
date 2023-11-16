@@ -104,7 +104,7 @@ gcloud compute ssl-policies create $SSL_POLICY_NAME \
     --profile COMPATIBLE  \
     --min-tls-version 1.0
 
-SSL_POLICY_NAME=ing-boutique-ssl-policy
+SSL_POLICY_NAME=prod-boutique-ssl-policy
 gcloud compute ssl-policies create $SSL_POLICY_NAME \
     --profile COMPATIBLE  \
     --min-tls-version 1.0

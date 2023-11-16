@@ -96,7 +96,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/sslPolicy
-        value: ing-boutique-ssl-policy
+        value: prod-boutique-ssl-policy
 
 # replica 수정
   - target:

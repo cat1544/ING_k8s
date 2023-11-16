@@ -107,7 +107,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 0
 
   # - target:
   #     group: autoscaling.gke.io
@@ -139,7 +139,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 4
+        value: 0
 
   - target:
       group: argoproj.io
@@ -168,7 +168,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 0
 
   - target:
       group: autoscaling
@@ -178,7 +178,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 0
 
   - target:
       group: autoscaling
@@ -188,7 +188,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 0
 
   - target:
       group: autoscaling
@@ -198,7 +198,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 0
 
   - target:
       group: autoscaling
@@ -208,7 +208,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 0
 
   - target:
       group: autoscaling
@@ -218,7 +218,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 0
 
   - target:
       group: autoscaling
@@ -228,7 +228,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 0
 
   - target:
       group: autoscaling
@@ -238,7 +238,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 5
+        value: 0
 
 # postgreSQL추가
   - target:

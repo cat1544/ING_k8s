@@ -1,4 +1,6 @@
 # terraform guide
+* global/gcs 폴더의 variables.tf파일 수정 {project_id, terraform backend name}
+* dev, prod 폴더 local 변수 및 project_id, backend name,Bastion sa 수정 후 apply
 
 ## GCS
 create GCS - terraform Backend
@@ -31,27 +33,27 @@ terraform init
 terraform apply
 ```
 
-## IAM
+## Workload Identity
 Workload Identity Service Account
 ```
-cd ../global/iam
-# variables.tf 파일 project_id 수정
-
-terraform init
-terraform apply
+#env
+PROJECT_ID={project_id}
+NAMESPACE={namespace}
+GSA={google_service_account}
+KSA={Kubernetes_Service_account}
 ```
 Kubernetes Service Account, Namespace 생성
 ```
-kubectl create sa [sa_name]
-kubectl create namespace [namespace]
+kubectl create sa $KSA
+kubectl create namespace $NAMESPACE
 ```
 Google Service Account와 Kubernetes Service Account mapping
 ```
 gcloud iam service-accounts add-iam-policy-binding \
     --role roles/iam.workloadIdentityUser \
-    --member "serviceAccount:[Project_id].svc.id.goog[namespace/ksa]" [Google_service_account]@fluted-union-403305.iam.gserviceaccount.com
+    --member "serviceAccount:$PROJECT_ID.svc.id.goog[$NAMESPACE/$KSA]" $GSA@$PROJECT_ID.iam.gserviceaccount.com
 ```
 kubernetes Service Account에 Annotation 추가
 ```
-kubectl annotate serviceaccount --namespace [namespace] [ksa] iam.gke.io/gcp-service-account=[Google_service_account]@[project_id].iam.gserviceaccount.com
+kubectl annotate serviceaccount --namespace $NAMESPACE $KSA iam.gke.io/gcp-service-account=$GSA@$PROJECT_ID.iam.gserviceaccount.com
 ```

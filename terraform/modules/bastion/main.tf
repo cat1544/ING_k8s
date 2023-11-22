@@ -19,6 +19,11 @@
 #   ]
 # }
 
+resource "google_service_account" "bastion_sa" {
+  account_id   = "bastion-sa"
+  display_name = "Custom SA for bastion"
+}
+
 resource "google_compute_instance" "bastion" {
     name = var.instance_name
     machine_type = "e2-medium"
@@ -55,7 +60,7 @@ resource "google_compute_instance" "bastion" {
     metadata_startup_script = file("userdata.sh")
 
     service_account {
-      email = var.sa_email
+      email = google_service_account.bastion_sa.email
       scopes = ["cloud-platform"] # To allow full access to all Cloud APIs
     }
 }

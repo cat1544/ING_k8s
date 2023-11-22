@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: boutique-node-down
+  namespace: argocd
+spec:
+  schedule: "0 22 * * MON-FRI"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccount: cron-ksa
+          nodeSelector:
+            app: argo
+          containers:
+          - name: boutique-node-down
+            image: google/cloud-sdk:slim
+            command:
+            - /bin/sh
+            - -c
+            - |
+              gcloud container clusters get-credentials boutique-dev --region asia-northeast3 --project yoondaegyoung-01-400304
+              gcloud container clusters resize boutique-dev --node-pool=boutique --num-nodes=0 --zone=asia-northeast3 --quiet
+          restartPolicy: OnFailure

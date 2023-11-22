@@ -1,5 +1,5 @@
 <p align="center">
-<img src="/ect/ING_architecture.jpg" />
+<img src="/etc/GCP2팀_ING_architecture.jpg" />
 </p>
 
 # terraform

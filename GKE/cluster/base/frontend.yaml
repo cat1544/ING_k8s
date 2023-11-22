@@ -11,6 +11,10 @@ spec:
       activeService: frontend-active
       autoPromotionEnabled: true
       previewService: frontend-preview
+    canary:
+      steps:
+      - setWeight: 10
+      - pause: {duration: 24h}
   template:
     metadata:
       annotations:
@@ -79,7 +83,7 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-      serviceAccountName: default
+      serviceAccountName: boutique-sa
 ---
 apiVersion: v1
 kind: Service

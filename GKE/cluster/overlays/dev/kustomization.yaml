@@ -8,27 +8,38 @@ resources:
 # image tag 수정
 images:
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/cartservice
-  newTag: 559dc28
+  newTag: 9a9b00a
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/cartservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/currencyservice
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/currencyservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/paymentservice
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/paymentservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/productcatalogservice
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/productcatalogservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/adservice
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/adservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/recommendationservice
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/recommendationservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/emailservice
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/emailservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/frontend
-  newTag: d3a2f00
+  newTag: 802cded
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/frontend
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/shippingservice
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/shippingservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/checkoutservice
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/checkoutservice
 - name: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/boutique-image/loadgenerator
-  newTag: 9b91bc1
+  newTag: fbdf305
+  newName: asia-docker.pkg.dev/yoondaegyoung-01-400304/gcf-artifacts/dev-boutique-image/loadgenerator
 
 # ingress 수정
 patches:
@@ -98,27 +109,37 @@ patches:
         path: /spec/minReplicas
         value: 2
 
+  # - target:
+  #     group: autoscaling.gke.io
+  #     version: v1beta1
+  #     kind: MultidimPodAutoscaler
+  #     name: cartservice-autoscaler
+  #   patch: |-
+  #     - op: replace
+  #       path: /spec/constraints/global/minReplicas
+  #       value: 4
+  #     - op: replace
+  #       path: /spec/constraints/global/maxReplicas
+  #       value: 4
+  #     - op: replace
+  #       path: /spec/constraints/container/0/requests/minAllowed/memory
+  #       value: "500Mi"
+  #     - op: replace
+  #       path: /spec/constraints/container/0/requests/maxAllowed/memory
+  #       value: "2Gi"
+  #     - op: replace
+  #       path: /spec/goals/metrics/0/resource/target/averageUtilization
+  #       value: 30
+
   - target:
-      group: autoscaling.gke.io
-      version: v1beta1
-      kind: MultidimPodAutoscaler
+      group: autoscaling
+      version: v1
+      kind: HorizontalPodAutoscaler
       name: cartservice-autoscaler
     patch: |-
       - op: replace
-        path: /spec/constraints/global/minReplicas
+        path: /spec/minReplicas
         value: 4
-      - op: replace
-        path: /spec/constraints/global/maxReplicas
-        value: 4
-      - op: replace
-        path: /spec/constraints/container/0/requests/minAllowed/memory
-        value: "500Mi"
-      - op: replace
-        path: /spec/constraints/container/0/requests/maxAllowed/memory
-        value: "2Gi"
-      - op: replace
-        path: /spec/goals/metrics/0/resource/target/averageUtilization
-        value: 30
 
   - target:
       group: argoproj.io
@@ -128,10 +149,16 @@ patches:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/resources/requests/cpu
-        value: "200m"
+        value: "4000m"
       - op: replace
         path: /spec/template/spec/containers/0/resources/limits/cpu
-        value: "2000m"
+        value: "6000m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "2Gi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "4Gi"
 
   - target:
       group: autoscaling
@@ -211,7 +238,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/minReplicas
-        value: 2
+        value: 4
 
 # postgreSQL추가
   - target:
@@ -237,3 +264,15 @@ patches:
         value: { "name": "PROJECT_ID", "value": "1081479304655" }
       - op: remove
         path: /spec/template/spec/containers/0/env/0
+
+  - target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Rollout
+      name: frontend
+    patch: |-
+      - op: remove
+        path: /spec/strategy/canary
+    # blueGreen
+    # - op: remove
+    #   path: /spec/strategy/blueGreen

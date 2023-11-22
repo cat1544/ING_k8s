@@ -171,7 +171,6 @@ module "bastion_vm" {
   project_id = local.project_id
   network = module.vpc.network
   subnetwork = module.subnet.subnetwork
-  sa_email = google_service_account.default.email
 
   depends_on = [ module.dev-gke ]
 }

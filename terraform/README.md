@@ -1,6 +1,16 @@
 # terraform guide
 * global/gcs 폴더의 variables.tf파일 수정 {project_id, terraform backend name}
-* dev, prod 폴더 local 변수 및 project_id, backend name,Bastion sa 수정 후 apply
+* dev, prod 폴더 local 변수 및 project_id, backend name,Bastion sa 수정 필요
+
+* terraform apply 전 API 활성화 필요
+```
+Compute Engine API / compute.googleapis.com
+Cloud Resource Manager API / cloudresourcemanager.googleapis.com
+Cloud Pub/sub API / pubsub.googleapis.com
+Identity and Accesss Management(IAM) API / am.googleapis.com
+Service Networking API / servicenetworking.googleapis.com
+Kubernetes Engine API / container.googleapis.com
+
 
 ## GCS
 create GCS - terraform Backend

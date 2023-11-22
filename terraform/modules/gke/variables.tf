@@ -40,3 +40,4 @@ variable "master_network_name" {}
 variable "peering" {}
 variable "pod_ip" {}
 variable "svc_ip" {}
+variable "noti_name" {}

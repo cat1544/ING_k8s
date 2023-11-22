@@ -25,7 +25,6 @@ terraform {
   backend "gcs" {
     bucket = "boutique-tf-backend"
     prefix = "tfstate/prod/"
-    # lock_timeout_seconds = 180
   }
 }
 
@@ -54,14 +53,12 @@ module "prod-gke" {
 
   network = module.vpc.network
   subnet = module.subnet.subnetwork
-#   private_ip_name        = "private"    #
-#   vpc_connection_service = "servicenetworking.googleapis.com" #
   name                   = "${local.service}-${local.env}"
   location               = local.location
   master_ipv4_cidr_block = "192.168.16.0/28"
   peering = module.vpc.peering
-  # cidr_block = "218.235.89.0/24"
   master_network_name = "${local.env}-master"
+  noti_name = "prod_cluster_upgrade"
   pod_ip = "192.168.0.0/21"
   svc_ip = "192.168.9.0/24"
 
@@ -79,9 +76,17 @@ resource "google_service_account" "prod_sa" {
   display_name = "prod-boutique-sa"
 }
 
-resource "google_project_iam_binding" "node_role_binding" {
+resource "google_project_iam_binding" "node_svc_role" {
   project = local.project_id
   role    = "roles/container.nodeServiceAccount"
+  members = [
+    "serviceAccount:${google_service_account.prod_sa.email}",
+  ]
+}
+
+resource "google_project_iam_binding" "ar_viewer" {
+  project = local.project_id
+  role    = "roles/artifactregistry.reader"
   members = [
     "serviceAccount:${google_service_account.prod_sa.email}",
   ]
@@ -92,9 +97,9 @@ module "prod-nodepool" {
   node_pool_name = local.service
   location       = local.location
   initial_node_count = 1
-  type = "e2-highcpu-8"
+  type = "custom-4-8192"
   disk_size      = 40
-  max_pods = 40
+  max_pods = 64
   min_node = 1
   max_node = 3
   cluster_name        = module.prod-gke.cluster_name
@@ -103,103 +108,44 @@ module "prod-nodepool" {
   label = {
     "env" : "prod"
     "app" : "boutique"
+    "made" : "terraform"
   }
 }
 
-resource "google_service_account" "argo_sa" {
-  account_id   = "prod-argo-sa"
-  display_name = "prod-argo-sa"
-}
+# resource "google_service_account" "argo_sa" {
+#   account_id   = "prod-argo-sa"
+#   display_name = "prod-argo-sa"
+# }
 
-resource "google_project_iam_binding" "argo_node_role_binding" {
-  project = local.project_id
-  role    = "roles/container.nodeServiceAccount"
-  members = [
-    "serviceAccount:${google_service_account.argo_sa.email}",
-  ]
-}
+# resource "google_project_iam_binding" "argo_node_role_binding" {
+#   project = local.project_id
+#   role    = "roles/container.nodeServiceAccount"
+#   members = [
+#     "serviceAccount:${google_service_account.argo_sa.email}",
+#   ]
+# }
 
 module "argo-nodepool" {
   source         = "../modules/node-pool"
   node_pool_name = "argocd"
   location       = local.location
   initial_node_count = 1
-  type = "e2-standard-4"
+  type = "e2-medium"
   disk_size      = 20
-  max_pods = 30
+  max_pods = 64
   min_node = 1
   max_node = 1
   cluster_name        = module.prod-gke.cluster_name
-  service_account = google_service_account.argo_sa.email
+  service_account = google_service_account.prod_sa.email
 
   label = {
     "env" : "prod"
     "app" : "argo"
+    "made" : "terraform"
   }
 
-  depends_on = [ google_service_account.argo_sa ]
+  depends_on = [ google_service_account.prod_sa ]
 }
-
-# resource "google_service_account" "bastion_sa" {
-#     account_id = "prod-bastion-sa"
-#     display_name = "prod-bastion-sa"
-# }
-
-# resource "google_project_iam_binding" "container_developer_binding" {
-#   project = local.project_id
-#   role    = "roles/container.developer"
-#   members = [
-#     "serviceAccount:${google_service_account.bastion_sa.email}",
-#   ]
-# }
-
-# resource "google_project_iam_binding" "iap_accessor_binding" {
-#   project = local.project_id
-#   role    = "roles/iap.httpsResourceAccessor"
-#   members = [
-#     "serviceAccount:${google_service_account.bastion_sa.email}",
-#   ]
-# }
-
-# resource "google_project_iam_binding" "iap_tunnel_accessor_binding" {
-#   project = local.project_id
-#   role    = "roles/iap.tunnelResourceAccessor"
-#   members = [
-#     "serviceAccount:${google_service_account.bastion_sa.email}",
-#   ]
-# }
-
-# resource "google_project_iam_binding" "role_create_binding" {
-#   project = local.project_id
-#   role    = "roles/container.clusterRoles.create"
-#   members = [
-#     "serviceAccount:${google_service_account.bastion_sa.email}",
-#   ]
-# }
-
-# resource "google_project_iam_binding" "role_binding_create_binding" {
-#   project = local.project_id
-#   role    = "roles/container.roleBindings.create"
-#   members = [
-#     "serviceAccount:${google_service_account.bastion_sa.email}",
-#   ]
-# }
-
-# resource "google_project_iam_binding" "cluster_role_create_binding" {
-#   project = local.project_id
-#   role    = "roles/container.roles.create"
-#   members = [
-#     "serviceAccount:${google_service_account.bastion_sa.email}",
-#   ]
-# }
-
-# resource "google_project_iam_binding" "oauth_editor_binding" {
-#   project = local.project_id
-#   role    = "roles/oauthconfig.editor"
-#   members = [
-#     "serviceAccount:${google_service_account.bastion_sa.email}",
-#   ]
-# }
 
 module "bastion_vm" {
   source = "../modules/bastion"
@@ -207,7 +153,7 @@ module "bastion_vm" {
   project_id = local.project_id
   network = module.vpc.network
   subnetwork = module.subnet.subnetwork
-  # sa_email = google_service_account.bastion_sa.email
+  sa_email = google_service_account.defualt.email
 
   depends_on = [ module.prod-gke ]
 }

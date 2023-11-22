@@ -1,16 +1,10 @@
-# resource "google_compute_global_address" "private_ip" {
-#   name          = var.private_ip_name
-#   purpose       = "VPC_PEERING"
-#   address_type  = "INTERNAL"
-#   prefix_length = 16
-#   network       = google_compute_network.vpc.id
-# }
+resource "google_pubsub_topic" "cluster_topic" {
+  name = var.noti_name
 
-# resource "google_service_networking_connection" "private_vpc_connection" {
-#   network                 = google_compute_network.vpc.id
-#   service                 = var.vpc_connection_service
-#   reserved_peering_ranges = [google_compute_global_address.private_ip.name]
-# }
+  labels = {
+    "made" : "terraform"
+  }  
+}
 
 resource "google_container_cluster" "cluster" {
   name     = var.name
@@ -95,14 +89,37 @@ resource "google_container_cluster" "cluster" {
 #    }
 #  }
 
+  maintenance_policy {
+    daily_maintenance_window {
+      start_time = "02:00"
+    }
+    maintenance_exclusion {
+      exclusion_name = "sale_festa"
+      start_time = "2023-11-01T00:00:00Z"
+      end_time = "2023-11-15T00:00:00Z"
+      exclusion_options {
+        scope = "NO_UPGRADES"
+      }
+    }
+  }
+
   resource_labels = var.label
 
   workload_identity_config {
     workload_pool = var.workload_identity_config
   }
 
+  notification_config {
+    pubsub {
+      enabled = "true"
+      topic = google_pubsub_topic.cluster_topic.id
+      filter {
+        event_type = ["UPGRADE_AVAILABLE_EVENT", "UPGRADE_EVENT"]
+      }
+    }
+  }
+
   depends_on = [ var.peering ]
-  # depends_on = [ google_service_networking_connection.private_vpc_connection ]
 }
 
 #   maintenance_policy {

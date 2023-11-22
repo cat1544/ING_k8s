@@ -33,7 +33,7 @@ resource "google_container_node_pool" "node-pool" {
   }
 
   upgrade_settings {
-    max_surge = 2
+    max_surge = 1
     max_unavailable = 0
     #strategy = "BLUE_GREEN"
     #blue_green_settings {

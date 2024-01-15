@@ -2,7 +2,7 @@
 * global/gcs 폴더의 variables.tf파일 수정 {project_id, terraform backend name}
 * dev, prod 폴더 local 변수 및 project_id, backend name,Bastion sa 수정 필요
 
-### API Enable
+## API Enable
 ```
 gcloud services enable compute.googleapis.com
 gcloud services enable cloudresourcemanager.googleapis.com
